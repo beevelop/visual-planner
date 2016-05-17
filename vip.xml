@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Module>
-<ModulePrefs title="visual-planner" description="Visual Planner for Google Calendar" author="Chris Thompson">
+<ModulePrefs title="visual-planner/dev" description="Visual Planner for Google Calendar" author="Chris Thompson">
 <Require feature="google.calendar-0.5.read"/>
 <Require feature="views"/>
 <Require feature="settitle"/>
@@ -35,9 +35,9 @@
 <button type="button" title="Single-column View" onclick="toggle_single_col();"><b>|</b></button>
 <button type="button" title="Settings" onclick="show_view('settings');"><b>*</b></button>
 </center>
-<script type="text/javascript" src="https://ctcode.github.io/visual-planner/vip_analytics.js"></script>
-<script type="text/javascript" src="https://ctcode.github.io/visual-planner/vip_lib.js"></script>
-<script type="text/javascript" src="https://ctcode.github.io/visual-planner/vip_main.js"></script>
+<script type="text/javascript">function ga_hit() {}</script>
+<script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_lib.js"></script>
+<script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_main.js"></script>
 ]]>
 </Content>
 <Content type="html" view="canvas">
@@ -167,9 +167,9 @@
 	</div>
 </div>
 
-<script type="text/javascript" src="https://ctcode.github.io/visual-planner/vip_analytics.js"></script>
-<script type="text/javascript" src="https://ctcode.github.io/visual-planner/vip_lib.js"></script>
-<script type="text/javascript" src="https://ctcode.github.io/visual-planner/vip_main.js"></script>
+<script type="text/javascript">function ga_hit() {}</script>
+<script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_lib.js"></script>
+<script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_main.js"></script>
 ]]>
 </Content>
 </Module>
