@@ -188,6 +188,7 @@ VipHost.prototype.createMultiCol = function()
 VipHost.prototype.scale_font = function()
 {
 	this.div.style.fontSize = fmt("^px", Math.floor(0.7*vip.cell.height));
+	this.div.style.fontSize = "11px";
 
 	var a = document.createElement('div');
 	a.innerHTML = "a";
