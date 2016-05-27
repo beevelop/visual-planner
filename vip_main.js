@@ -76,10 +76,6 @@ function VipInit()
 	}
 	else
 		InitSingleColView();
-
-	document.addEventListener('DOMSubtreeModified', function () {console.log('DOMSubtreeModified')}, false);
-	document.addEventListener('transitionend', function () {console.log('transitionend')}, false);
-	document.addEventListener('message', function () {console.log('message')}, false);
 }
 
 function InitSingleColView()
