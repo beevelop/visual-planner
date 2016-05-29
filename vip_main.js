@@ -105,6 +105,8 @@ function InitSingleColView()
 
 function InitMultiColView()
 {
+window.open("vip.htm");
+return;
 	document.body.removeChild(document.getElementById('settings'));
 	install_event_handling();
 
