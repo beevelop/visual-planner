@@ -105,8 +105,6 @@ function InitSingleColView()
 
 function InitMultiColView()
 {
-window.open("vip.htm");
-return;
 	document.body.removeChild(document.getElementById('settings'));
 	install_event_handling();
 
@@ -179,6 +177,8 @@ function toggle_single_col()
 
 function show_view(name)
 {
+window.open("vip.htm");
+return;
 	gadgets.views.requestNavigateTo('canvas', {canvasview : name});
 }
 
