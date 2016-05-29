@@ -177,7 +177,7 @@ function toggle_single_col()
 
 function show_view(name)
 {
-window.open("vip.htm");
+window.open("https://rawgit.com/ctcode/visual-planner/dev/vip.htm");
 return;
 	gadgets.views.requestNavigateTo('canvas', {canvasview : name});
 }
