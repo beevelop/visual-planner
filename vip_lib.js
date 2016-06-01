@@ -284,7 +284,7 @@ function VipCol(parent, vdt_start, vdt_end)
 	this.ReqDateEnd = vdt_end.GCalDate();
 	
 	vip.event_req.queue.push(this);
-	request_events();
+	//request_events();
 }
 
 VipCol.prototype = new VipObject;
@@ -854,7 +854,7 @@ VipDate.prototype.DayTitle = function()
 
 VipDate.prototype.GCalDate = function()
 {
-	return google.calendar.utils.fromDate(this.dt);
+	//return google.calendar.utils.fromDate(this.dt);
 }
 
 VipDate.prototype.isWeekend = function()
@@ -892,7 +892,7 @@ VipDate.prototype.TimespanTo = function(vdt_end)
 
 VipDate.prototype.ShowInCalendar = function()
 {
-	google.calendar.showDate(this.dt.getFullYear(), (this.dt.getMonth() + 1), this.dt.getDate());
+	//google.calendar.showDate(this.dt.getFullYear(), (this.dt.getMonth() + 1), this.dt.getDate());
 }
 
 
