@@ -119,6 +119,8 @@ VipDiv.prototype = new VipObject;
 function VipHost()
 {
 	this.createDiv(null, "viphost");
+	this.div.style.width = "100%";
+	this.div.style.height = "100%";
 }
 
 VipHost.prototype = new VipObject;
