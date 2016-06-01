@@ -18,7 +18,7 @@ var vip = {
 	},
 	selection: {start: null, end: null},
 	touch: {id: null, start: {x:0, y:0}},
-	event_req: {queue: [], pending: false}
+	event_req: {add: onAddEventRequest, queue: [], pending: false}
 };
 
 function VipInit()
@@ -78,6 +78,16 @@ function install_event_handling()
 	vip.host.div.addEventListener('touchmove', ontouchmove, false);
 	vip.host.div.addEventListener('touchend', ontouchend, false);
 	vip.host.div.addEventListener('touchcancel', ontouchcancel, false);
+}
+
+
+/////////////////////////////////////////////////////////////////
+// calendar event handlers
+
+function onAddEventRequest(vipcol)
+{
+	//vip.event_req.queue.push(vipcol);
+	//request_events();
 }
 
 
