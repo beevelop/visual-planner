@@ -284,11 +284,10 @@ function VipCol(parent, vdt_start, vdt_end)
 	this.firstcell = this.vipcells.div.firstChild.vipobj;
 	this.lastcell = this.vipcells.div.lastChild.vipobj;
 
-	this.ReqDateStart = vdt_start.GCalDate();
-	this.ReqDateEnd = vdt_end.GCalDate();
+	this.ReqDateStart = vdt_start;
+	this.ReqDateEnd = vdt_end;
 	
-	vip.event_req.queue.push(this);
-	//request_events();
+	vip.event_req.add(this);
 }
 
 VipCol.prototype = new VipObject;
@@ -854,11 +853,6 @@ VipDate.prototype.DayTitle = function()
 {
 	var dt_array = this.dt.toDateString().split(' ');
 	return fmt("^ ^ ^", dt_array[0], this.DayOfMonth(), dt_array[1]);
-}
-
-VipDate.prototype.GCalDate = function()
-{
-	//return google.calendar.utils.fromDate(this.dt);
 }
 
 VipDate.prototype.isWeekend = function()

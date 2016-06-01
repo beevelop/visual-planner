@@ -21,7 +21,7 @@ var vip = {
 	},
 	selection: {start: null, end: null},
 	touch: {id: null, start: {x:0, y:0}},
-	event_req: {queue: [], pending: false}
+	event_req: {add: onAddEventRequest, queue: [], pending: false}
 };
 
 function VipInit()
@@ -246,6 +246,12 @@ function update_indicator(cal_dates)
 		vipcol.vipind.Align(cell_top, cell_bottom);
 }
 
+function onAddEventRequest(vipcol)
+{
+	vip.event_req.queue.push(vipcol);
+	request_events();
+}
+
 function update_events()
 // callback when calendar events have changed
 {
@@ -286,7 +292,10 @@ function request_events()
 	vip.event_req.pending = true;
 
 	var vipcol = vip.event_req.queue.shift();
-	google.calendar.read.getEvents(receive_events, "selected", vipcol.ReqDateStart, vipcol.ReqDateEnd);
+
+	var gdtStart = google.calendar.utils.fromDate(vipcol.ReqDateStart.dt);
+	var gdtEnd = google.calendar.utils.fromDate(vipcol.ReqDateEnd.dt);
+	google.calendar.read.getEvents(receive_events, "selected", gdtStart, gdtEnd);
 }
 
 function receive_events(data)
@@ -614,7 +623,9 @@ function create_calendar_event()
 	
 	vdt_end.MoveDays(1);  // end date is exclusive
 
-	google.calendar.composeEvent({allDay: true, startTime: vdt_start.GCalDate(), endTime: vdt_end.GCalDate()});
+	var gdtStart = google.calendar.utils.fromDate(vdt_start.dt);
+	var gdtEnd = google.calendar.utils.fromDate(vdt_end.dt);
+	google.calendar.composeEvent({allDay: true, startTime: gdtStart, endTime: gdtEnd});
 }
 
 function ontouchstart(event)
