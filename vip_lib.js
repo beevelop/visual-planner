@@ -119,10 +119,6 @@ VipDiv.prototype = new VipObject;
 function VipHost()
 {
 	this.createDiv(null, "viphost");
-	//this.div.style.left = "0px";
-	//this.div.style.top = "0px";
-	//this.div.style.width = "100%";
-	//this.div.style.height = "100%";
 }
 
 VipHost.prototype = new VipObject;
@@ -191,7 +187,7 @@ VipHost.prototype.createMultiCol = function()
 
 VipHost.prototype.scale_font = function()
 {
-	this.div.style.fontSize = fmt("^px", Math.floor(0.7*vip.cell.height));
+	this.div.style.fontSize = fmt("^px", Math.floor(0.6*vip.cell.height));
 
 	var a = document.createElement('div');
 	a.innerHTML = "a";
