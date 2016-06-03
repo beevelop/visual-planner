@@ -31,7 +31,7 @@
 <Content type="html">
 <![CDATA[
 <center>
-<button type="button" title="Multi-column View" onclick="window.open('https://rawgit.com/ctcode/visual-planner/dev/vip.htm');"><b>||||</b></button>
+<button type="button" title="Multi-column View" onclick="show_view('multi-col');"><b>||||</b></button>
 <button type="button" title="Single-column View" onclick="toggle_single_col();"><b>|</b></button>
 <button type="button" title="Settings" onclick="show_view('settings');"><b>*</b></button>
 </center>

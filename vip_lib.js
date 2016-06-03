@@ -886,7 +886,7 @@ VipDate.prototype.TimespanTo = function(vdt_end)
 
 VipDate.prototype.ShowInCalendar = function()
 {
-	//google.calendar.showDate(this.dt.getFullYear(), (this.dt.getMonth() + 1), this.dt.getDate());
+	google.calendar.showDate(this.dt.getFullYear(), (this.dt.getMonth() + 1), this.dt.getDate());
 }
 
 
