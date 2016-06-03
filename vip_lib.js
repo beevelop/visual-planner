@@ -280,8 +280,8 @@ function VipCol(parent, vdt_start, vdt_end)
 	this.firstcell = this.vipcells.div.firstChild.vipobj;
 	this.lastcell = this.vipcells.div.lastChild.vipobj;
 
-	this.ReqDateStart = vdt_start;
-	this.ReqDateEnd = vdt_end;
+	this.ReqDateStart = new VipDate(vdt_start);
+	this.ReqDateEnd = new VipDate(vdt_end);
 	
 	vip.event_req.add(this);
 }
