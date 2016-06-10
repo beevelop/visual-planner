@@ -33,7 +33,7 @@ function InitSettings()
 
 function onSaveSettings()
 {
-	setdoc.getElementById("save_btn").innerHTML = "<i>Saving...</i>";
+	getElementById("save_btn").innerHTML = "<i>Saving...</i>";
 	
 /*
 	prefs.set("multi_col_count", setdoc.getElementById("multi_col_count").value);
