@@ -30,3 +30,38 @@ function InitSettings()
 	ga_hit('view', 'settings');
 */
 }
+
+function onSaveSettings()
+{
+	setdoc.getElementById("save_btn").innerHTML = "<i>Saving...</i>";
+	
+/*
+	prefs.set("multi_col_count", setdoc.getElementById("multi_col_count").value);
+	prefs.set("fixed_cell_size", setdoc.getElementById("fixed_cell_size").checked.toString());
+	prefs.set("fixed_height", setdoc.getElementById("fixed_height").value);
+	prefs.set("fixed_width", setdoc.getElementById("fixed_width").value);
+	prefs.set("auto_scroll", setdoc.getElementById("auto_scroll").checked.toString());
+	prefs.set("start_month_offset", setdoc.getElementById("start_month_offset").value);
+	prefs.set("past_transparency", setdoc.getElementById("past_transparency").value);
+	prefs.set("proportional_events", setdoc.getElementById("proportional_events").checked.toString());
+	prefs.set("evt_start_hour", setdoc.getElementById("evt_start_hour").value);
+	prefs.set("evt_end_hour", setdoc.getElementById("evt_end_hour").value);
+	prefs.set("show_event_title", setdoc.getElementById("show_event_title").checked.toString());
+	prefs.set("show_evt_time", setdoc.getElementById("show_evt_time").checked.toString());
+	prefs.set("use_evt_colour", setdoc.getElementById("use_evt_colour").checked.toString());
+	prefs.set("hide_evt_marker", setdoc.getElementById("hide_evt_marker").checked.toString());
+	prefs.set("show_all_day_evts", setdoc.getElementById("show_all_day_evts").checked.toString());
+	prefs.set("one_day_as_timed", setdoc.getElementById("one_day_as_timed").checked.toString());
+	prefs.set("multi_day_as_timed", setdoc.getElementById("multi_day_as_timed").checked.toString());
+	prefs.set("show_timed_evts", setdoc.getElementById("show_timed_evts").checked.toString());
+	prefs.set("multi_day_as_all_day", setdoc.getElementById("multi_day_as_all_day").checked.toString());
+	prefs.set("all_day_evt_width_chars", setdoc.getElementById("all_day_evt_width_chars").value);
+*/
+
+	window.setTimeout(reload_calendar, 1000);
+}
+
+function reload_calendar()
+{
+	window.top.location.replace("https://www.google.com/calendar/render");
+}
