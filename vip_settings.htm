@@ -1,51 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<Module>
-<ModulePrefs title="visual-planner/dev" description="Visual Planner for Google Calendar" author="Chris Thompson">
-<Require feature="google.calendar-0.5.read"/>
-<Require feature="views"/>
-<Require feature="settitle"/>
-<Require feature="setprefs"/>
-<Require feature="dynamic-height"/>
-</ModulePrefs>
-<UserPref name="show_single_col" datatype="bool" default_value="false"/>
-<UserPref name="multi_col_count" datatype="int" default_value="8"/>
-<UserPref name="fixed_cell_size" datatype="bool" default_value="false"/>
-<UserPref name="fixed_height" datatype="int" default_value="16"/>
-<UserPref name="fixed_width" datatype="int" default_value="144"/>
-<UserPref name="auto_scroll" datatype="bool" default_value="true"/>
-<UserPref name="start_month_offset" datatype="int" default_value="-1"/>
-<UserPref name="past_transparency" datatype="int" default_value="40"/>
-<UserPref name="proportional_events" datatype="bool" default_value="false"/>
-<UserPref name="evt_start_hour" datatype="int" default_value="8"/>
-<UserPref name="evt_end_hour" datatype="int" default_value="20"/>
-<UserPref name="show_event_title" datatype="bool" default_value="true"/>
-<UserPref name="show_evt_time" datatype="bool" default_value="true"/>
-<UserPref name="use_evt_colour" datatype="bool" default_value="false"/>
-<UserPref name="hide_evt_marker" datatype="bool" default_value="false"/>
-<UserPref name="show_all_day_evts" datatype="bool" default_value="true"/>
-<UserPref name="one_day_as_timed" datatype="bool" default_value="true"/>
-<UserPref name="multi_day_as_timed" datatype="bool" default_value="false"/>
-<UserPref name="show_timed_evts" datatype="bool" default_value="true"/>
-<UserPref name="multi_day_as_all_day" datatype="bool" default_value="true"/>
-<UserPref name="all_day_evt_width_chars" datatype="int" default_value="1"/>
-<Content type="html">
-<![CDATA[
-<center>
-<button type="button" title="Multi-column View" onclick="show_view('multi_col');"><b>||||</b></button>
-<button type="button" title="Single-column View" onclick="toggle_single_col();"><b>|</b></button>
-<button type="button" title="Settings" onclick="show_view('settings');"><b>*</b></button>
-<button type="button" onclick="show_multi_col();">[||||]</button>
-<button type="button" onclick="show_settings();">[*]</button>
-</center>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>visual-planner : Settings</title>
+<link rel="icon" href="vip_64.png">
 <script type="text/javascript">function ga_hit() {}</script>
-<script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_lib.js"></script>
-<script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_main.js"></script>
-]]>
-</Content>
-<Content type="html" view="canvas">
-<![CDATA[
+<script type="text/javascript" src="vip_settings.js"></script>
+</head>
+<body onload="InitSettings();">
 
-<div id="settings" style="visibility:hidden; font-family:Arial; margin:40px">
+<div id="settings" style="font-family:Arial; margin:40px; width:800px;">
 	<div>
 		<b>Multi-column view</b>
 		<div style="margin-left:20px">
@@ -131,10 +93,6 @@
 					<input id="multi_day_as_timed" type="checkbox">
 					Display multi-day all-day events as timed events.
 				</div>
-				<div style="margin-left:30px; margin-top:10px; color:red; font-size:12px">
-					A known issue exists which prevents some all-day events being displayed.
-					<a href="https://groups.google.com/forum/#!topic/visual-planner-discuss/I9nNgvKWZj0" target="_blank">Read more...</a>
-				</div>
 			</div>
 			<div style="margin-top:30px">
 				<input id="show_timed_evts" type="checkbox">
@@ -169,9 +127,5 @@
 	</div>
 </div>
 
-<script type="text/javascript">function ga_hit() {}</script>
-<script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_lib.js"></script>
-<script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_main.js"></script>
-]]>
-</Content>
-</Module>
+</body>
+</html>

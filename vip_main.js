@@ -180,6 +180,18 @@ function show_view(name)
 	gadgets.views.requestNavigateTo('canvas', {canvasview : name});
 }
 
+function show_multi_col()
+{
+	//window.open("https://ctcode.github.io/ctcode/visual-planner/vip.htm");
+	window.open("https://rawgit.com/ctcode/visual-planner/dev/vip.htm");
+}
+
+function show_settings()
+{
+	//window.top.location.replace("https://ctcode.github.io/ctcode/visual-planner/vip_settings.htm");
+	window.top.location.replace("https://rawgit.com/ctcode/visual-planner/dev/vip_settings.htm");
+}
+
 function receive_GCalPrefs(prefs)
 {
 	if ('military' in prefs)
