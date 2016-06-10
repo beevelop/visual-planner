@@ -61,6 +61,11 @@ function onSaveSettings()
 	window.setTimeout(reload_calendar, 1000);
 }
 
+function onCancel()
+{
+	reload_calendar();
+}
+
 function reload_calendar()
 {
 	window.top.location.replace("https://www.google.com/calendar/render");
