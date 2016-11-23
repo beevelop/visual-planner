@@ -1,7 +1,7 @@
 {
 	"name": "visual-planner",
 	"icons": [
-		{"src": "vip_114.png", "sizes": "114x114"}
+		{"src": "vip.png", "sizes": "172x114"}
 	],
 	"start_url": "vip.htm",
 	"display": "standalone"
