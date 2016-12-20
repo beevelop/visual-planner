@@ -305,8 +305,8 @@ function request_events()
 
 	var vipcol = vip.event_req.queue.shift();
 
-	var gdtStart = google.calendar.utils.fromDate(vipcol.ReqDateStart.dt);
-	var gdtEnd = google.calendar.utils.fromDate(vipcol.ReqDateEnd.dt);
+	var gdtStart = google.calendar.utils.fromDate(vipcol.datespan.start.dt);
+	var gdtEnd = google.calendar.utils.fromDate(vipcol.datespan.end.dt);
 	google.calendar.read.getEvents(receive_events, "selected", gdtStart, gdtEnd);
 }
 
