@@ -187,7 +187,8 @@ VipHost.prototype.createMultiCol = function()
 
 VipHost.prototype.scale_font = function()
 {
-	this.div.style.fontSize = fmt("^px", Math.floor(0.7*vip.cell.height));
+	//this.div.style.fontSize = fmt("^px", Math.floor(0.7*vip.cell.height));
+	this.div.style.fontSize = "8pt";
 
 	var a = document.createElement('div');
 	a.innerHTML = "a";
@@ -281,7 +282,7 @@ function VipCol(parent, vdt_start, vdt_end)
 	this.lastcell = this.vipcells.div.lastChild.vipobj;
 	this.datespan = {start: new VipDate(vdt_start), end: new VipDate(vdt_end)};
 	
-	vip.event_req.add(this);
+	//vip.event_req.add(this);
 }
 
 VipCol.prototype = new VipObject;

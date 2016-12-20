@@ -17,8 +17,7 @@ var vip = {
 		allday: {show: true, one_day_as_timed: true, multi_day_as_timed: false, width_chars: 1}
 	},
 	selection: {start: null, end: null},
-	touch: {id: null, start: {x:0, y:0}},
-	event_req: {add: onAddEventRequest, queue: [], pending: false}
+	touch: {id: null, start: {x:0, y:0}}
 };
 
 function VipInit()
@@ -78,16 +77,6 @@ function install_event_handling()
 	vip.host.div.addEventListener('touchmove', ontouchmove, false);
 	vip.host.div.addEventListener('touchend', ontouchend, false);
 	vip.host.div.addEventListener('touchcancel', ontouchcancel, false);
-}
-
-
-/////////////////////////////////////////////////////////////////
-// calendar event handlers
-
-function onAddEventRequest(vipcol)
-{
-	//vip.event_req.queue.push(vipcol);
-	//request_events();
 }
 
 
