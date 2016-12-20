@@ -302,7 +302,7 @@ VipCol.prototype.addMonthHeader = function(vdt_month)
 	hdr.setAttribute('onclick', "onclick_month_header(event);");
 	hdr.style.width = vip.cell.width;
 	hdr.style.textAlign = "center";
-	hdr.style.verticalAlign = "text-bottom";
+	hdr.style.verticalAlign = "bottom";
 	hdr.style.pointerEvents = "all";
 	hdr.style.cursor = "pointer";
 }
