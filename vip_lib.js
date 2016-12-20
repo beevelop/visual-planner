@@ -289,13 +289,13 @@ VipCol.prototype = new VipObject;
 VipCol.prototype.addMonthHeader = function(vdt_month)
 {
 	this.vdt_month = new VipDate(vdt_month);
-	this.setSize(vip.cell.width-1, vip.cell.height-1);
 	this.vipcelloffset.setPos(0, ((vdt_month.DayOfWeek() + 1) * vip.cell.height));
 
 	if (vdt_month.isPastMonth())
 		this.div.style.opacity = ((100 - vip.multi_col.past_transparency) / 100);
 
 	var viphdr = new VipDiv(this, "vipmonthhdr");
+	viphdr.setSize(vip.cell.width, vip.cell.height);
 	viphdr.setText(vdt_month.MonthTitle());
 
 	var hdr = viphdr.div;
