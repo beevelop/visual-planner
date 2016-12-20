@@ -157,8 +157,7 @@ VipHost.prototype.createMultiCol = function()
 		// reset dimensions depending on available space
 		vip.cell.height = Math.floor(document.body.clientHeight/(31+6+1));  // max days + max offset + month name
 		vip.cell.width = Math.floor(document.body.clientWidth/vip.multi_col.count);
-		//this.div.style.fontSize = fmt("^px", Math.floor(0.6875*vip.cell.height));
-		this.div.style.fontSize = fmt("^px", Math.floor(0.5*vip.cell.height));
+		this.div.style.fontSize = fmt("^px", Math.floor(0.55*vip.cell.height));
 	}
 
 	vip.cell.margin = vip.cell.height+4;
