@@ -711,8 +711,8 @@ function VipSingleDayEvent(vipcell, event)
 	{
 		this.viptitle = new VipDiv(this, "viptitle");
 		this.viptitle.div.style.whiteSpace = "nowrap";
-		this.viptitle.div.style.lineHeight = fmt("^px", vip.cell.height+1);
-		this.viptitle.setPos(x_off, 0);
+		this.viptitle.div.style.lineHeight = fmt("^px", vip.cell.height-1);
+		this.viptitle.setPos(x_off, 1);
 
 		if (vip.events.title.colour)
 			this.viptitle.div.style.color = event.palette.medium;
