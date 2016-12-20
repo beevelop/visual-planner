@@ -155,7 +155,7 @@ VipHost.prototype.createMultiCol = function()
 
 		// reset dimensions depending on available space
 		vip.cell.height = Math.floor(document.body.clientHeight/(31+6+1));  // max days + max offset + month name
-		//vip.cell.height = 16;
+		vip.cell.height = 16;
 		vip.cell.width = Math.floor(document.body.clientWidth/vip.multi_col.count);
 	}
 
@@ -189,8 +189,6 @@ VipHost.prototype.createMultiCol = function()
 VipHost.prototype.scale_font = function()
 {
 	this.div.style.fontSize = fmt("^px", Math.floor(0.6875*vip.cell.height));
-	//this.div.style.fontSize = fmt("^px", 11);
-alert(this.div.style.fontSize);
 
 	var a = document.createElement('div');
 	a.innerHTML = "a";
