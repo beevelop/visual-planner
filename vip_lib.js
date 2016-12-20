@@ -433,6 +433,7 @@ function VipCell(parent, col, vdt)
 
 	var num = vipnum.div;
 	//num.style.top = Math.floor((vip.cell.height - num.clientHeight) / 2);
+	num.style.lineHeight = fmt("^px", vip.cell.height);  // vertical centre
 	num.style.width = vip.cell.height;
 	num.style.textAlign = "center";
 	num.style.cursor = "pointer";
