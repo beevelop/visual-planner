@@ -130,6 +130,7 @@ VipHost.prototype.createSingleCol = function()
 	vip.cell.width = document.body.offsetWidth;
 
 	this.scale_font();
+	this.div.style.fontSize = fmt("^px", 10);
 	
 	var vdt_start = new VipDate.Today();
 	vdt_start.MoveToStartOfWeek(1);  // monday this week
@@ -156,6 +157,8 @@ VipHost.prototype.createMultiCol = function()
 		// reset dimensions depending on available space
 		vip.cell.height = Math.floor(document.body.clientHeight/(31+6+1));  // max days + max offset + month name
 		vip.cell.width = Math.floor(document.body.clientWidth/vip.multi_col.count);
+		//this.div.style.fontSize = fmt("^px", Math.floor(0.6875*vip.cell.height));
+		this.div.style.fontSize = fmt("^px", Math.floor(0.5*vip.cell.height));
 	}
 
 	vip.cell.margin = vip.cell.height+4;
@@ -187,9 +190,6 @@ VipHost.prototype.createMultiCol = function()
 
 VipHost.prototype.scale_font = function()
 {
-	this.div.style.fontSize = fmt("^px", Math.floor(0.6875*vip.cell.height));
-	this.div.style.fontSize = fmt("^px", Math.floor(0.625*vip.cell.height));
-
 	var a = document.createElement('div');
 	a.innerHTML = "a";
 	this.div.appendChild(a);
