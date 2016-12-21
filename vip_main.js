@@ -64,16 +64,7 @@ function init_vip()
 
 	vip.host = new VipHost();
 
-	if ('canvasview' in gadgets.views.getParams())
-	{
-		if (gadgets.views.getParams().canvasview == 'multi_col')
-			InitMultiColView();
-
-		//if (gadgets.views.getParams().canvasview == 'settings')
-			//InitSettingsView();
-	}
-	else
-		InitSingleColView();
+	install_event_handling();
 }
 
 function InitSingleColView()
