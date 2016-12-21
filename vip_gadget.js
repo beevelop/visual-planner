@@ -1,7 +1,5 @@
-function InitSingleColView()
+function show_single_col()
 {
-	init_vip();
-
 	var prefs = new gadgets.Prefs();
 	var show_single_col = prefs.getBool("show_single_col");
 	google.calendar.getPreferences(receive_GCalPrefs);
@@ -15,26 +13,16 @@ function InitSingleColView()
 
 		vip.host.createSingleCol();
 
-		// calendar notifications
 		//google.calendar.subscribeToDates(update_dates);
 		//google.calendar.subscribeToDataChange(update_events);
-
-		ga_hit('event_format', vip.events.format);
+	}
+	else
+	{
+		google.calendar.subscribeToDates(null);
+		google.calendar.subscribeToDataChange(null);
 	}
 
 	ga_hit('view', show_single_col ? 'single_col' : 'none');
-}
-
-function InitMultiColView()
-{
-	init_vip();
-
-	vip.host.createMultiCol();
-
-	ga_hit('view', 'multi_col');
-	ga_hit('multi_col_count', vip.multi_col.count);
-	ga_hit('multi_col_scroll_offset', vip.multi_col.auto_scroll ? vip.multi_col.offset : 'n/a');
-	ga_hit('event_format', vip.events.format);
 }
 
 function toggle_single_col()
@@ -42,7 +30,7 @@ function toggle_single_col()
 	var prefs = new gadgets.Prefs();
 	prefs.set("show_single_col", (!prefs.getBool("show_single_col")).toString());
 
-	InitSingleColView();
+	show_single_col();
 }
 
 function show_multi_col()

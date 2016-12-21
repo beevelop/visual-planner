@@ -60,7 +60,7 @@ function init_vip()
 	else
 		vip.events.format = 'basic';
 
-	google.calendar.getPreferences(receive_GCalPrefs);
+	ga_hit('event_format', vip.events.format);
 
 	vip.host = new VipHost();
 
@@ -69,118 +69,19 @@ function init_vip()
 
 function InitSingleColView()
 {
-	var prefs = new gadgets.Prefs();
-	vip.single_col.show = prefs.getBool("show_single_col");
-
-	vip.host.ClearContent();
-	gadgets.window.adjustHeight();
-
-	if (vip.single_col.show)
-	{
-		gadgets.window.adjustHeight(26 + (28*vip.cell.height));
-		install_event_handling();
-
-		vip.host.createSingleCol();
-
-		// calendar notifications
-		google.calendar.subscribeToDates(update_dates);
-		google.calendar.subscribeToDataChange(update_events);
-
-		ga_hit('event_format', vip.events.format);
-	}
-
-	ga_hit('view', vip.single_col.show ? 'single_col' : 'none');
+	init_vip();
+	show_single_col();
 }
 
 function InitMultiColView()
 {
-	document.body.removeChild(document.getElementById('settings'));
-	install_event_handling();
+	init_vip();
+
+	vip.host.createMultiCol();
 
 	ga_hit('view', 'multi_col');
 	ga_hit('multi_col_count', vip.multi_col.count);
 	ga_hit('multi_col_scroll_offset', vip.multi_col.auto_scroll ? vip.multi_col.offset : 'n/a');
-	ga_hit('event_format', vip.events.format);
-
-	vip.host.createMultiCol();
-}
-
-function InitSettingsView()
-{
-	gadgets.window.setTitle("visual-planner : Settings");
-	document.getElementById("basic_marker").checked = true;
-
-	var prefs = new gadgets.Prefs();
-	document.getElementById("multi_col_count").value = prefs.getInt("multi_col_count");
-	document.getElementById("fixed_cell_size").checked = prefs.getBool("fixed_cell_size");
-	document.getElementById("fixed_height").value = prefs.getInt("fixed_height");
-	document.getElementById("fixed_width").value = prefs.getInt("fixed_width");
-	document.getElementById("auto_scroll").checked = prefs.getBool("auto_scroll");
-	document.getElementById("start_month_offset").value = prefs.getInt("start_month_offset");
-	document.getElementById("past_transparency").value = prefs.getInt("past_transparency");
-	document.getElementById("proportional_events").checked = prefs.getBool("proportional_events");
-	document.getElementById("evt_start_hour").value = prefs.getInt("evt_start_hour");
-	document.getElementById("evt_end_hour").value = prefs.getInt("evt_end_hour");
-	document.getElementById("show_event_title").checked = prefs.getBool("show_event_title");
-	document.getElementById("show_evt_time").checked = prefs.getBool("show_evt_time");
-	document.getElementById("use_evt_colour").checked = prefs.getBool("use_evt_colour");
-	document.getElementById("hide_evt_marker").checked = prefs.getBool("hide_evt_marker");
-	document.getElementById("show_all_day_evts").checked = prefs.getBool("show_all_day_evts");
-	document.getElementById("one_day_as_timed").checked = prefs.getBool("one_day_as_timed");
-	document.getElementById("multi_day_as_timed").checked = prefs.getBool("multi_day_as_timed");
-	document.getElementById("show_timed_evts").checked = prefs.getBool("show_timed_evts");
-	document.getElementById("multi_day_as_all_day").checked = prefs.getBool("multi_day_as_all_day");
-	document.getElementById("all_day_evt_width_chars").value = prefs.getInt("all_day_evt_width_chars");
-
-	document.getElementById("available_space").innerHTML = fmt("^x^", document.body.clientWidth, document.body.clientHeight);
-
-	var setdiv = document.getElementById('settings');
-
-	document.body.removeChild(setdiv);
-	document.body.innerHTML = "";
-	setdiv.style.visibility = "visible";
-
-	var ifm = document.createElement('iframe');
-	ifm.id = 'vipsettingsfrm';
-	ifm.width = '800px';
-	ifm.height = '100%';
-	ifm.style.border = 0;
-	ifm.src = 'about:blank'; 
-	document.body.appendChild(ifm);
-
-	ifm.contentDocument.open('text/html', 'replace');
-	ifm.contentDocument.write("<body style='background-color:#F5DEB3'> </body>");
-	ifm.contentDocument.body.appendChild(setdiv);
-	ifm.contentDocument.close();
-
-	ga_hit('view', 'settings');
-}
-
-function toggle_single_col()
-{
-	var prefs = new gadgets.Prefs();
-	prefs.set("show_single_col", (!vip.single_col.show).toString());
-
-	InitSingleColView();
-}
-
-function show_multi_col()
-{
-	//gadgets.views.requestNavigateTo('canvas', {canvasview : name});
-	//window.open("https://ctcode.github.io/ctcode/visual-planner/vip.htm");
-	window.open("https://rawgit.com/ctcode/visual-planner/dev/vip.htm");
-}
-
-function show_settings()
-{
-	//window.top.location.replace("https://ctcode.github.io/ctcode/visual-planner/vip_settings.htm");
-	window.top.location.replace("https://rawgit.com/ctcode/visual-planner/dev/vip_settings.htm");
-}
-
-function receive_GCalPrefs(prefs)
-{
-	if ('military' in prefs)
-		vip.events.time_24hr = prefs.military;
 }
 
 function install_event_handling()
