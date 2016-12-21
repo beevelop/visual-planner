@@ -1,42 +1,37 @@
 function InitSingleColView()
 {
-/*
 	var prefs = new gadgets.Prefs();
-	vip.single_col.show = prefs.getBool("show_single_col");
+	var show_single_col = prefs.getBool("show_single_col");
+	google.calendar.getPreferences(receive_GCalPrefs);
 
 	vip.host.ClearContent();
 	gadgets.window.adjustHeight();
 
-	if (vip.single_col.show)
+	if (show_single_col)
 	{
 		gadgets.window.adjustHeight(26 + (28*vip.cell.height));
-		install_event_handling();
+		//install_event_handling();
 
 		vip.host.createSingleCol();
 
 		// calendar notifications
-		google.calendar.subscribeToDates(update_dates);
-		google.calendar.subscribeToDataChange(update_events);
+		//google.calendar.subscribeToDates(update_dates);
+		//google.calendar.subscribeToDataChange(update_events);
 
 		ga_hit('event_format', vip.events.format);
 	}
 
-	ga_hit('view', vip.single_col.show ? 'single_col' : 'none');
-*/
-console.log("InitSingleColView");
+	ga_hit('view', show_single_col ? 'single_col' : 'none');
 }
 
 function InitMultiColView()
 {
-/*
 	ga_hit('view', 'multi_col');
 	ga_hit('multi_col_count', vip.multi_col.count);
 	ga_hit('multi_col_scroll_offset', vip.multi_col.auto_scroll ? vip.multi_col.offset : 'n/a');
 	ga_hit('event_format', vip.events.format);
 
 	vip.host.createMultiCol();
-*/
-console.log("InitMultiColView");
 }
 
 function toggle_single_col()

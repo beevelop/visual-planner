@@ -1,26 +1,4 @@
-// global object
-var vip = {
-	single_col: {show: false},
-	multi_col: {
-		auto_scroll: true,
-		offset: -1,
-		count: 8,
-		past_transparency: 50
-	},
-	cell: {width: 144, height: 16, margin: 20},
-	events: {
-		time_24hr: true,
-		proportional: {show: false, start_hour:8, end_hour:20},
-		title: {show: false, time: false, colour: false, hide_marker: false},
-		marker: {width: 6, height: 11, hide: false},
-		timed: {show: true, multi_day_as_all_day: false},
-		allday: {show: true, one_day_as_timed: true, multi_day_as_timed: false, width_chars: 1}
-	},
-	selection: {start: null, end: null},
-	touch: {id: null, start: {x:0, y:0}}
-};
-
-function VipInit()
+function init_vip()
 {
 	if (vip.events.proportional.start_hour >= vip.events.proportional.end_hour)
 	{

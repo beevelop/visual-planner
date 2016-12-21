@@ -1,14 +1,9 @@
-// gadget initialisation
-gadgets.util.registerOnLoadHandler(VipInit);
-
 // global object
 var vip = {
-	single_col: {show: false},
 	multi_col: {
 		auto_scroll: true,
-		offset: -2,
-		count: 10,
-		scale: {fixed: false, width: 144, height: 16},
+		offset: -1,
+		count: 8,
 		past_transparency: 50
 	},
 	cell: {width: 144, height: 16, margin: 20},
@@ -21,12 +16,13 @@ var vip = {
 		allday: {show: true, one_day_as_timed: true, multi_day_as_timed: false, width_chars: 1}
 	},
 	selection: {start: null, end: null},
-	touch: {id: null, start: {x:0, y:0}},
+	touch: {id: null, start: {x:0, y:0}}
 	event_req: {add: onAddEventRequest, queue: [], pending: false}
 };
 
-function VipInit()
+function init_vip()
 {
+/*
 	var prefs = new gadgets.Prefs();
 
 	vip.multi_col.count = prefs.getInt("multi_col_count");
@@ -49,6 +45,7 @@ function VipInit()
 	vip.events.timed.show = prefs.getBool("show_timed_evts");
 	vip.events.timed.multi_day_as_all_day = prefs.getBool("multi_day_as_all_day");
 	vip.events.allday.width_chars = prefs.getInt("all_day_evt_width_chars");
+*/
 
 	if (vip.events.proportional.start_hour >= vip.events.proportional.end_hour)
 	{
@@ -72,8 +69,8 @@ function VipInit()
 		if (gadgets.views.getParams().canvasview == 'multi_col')
 			InitMultiColView();
 
-		if (gadgets.views.getParams().canvasview == 'settings')
-			InitSettingsView();
+		//if (gadgets.views.getParams().canvasview == 'settings')
+			//InitSettingsView();
 	}
 	else
 		InitSingleColView();
@@ -176,13 +173,9 @@ function toggle_single_col()
 	InitSingleColView();
 }
 
-function show_view(name)
-{
-	gadgets.views.requestNavigateTo('canvas', {canvasview : name});
-}
-
 function show_multi_col()
 {
+	//gadgets.views.requestNavigateTo('canvas', {canvasview : name});
 	//window.open("https://ctcode.github.io/ctcode/visual-planner/vip.htm");
 	window.open("https://rawgit.com/ctcode/visual-planner/dev/vip.htm");
 }
