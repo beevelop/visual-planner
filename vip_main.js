@@ -11,11 +11,12 @@ var vip = {
 		scale: {fixed: false, width: 144, height: 16},
 		past_transparency: 50
 	},
-	cell: {width: 144, height: 16, margin: 20, font_client: {}},
+	cell: {width: 144, height: 16, margin: 20},
 	events: {
 		time_24hr: true,
 		proportional: {show: false, start_hour:8, end_hour:20},
 		title: {show: false, time: false, colour: false, hide_marker: false},
+		marker: {width: 6, height: 10, hide: false},
 		timed: {show: true, multi_day_as_all_day: false},
 		allday: {show: true, one_day_as_timed: true, multi_day_as_timed: false, width_chars: 1}
 	},
