@@ -53,3 +53,40 @@ function receive_GCalPrefs(prefs)
 	if ('military' in prefs)
 		vip.events.time_24hr = prefs.military;
 }
+
+
+/////////////////////////////////////////////////////////////////
+// calendar event handlers
+
+function update_dates(cal_dates)
+// callback when user changes calendar date range
+{
+	update_indicator(cal_dates);
+}
+
+function update_indicator(cal_dates)
+// redraw date range indicator
+{
+	var vipcol = vip.host.getFirstChild();
+	if (!vipcol) return;
+	vipcol.vipind.Align(null);
+
+	var vdt_start = new VipDate.GCal(cal_dates.startTime);
+	var vdt_end = new VipDate.GCal(cal_dates.endTime);
+
+	var cell_top = vip.host.getVipCell(vdt_start);
+	var cell_bottom = vip.host.getVipCell(vdt_end);
+	var cell_first = vipcol.vipcells.getFirstChild();
+	var cell_last = vipcol.vipcells.getLastChild();
+
+	if (!cell_top)
+	if (cell_first.inDateRange(vdt_start, vdt_end))
+		cell_top = cell_first;
+
+	if (!cell_bottom)
+	if (cell_last.inDateRange(vdt_start, vdt_end))
+		cell_bottom = cell_last;
+	
+	if (cell_top && cell_bottom)
+		vipcol.vipind.Align(cell_top, cell_bottom);
+}
