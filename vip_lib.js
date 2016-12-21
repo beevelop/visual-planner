@@ -153,11 +153,21 @@ VipHost.prototype.createMultiCol = function()
 		if (screen.orientation.type.includes("portrait"))
 			vip.multi_col.count = (vip.multi_col.count / 2);
 
-		// reset dimensions depending on available space
-		vip.cell.height = Math.floor(document.body.clientHeight/(31+6+1));  // max days + max offset + month name
+		// scale dimensions depending on available space
 		vip.cell.width = Math.floor(document.body.clientWidth/vip.multi_col.count);
-		this.div.style.fontSize = fmt("^px", Math.floor(0.55*vip.cell.height));
+		vip.cell.height = Math.floor(document.body.clientHeight/(31+6+1));  // max days + max offset + month name
+		vip.events.marker.width = Math.floor(0.037 * vip.cell.width);
+		vip.events.marker.height = Math.floor(0.55 * vip.cell.height);
+		this.div.style.fontSize = fmt("^px", vip.events.marker.height);
 	}
+
+	if (screen.orientation.type.includes("portrait"))
+		vip.multi_col.count = (vip.multi_col.count / 2);
+
+	// reset dimensions depending on available space
+	vip.cell.height = Math.floor(document.body.clientHeight/(31+6+1));  // max days + max offset + month name
+	vip.cell.width = Math.floor(document.body.clientWidth/vip.multi_col.count);
+	this.div.style.fontSize = fmt("^px", Math.floor(0.55*vip.cell.height));
 
 	vip.cell.margin = vip.cell.height+4;
 	

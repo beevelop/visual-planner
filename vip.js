@@ -5,7 +5,6 @@ var vip = {
 		auto_scroll: true,
 		offset: -1,
 		count: 8,
-		scale: {fixed: false, width: 144, height: 16},
 		past_transparency: 50
 	},
 	cell: {width: 144, height: 16, margin: 20},
