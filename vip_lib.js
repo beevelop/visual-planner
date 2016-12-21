@@ -127,10 +127,14 @@ VipHost.prototype.createSingleCol = function()
 {
 	this.SingleCol = true;
 
-	vip.cell.width = document.body.offsetWidth;
-
-	this.div.style.fontSize = fmt("^px", 10);
 	
+	// use fixed dimensions
+	vip.cell.width = document.body.offsetWidth;
+	vip.cell.height = 16;
+	vip.events.marker.width = 6;
+	vip.events.marker.height = 10;
+	this.div.style.fontSize = "10px";
+
 	var vdt_start = new VipDate.Today();
 	vdt_start.MoveToStartOfWeek(1);  // monday this week
 
