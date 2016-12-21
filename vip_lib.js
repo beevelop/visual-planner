@@ -127,13 +127,13 @@ VipHost.prototype.createSingleCol = function()
 {
 	this.SingleCol = true;
 
-	
 	// use fixed dimensions
 	vip.cell.width = document.body.offsetWidth;
 	vip.cell.height = 16;
 	vip.events.marker.width = 6;
-	vip.events.marker.height = 10;
+	vip.events.marker.height = 9;
 	this.div.style.fontSize = "10px";
+	vip.cell.margin = 20;
 
 	var vdt_start = new VipDate.Today();
 	vdt_start.MoveToStartOfWeek(1);  // monday this week
@@ -156,7 +156,6 @@ VipHost.prototype.createMultiCol = function()
 	vip.events.marker.width = Math.floor(0.037 * vip.cell.width);
 	vip.events.marker.height = Math.floor(0.55 * vip.cell.height);
 	this.div.style.fontSize = fmt("^px", vip.events.marker.height);
-
 	vip.cell.margin = vip.cell.height+4;
 	
 	var vdt_start = new VipDate.Today();
