@@ -835,6 +835,11 @@ VipDate.prototype.DayTitle = function()
 	return fmt("^ ^ ^", dt_array[0], this.DayOfMonth(), dt_array[1]);
 }
 
+VipDate.prototype.GCalDate = function()
+{
+	return google.calendar.utils.fromDate(this.dt);
+}
+
 VipDate.prototype.isWeekend = function()
 {
 	return (this.dt.getDay()==0 || this.dt.getDay()==6);

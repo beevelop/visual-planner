@@ -453,7 +453,7 @@ function create_calendar_event()
 	
 	vdt_end.MoveDays(1);  // end date is exclusive
 
-	google.calendar.composeEvent({allDay: true, startTime: vdt_start.GCal(), endTime: vdt_end.GCal()});
+	google.calendar.composeEvent({allDay: true, startTime: vdt_start.GCalDate(), endTime: vdt_end.GCalDate()});
 }
 
 function ontouchstart(event)
