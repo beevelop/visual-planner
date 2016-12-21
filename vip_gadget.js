@@ -35,11 +35,9 @@ function toggle_single_col()
 
 function show_multi_col()
 {
-	if (confirm("Open standalone?"))
-		//window.open("https://ctcode.github.io/ctcode/visual-planner/vip.htm");
-		window.open("https://rawgit.com/ctcode/visual-planner/dev/vip.htm");
-	else
-		gadgets.views.requestNavigateTo('canvas');
+	//window.open("https://ctcode.github.io/ctcode/visual-planner/vip.htm");
+	//window.open("https://rawgit.com/ctcode/visual-planner/dev/vip.htm");
+	gadgets.views.requestNavigateTo('canvas');
 }
 
 function show_settings()
