@@ -131,7 +131,7 @@ VipHost.prototype.createSingleCol = function()
 	vip.cell.width = document.body.offsetWidth;
 	vip.cell.height = 16;
 	vip.events.marker.width = 6;
-	vip.events.marker.height = 9;
+	vip.events.marker.height = 11;
 	this.div.style.fontSize = "10px";
 	vip.cell.margin = 20;
 
