@@ -266,7 +266,7 @@ function VipCol(parent, vdt_start, vdt_end)
 	this.lastcell = this.vipcells.div.lastChild.vipobj;
 	this.datespan = {start: new VipDate(vdt_start), end: new VipDate(vdt_end)};
 	
-	//vip.event_req.add(this);
+	vip.event_req.add(this);
 }
 
 VipCol.prototype = new VipObject;

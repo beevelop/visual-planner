@@ -111,39 +111,6 @@ function install_event_handling()
 /////////////////////////////////////////////////////////////////
 // calendar event handlers
 
-function update_dates(cal_dates)
-// callback when user changes calendar date range
-{
-	update_indicator(cal_dates);
-}
-
-function update_indicator(cal_dates)
-// redraw date range indicator
-{
-	var vipcol = vip.host.getFirstChild();
-	if (!vipcol) return;
-	vipcol.vipind.Align(null);
-
-	var vdt_start = new VipDate.GCal(cal_dates.startTime);
-	var vdt_end = new VipDate.GCal(cal_dates.endTime);
-
-	var cell_top = vip.host.getVipCell(vdt_start);
-	var cell_bottom = vip.host.getVipCell(vdt_end);
-	var cell_first = vipcol.vipcells.getFirstChild();
-	var cell_last = vipcol.vipcells.getLastChild();
-
-	if (!cell_top)
-	if (cell_first.inDateRange(vdt_start, vdt_end))
-		cell_top = cell_first;
-
-	if (!cell_bottom)
-	if (cell_last.inDateRange(vdt_start, vdt_end))
-		cell_bottom = cell_last;
-	
-	if (cell_top && cell_bottom)
-		vipcol.vipind.Align(cell_top, cell_bottom);
-}
-
 function onAddEventRequest(vipcol)
 {
 	vip.event_req.queue.push(vipcol);
@@ -295,41 +262,6 @@ function add_timed_event(event)
 
 /////////////////////////////////////////////////////////////////
 // mouse/keyboard event handlers
-
-function onSaveSettings()
-{
-	var setdoc = document.getElementById("vipsettingsfrm").contentDocument;
-	setdoc.getElementById("save_btn").innerHTML = "<i>Saving...</i>";
-	
-	var prefs = new gadgets.Prefs();
-	prefs.set("multi_col_count", setdoc.getElementById("multi_col_count").value);
-	prefs.set("fixed_cell_size", setdoc.getElementById("fixed_cell_size").checked.toString());
-	prefs.set("fixed_height", setdoc.getElementById("fixed_height").value);
-	prefs.set("fixed_width", setdoc.getElementById("fixed_width").value);
-	prefs.set("auto_scroll", setdoc.getElementById("auto_scroll").checked.toString());
-	prefs.set("start_month_offset", setdoc.getElementById("start_month_offset").value);
-	prefs.set("past_transparency", setdoc.getElementById("past_transparency").value);
-	prefs.set("proportional_events", setdoc.getElementById("proportional_events").checked.toString());
-	prefs.set("evt_start_hour", setdoc.getElementById("evt_start_hour").value);
-	prefs.set("evt_end_hour", setdoc.getElementById("evt_end_hour").value);
-	prefs.set("show_event_title", setdoc.getElementById("show_event_title").checked.toString());
-	prefs.set("show_evt_time", setdoc.getElementById("show_evt_time").checked.toString());
-	prefs.set("use_evt_colour", setdoc.getElementById("use_evt_colour").checked.toString());
-	prefs.set("hide_evt_marker", setdoc.getElementById("hide_evt_marker").checked.toString());
-	prefs.set("show_all_day_evts", setdoc.getElementById("show_all_day_evts").checked.toString());
-	prefs.set("one_day_as_timed", setdoc.getElementById("one_day_as_timed").checked.toString());
-	prefs.set("multi_day_as_timed", setdoc.getElementById("multi_day_as_timed").checked.toString());
-	prefs.set("show_timed_evts", setdoc.getElementById("show_timed_evts").checked.toString());
-	prefs.set("multi_day_as_all_day", setdoc.getElementById("multi_day_as_all_day").checked.toString());
-	prefs.set("all_day_evt_width_chars", setdoc.getElementById("all_day_evt_width_chars").value);
-
-	window.setTimeout(reload_calendar, 1000);
-}
-
-function reload_calendar()
-{
-	window.top.location.replace("https://www.google.com/calendar/render");
-}
 
 function onclick_day_number(event)
 {
@@ -521,7 +453,7 @@ function create_calendar_event()
 	
 	vdt_end.MoveDays(1);  // end date is exclusive
 
-	//google.calendar.composeEvent({allDay: true, startTime: vdt_start.GCal(), endTime: vdt_end.GCal()});
+	google.calendar.composeEvent({allDay: true, startTime: vdt_start.GCal(), endTime: vdt_end.GCal()});
 }
 
 function ontouchstart(event)
