@@ -130,7 +130,6 @@ VipHost.prototype.createSingleCol = function()
 	vip.cell.width = document.body.offsetWidth;
 
 	this.div.style.fontSize = fmt("^px", 10);
-	this.scale_font();
 	
 	var vdt_start = new VipDate.Today();
 	vdt_start.MoveToStartOfWeek(1);  // monday this week
@@ -161,8 +160,6 @@ VipHost.prototype.createMultiCol = function()
 	}
 
 	vip.cell.margin = vip.cell.height+4;
-
-	this.scale_font();
 	
 	var vdt_start = new VipDate.Today();
 	vdt_start.MoveToStartOfMonth();
@@ -185,15 +182,6 @@ VipHost.prototype.createMultiCol = function()
 	}
 
 	this.updateLayout();
-}
-
-VipHost.prototype.scale_font = function()
-{
-	var a = document.createElement('div');
-	a.innerHTML = "a";
-	this.div.appendChild(a);
-	vip.cell.font_client = {width: a.clientWidth, height: a.clientHeight};
-	this.div.removeChild(a);
 }
 
 VipHost.prototype.scroll_col = function(offset, ui_event)
@@ -622,7 +610,7 @@ function VipMultiDayEvent(parent, event, vipcell)
 	this.div.style.zIndex = "1";
 
 	var evt = this.div;
-	evt.style.width = vip.events.allday.width_chars * vip.cell.font_client.width;
+	evt.style.width = vip.events.marker.width;
 	evt.style.backgroundColor = event.palette.medium;
 
 	if (event.calendar)
@@ -667,12 +655,12 @@ function VipSingleDayEvent(vipcell, event)
 	this.tooltip += this.evt_title;
 
 	var x_off = 0;
-	var y_off = Math.floor((vip.cell.height - vip.cell.font_client.height) / 2);
+	var y_off = Math.floor((vip.cell.height - vip.events.marker.height) / 2);
 
 	if (!vip.events.title.show || !vip.events.title.hide_marker)
 	{
 		this.vipmarker = new VipDiv(this, "vipevtmarker");
-		this.vipmarker.setSize(vip.cell.font_client.width, vip.cell.font_client.height);
+		this.vipmarker.setSize(vip.events.marker.width, vip.events.marker.height);
 		this.vipmarker.setPos(0, y_off);
 		this.vipmarker.div.style.backgroundColor = event.palette.medium;
 
