@@ -13,7 +13,7 @@ function show_single_col()
 
 		vip.host.createSingleCol();
 
-		//google.calendar.subscribeToDates(update_dates);
+		google.calendar.subscribeToDates(update_dates);
 		//google.calendar.subscribeToDataChange(update_events);
 	}
 	else
