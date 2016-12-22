@@ -30,18 +30,6 @@
 				</div>
 			</div>
 			<div style="margin-top:30px">
-				<input id="fixed_cell_size" type="checkbox">
-				Use fixed size for each cell.  If not selected, the size will be calculated according to available space (currently <span id="available_space">n/a</span>).
-				<div style="margin-left:30px; margin-top:10px">
-					<input id="fixed_height" type="number" min="8" max="20" style="width: 50px">
-					Fixed height.
-				</div>
-				<div style="margin-left:30px; margin-top:10px">
-					<input id="fixed_width" type="number" min="80" max="360" style="width: 50px">
-					Fixed width.
-				</div>
-			</div>
-			<div style="margin-top:30px">
 				<input id="past_transparency" type="number" min="0" max="100" style="width: 50px">
 				%  Transparency of past months.  Set to 0 to show past months without transparency.
 			</div>
@@ -83,28 +71,16 @@
 				Display basic event markers.
 			</div>
 			<div style="margin-top:30px">
-				<input id="show_all_day_evts" type="checkbox">
-				Show all-day events.
-				<div style="margin-left:30px; margin-top:10px">
-					<input id="one_day_as_timed" type="checkbox">
-					Display one-day all-day events as timed events.
-				</div>
-				<div style="margin-left:30px; margin-top:10px">
-					<input id="multi_day_as_timed" type="checkbox">
-					Display multi-day all-day events as timed events.
-				</div>
+				<input id="multi_day_separate" type="checkbox">
+				Show multi-day events as a separate event on each day.
 			</div>
 			<div style="margin-top:30px">
-				<input id="show_timed_evts" type="checkbox">
-				Show timed events.
-				<div style="margin-left:30px; margin-top:10px">
-					<input id="multi_day_as_all_day" type="checkbox">
-					Display multi-day timed events as all-day events.
-				</div>
+				<input id="multi_day_first" type="checkbox">
+				Show multi-day events with a separate event on first day.
 			</div>
 			<div style="margin-top:30px">
-				<input id="all_day_evt_width_chars" type="number" min="1" max="10" style="width: 50px">
-				Width of all-day events vertical bar, which is set to the width of the number of characters selected.
+				<input id="marker_width" type="number" min="1" max="10" style="width: 50px">
+				Width of coloured event marker.
 			</div>
 		</div>
 	</div>

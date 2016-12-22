@@ -25,8 +25,6 @@ function InitSettings()
 	document.getElementById("multi_day_as_all_day").checked = prefs.getBool("multi_day_as_all_day");
 	document.getElementById("all_day_evt_width_chars").value = prefs.getInt("all_day_evt_width_chars");
 
-	document.getElementById("available_space").innerHTML = fmt("^x^", document.body.clientWidth, document.body.clientHeight);
-
 	ga_hit('view', 'settings');
 */
 }
