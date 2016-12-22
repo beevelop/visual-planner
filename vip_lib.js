@@ -158,7 +158,7 @@ VipHost.prototype.createMultiCol = function()
 	//vip.events.marker.height = Math.max(Math.floor(0.55 * vip.cell.height), 11);
 	vip.events.marker.width = 6;
 	vip.events.marker.height = 11;
-	this.div.style.fontSize = fmt("^mm", 0.18*vip.cell.height);
+	this.div.style.fontSize = fmt("^mm", 0.17*vip.cell.height);
 	vip.cell.margin = vip.cell.height+4;
 
 	var vdt_start = new VipDate.Today();
