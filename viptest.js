@@ -24,8 +24,13 @@ function init()
 	vip.host = new VipHost();
 	var cell = new VipClrBar(vip.host, "clrbar", "grey", 20, 200);
 	cell.setSize(500,160);
-	cell.setText("Arsey");
-	cell.div.style.lineHeight = "160px";
 	cell.div.style.fontSize = "100px";
 	cell.Show(true);
+	
+	var viptitle = new VipDiv(cell, "viptitle");
+	viptitle.setText("Arsey");
+	viptitle.div.style.whiteSpace = "nowrap";
+	//viptitle.div.style.height = 160;
+	viptitle.div.style.lineHeight = "160px";
+	viptitle.setPos(20, 0);
 }
