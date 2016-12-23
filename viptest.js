@@ -32,5 +32,5 @@ function init()
 	viptitle.div.style.whiteSpace = "nowrap";
 	//viptitle.div.style.height = 160;
 	viptitle.div.style.lineHeight = "160px";
-	viptitle.setPos(20, 0);
+	viptitle.setPos(50, 0);
 }
