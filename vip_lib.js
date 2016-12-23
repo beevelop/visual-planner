@@ -132,7 +132,7 @@ VipHost.prototype.createSingleCol = function()
 	vip.cell.height = 16;
 	vip.events.marker.width = 6;
 	vip.events.marker.height = 11;
-	this.div.style.fontSize = "2.7mm";
+	this.div.style.fontSize = "10px";
 	vip.cell.margin = 20;
 
 	var vdt_start = new VipDate.Today();
@@ -153,9 +153,15 @@ VipHost.prototype.createMultiCol = function()
 	// scale dimensions depending on available space
 	vip.cell.width = Math.floor(document.body.clientWidth/vip.multi_col.count);
 	vip.cell.height = Math.floor(document.body.clientHeight/(31+6+1));  // max days + max offset + month name
-	vip.events.marker.width = Math.max(Math.floor(0.037 * vip.cell.width), 6);
-	vip.events.marker.height = Math.max(Math.floor(0.55 * vip.cell.height), 11);
-	this.div.style.fontSize = fmt("^mm", vip.cell.height > 16 ? 0.14*vip.cell.height : 2.7);
+	vip.events.marker.width = 6;
+	vip.events.marker.height = 11;
+	this.div.style.fontSize = "10px";
+	if (vip.cell.height > 16)
+	{
+		vip.events.marker.width = Math.floor(0.037 * vip.cell.width);
+		vip.events.marker.height = Math.floor(0.6875 * vip.cell.height);
+		this.div.style.fontSize = fmt("^px", Math.floor(0.625 * vip.cell.height));
+	}
 	vip.cell.margin = vip.cell.height+4;
 
 	var vdt_start = new VipDate.Today();
@@ -696,7 +702,8 @@ function VipSingleDayEvent(vipcell, event)
 	{
 		this.viptitle = new VipDiv(this, "viptitle");
 		this.viptitle.div.style.whiteSpace = "nowrap";
-		this.viptitle.setPos(x_off, y_off);
+		this.viptitle.div.style.lineHeight = fmt("^px", vip.cell.height);
+		this.viptitle.setPos(x_off, 0);
 
 		if (vip.events.title.colour)
 			this.viptitle.div.style.color = event.palette.medium;
