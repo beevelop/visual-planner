@@ -156,6 +156,7 @@ VipHost.prototype.createMultiCol = function()
 	vip.events.marker.width = 6;
 	vip.events.marker.height = 11;
 	this.div.style.fontSize = "10px";
+	this.div.style.fontSize = "6px";
 	if (vip.cell.height > 16)
 	{
 		vip.events.marker.width = Math.floor(0.037 * vip.cell.width);
