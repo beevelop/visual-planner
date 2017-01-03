@@ -156,13 +156,13 @@ VipHost.prototype.createMultiCol = function()
 	vip.events.marker.width = 6;
 	vip.events.marker.height = 11;
 	this.div.style.fontSize = "10px";
-	this.div.style.fontSize = "6px";
 	if (vip.cell.height > 16)
 	{
 		vip.events.marker.width = Math.floor(0.037 * vip.cell.width);
 		vip.events.marker.height = Math.floor(0.6875 * vip.cell.height);
 		this.div.style.fontSize = fmt("^px", Math.floor(0.625 * vip.cell.height));
 	}
+	this.div.style.fontSize = "6px";
 	vip.cell.margin = vip.cell.height+4;
 
 	var vdt_start = new VipDate.Today();
