@@ -133,7 +133,6 @@ VipHost.prototype.createSingleCol = function()
 	vip.events.marker.width = 6;
 	vip.events.marker.height = 11;
 	this.div.style.fontSize = "10px";
-	this.div.style.fontSize = "9px";
 	vip.cell.margin = 20;
 
 	var vdt_start = new VipDate.Today();
