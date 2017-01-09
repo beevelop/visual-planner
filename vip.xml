@@ -10,9 +10,9 @@
 <Content type="html">
 <![CDATA[
 <center>
-<button type="button" title="Multi-column View" style="border:4px" onclick="show_multi_col();"><b>||||</b></button>
-<button type="button" title="Single-column View" style="border:4px" onclick="toggle_single_col();"><b>|</b></button>
-<button type="button" title="Settings" style="border:4px" onclick="show_settings();"><b>*</b></button>
+<button type="button" title="Multi-column View" style="padding:4px" onclick="show_multi_col();"><b>||||</b></button>
+<button type="button" title="Single-column View" style="padding:4px" onclick="toggle_single_col();"><b>|</b></button>
+<button type="button" title="Settings" style="padding:4px" onclick="show_settings();"><b>*</b></button>
 </center>
 <script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_analytics.js"></script>
 <script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_lib.js"></script>
