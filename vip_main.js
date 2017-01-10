@@ -79,6 +79,15 @@ function InitMultiColView()
 
 	vip.host.createMultiCol();
 
+	// printing
+	if (window.matchMedia)
+	{
+	  var mql = window.matchMedia("print");
+	  
+	  if (mql)
+		mql.addListener(onMediaChange);
+	}
+
 	ga_hit('view', 'multi_col');
 	ga_hit('multi_col_count', vip.multi_col.count);
 	ga_hit('multi_col_scroll_offset', vip.multi_col.auto_scroll ? vip.multi_col.offset : 'n/a');
@@ -532,4 +541,13 @@ function ontouchcancel(event)
 {
 	vip.touch.id = null;
 	cancel_selection();
+}
+
+function onMediaChange()
+{
+	if (vip.host)
+	{
+		vip.host.ClearContent();
+		vip.host.createMultiCol();
+	}
 }
