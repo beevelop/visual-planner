@@ -19,18 +19,38 @@ var vip = {
 	event_req: {add: null, queue: [], pending: false}
 };
 
+var viptitle;
 function init()
 {
+	
 	vip.host = new VipHost();
-	var cell = new VipClrBar(vip.host, "clrbar", "grey", 20, 200);
+	cell = new VipClrBar(vip.host, "clrbar", "grey", 20, 200);
 	cell.setSize(500,160);
 	cell.div.style.fontSize = "100px";
 	cell.Show(true);
 	
-	var viptitle = new VipDiv(cell, "viptitle");
-	viptitle.setText("Arsey");
+	viptitle = new VipDiv(cell, "viptitle");
 	viptitle.div.style.whiteSpace = "nowrap";
-	//viptitle.div.style.height = 160;
 	viptitle.div.style.lineHeight = "160px";
 	viptitle.setPos(50, 0);
+
+	if (window.matchMedia)
+	{
+	  var mq = window.matchMedia("print");
+	  mq.addListener(onMediaChange);
+	  onMediaChange(mq);
+	}
+}
+
+// media query change
+function onMediaChange(mq)
+{
+	var txt = "";
+	txt += mq.matches ? "Print" : "Screen";
+	txt += " ";
+	txt += document.body.clientWidth;
+	txt += "x";
+	txt += document.body.clientHeight;
+
+	viptitle.setText(txt);
 }
