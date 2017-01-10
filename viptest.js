@@ -36,17 +36,17 @@ function init()
 
 	if (window.matchMedia)
 	{
-	  var mq = window.matchMedia("print");
-	  mq.addListener(onMediaChange);
-	  onMediaChange(mq);
+	  var mql = window.matchMedia("print");
+	  mql.addListener(onMediaChange);
+	  onMediaChange(mql);
 	}
 }
 
 // media query change
-function onMediaChange(mq)
+function onMediaChange(mql)
 {
 	var txt = "";
-	txt += mq.matches ? "Print" : "Screen";
+	txt += mql.matches ? "Print" : "Screen";
 	txt += " ";
 	txt += document.body.clientWidth;
 	txt += "x";
