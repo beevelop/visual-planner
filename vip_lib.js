@@ -253,8 +253,12 @@ VipHost.prototype.updateScale = function()
 		while(vipcell)
 		{
 			vipcell.div.style.width = cellwidth;
+			vipcell.updateEventLayout();
+
 			vipcell = vipcell.Next();
 		}
+		
+		vipcol.updateEventLayout();
 
 		vipcol.div.style.left = xpos;
 		xpos += cellwidth;
