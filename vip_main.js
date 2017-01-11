@@ -309,9 +309,12 @@ function onkeydown(event)
 			break;
 	}
 
+	if (clicks == 0)
+		return;
+
 	vip.host.scroll_col(clicks, "key");
 
-	event.returnValue=false;
+	event.returnValue = false;
 }
 
 function onmousewheel(event)
