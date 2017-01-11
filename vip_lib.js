@@ -241,12 +241,13 @@ VipHost.prototype.updateLayout = function()
 
 VipHost.prototype.updateScale = function()
 {
-	var cellwidth = Math.floor(document.body.clientWidth/vip.multi_col.count);
+	var cellwidth = Math.floor(document.body.clientWidth/vip.multi_col.count) - 1;
 	var xpos=0;
 
 	var vipcol = this.getFirstChild();
 	while(vipcol)
 	{
+		vipcol.div.style.width = cellwidth;
 		vipcol.viphdr.div.style.width = cellwidth;
 
 		var vipcell = vipcol.vipcells.getFirstChild();
@@ -261,7 +262,7 @@ VipHost.prototype.updateScale = function()
 		vipcol.updateEventLayout();
 
 		vipcol.div.style.left = xpos;
-		xpos += cellwidth;
+		xpos += (cellwidth + 1);
 
 		vipcol = vipcol.Next();
 	}
@@ -286,6 +287,7 @@ function VipCol(parent, vdt_start, vdt_end)
 {
 	this.createDiv(parent, "vipcol");
 
+	this.div.style.width = vip.cell.width;
 	this.vipcelloffset = new VipDiv(this, "vipcelloffset");
 	this.vipcells = new VipCells(this.vipcelloffset, this, vdt_start, vdt_end);
 	this.vipevts = new VipDiv(this.vipcelloffset, "vipevts");
@@ -381,7 +383,7 @@ VipCol.prototype.updateEventLayout = function()
 	while (vipsib)
 	{
 		var x_off = (vipsib.div.clientWidth + 2);
-		vipsib.div.style.left = (vip.cell.width - x_off);
+		vipsib.div.style.left = (this.div.offsetWidth - x_off);
 		
 		while(true)
 		{
