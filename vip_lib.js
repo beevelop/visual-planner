@@ -254,6 +254,7 @@ VipHost.prototype.updateScale = function()
 		while(vipcell)
 		{
 			vipcell.div.style.width = cellwidth;
+			vipcell.vipevts.div.style.width = (cellwidth - vip.cell.margin);
 			vipcell.updateEventLayout();
 
 			vipcell = vipcell.Next();
