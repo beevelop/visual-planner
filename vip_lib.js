@@ -247,6 +247,8 @@ VipHost.prototype.updateScale = function()
 	var vipcol = this.getFirstChild();
 	while(vipcol)
 	{
+		vipcol.viphdr.div.style.width = cellwidth;
+
 		var vipcell = vipcol.vipcells.getFirstChild();
 		while(vipcell)
 		{
@@ -312,11 +314,11 @@ VipCol.prototype.addMonthHeader = function(vdt_month)
 	if (vdt_month.isPastMonth())
 		this.div.style.opacity = ((100 - vip.multi_col.past_transparency) / 100);
 
-	var viphdr = new VipDiv(this, "vipmonthhdr");
-	viphdr.setSize(vip.cell.width, vip.cell.height);
-	viphdr.setText(vdt_month.MonthTitle());
+	this.viphdr = new VipDiv(this, "vipmonthhdr");
+	this.viphdr.setSize(vip.cell.width, vip.cell.height);
+	this.viphdr.setText(vdt_month.MonthTitle());
 
-	var hdr = viphdr.div;
+	var hdr = this.viphdr.div;
 	hdr.setAttribute('onclick', "onclick_month_header(event);");
 	hdr.style.textAlign = "center";
 	hdr.style.lineHeight = fmt("^px", vip.cell.height);  // vertical centre
