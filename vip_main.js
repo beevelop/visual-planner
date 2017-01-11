@@ -314,6 +314,7 @@ function onkeydown(event)
 	vip.host.scroll_col(clicks, "key");
 
 	event.returnValue = false;
+	event.preventDefault();
 }
 
 function onmousewheel(event)
