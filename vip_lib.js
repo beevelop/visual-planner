@@ -242,6 +242,7 @@ VipHost.prototype.updateLayout = function()
 VipHost.prototype.updateScale = function()
 {
 	var cellwidth = Math.floor(document.body.clientWidth/vip.multi_col.count);
+	var xpos=0;
 
 	var vipcol = this.getFirstChild();
 	while(vipcol)
@@ -252,6 +253,9 @@ VipHost.prototype.updateScale = function()
 			vipcell.div.style.width = cellwidth;
 			vipcell = vipcell.Next();
 		}
+
+		vipcol.div.style.left = xpos;
+		xpos += cellwidth;
 
 		vipcol = vipcol.Next();
 	}
