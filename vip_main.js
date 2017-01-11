@@ -307,10 +307,9 @@ function onkeydown(event)
 		case 40:  // down
 			clicks = 1;
 			break;
+		default:
+			return;
 	}
-
-	if (clicks == 0)
-		return;
 
 	vip.host.scroll_col(clicks, "key");
 
