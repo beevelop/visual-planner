@@ -545,9 +545,13 @@ function ontouchcancel(event)
 
 function onMediaChange()
 {
-	if (vip.host)
-	{
-		vip.host.ClearContent();
-		vip.host.createMultiCol();
-	}
+	var txt = "";
+	txt += mql.matches ? "Print" : "Screen";
+	txt += " ";
+	txt += document.body.clientWidth;
+	txt += "x";
+	txt += document.body.clientHeight;
+	console.log(txt);
+	//if (vip.host)
+		//vip.host.updateScale();
 }

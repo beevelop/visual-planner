@@ -239,6 +239,16 @@ VipHost.prototype.updateLayout = function()
 	}
 }
 
+VipHost.prototype.updateScale = function()
+{
+	var col = this.div.firstChild;
+	
+	while(col)
+	{
+		col = col.nextSibling;
+	}
+}
+
 VipHost.prototype.getVipCell = function(vdt)
 {
 	var div = document.getElementById(vdt.Datestamp());
