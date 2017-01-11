@@ -241,11 +241,19 @@ VipHost.prototype.updateLayout = function()
 
 VipHost.prototype.updateScale = function()
 {
-	var col = this.div.firstChild;
-	
-	while(col)
+	var cellwidth = Math.floor(document.body.clientWidth/vip.multi_col.count);
+
+	var vipcol = this.getFirstChild();
+	while(vipcol)
 	{
-		col = col.nextSibling;
+		var vipcell = vipcol.vipcells.getFirstChild();
+		while(vipcell)
+		{
+			vipcell.div.style.width = cellwidth;
+			vipcell = vipcell.Next();
+		}
+
+		vipcol = vipcol.Next();
 	}
 }
 
