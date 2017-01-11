@@ -543,7 +543,7 @@ function ontouchcancel(event)
 	cancel_selection();
 }
 
-function onMediaChange()
+function onMediaChange(mql)
 {
 	var txt = "";
 	txt += mql.matches ? "Print" : "Screen";
