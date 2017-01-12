@@ -552,5 +552,5 @@ function onMediaChange(mql)
 		vip.host.updateScale();
 
 	if (mql.matches)
-		ga_hit('media_change', 'print');
+		ga_hit('media', 'print');
 }
