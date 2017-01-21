@@ -10,7 +10,7 @@ function vip_init()
 	banner.style.paddingLeft = "10px";
 	banner.style.backgroundColor = "#DAE4EB";
 	banner.style.lineHeight = "2.5em";
-	banner.style.fontSize = "0.8em";
+	banner.style.fontSize = "1.2em";
 
 	var grid = document.getElementById("grid");
 	grid.style.height = "100%";
