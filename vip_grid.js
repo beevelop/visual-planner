@@ -367,7 +367,7 @@ function ontouchend(event)
 		
 		if (dx > dy)
 		if (dx > 30)
-			vip.host.scroll_col((vip.touch.start.x > t.pageX) ? 1 : -1, "touch");
+			vip.grid.scroll_col((vip.touch.start.x > t.pageX) ? 1 : -1, "touch");
 	}
 
 	ontouchcancel();
