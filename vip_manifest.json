@@ -3,6 +3,6 @@
 	"icons": [
 		{"src": "vip.png", "sizes": "172x172"}
 	],
-	"start_url": "vip.htm",
+	"start_url": "vip.html",
 	"display": "standalone"
 }

@@ -4,7 +4,7 @@ function VipObject()
 {
 }
 
-VipObject.prototype.createDiv = function(parent, id)
+VipObject.prototype.createChildDiv = function(container_element, id)
 {
 	if (this.div) console.error("vip: div element already created");
 	
@@ -14,27 +14,22 @@ VipObject.prototype.createDiv = function(parent, id)
 		div.id = id;
 
 	div.style.position = "absolute";
+	div.style.width = "100%";
+	div.style.height = "100%";
 	div.style.pointerEvents = "none";
 	div.style.MozUserSelect = "none";  // ff fix
 	div.vipobj = this;
-	
-	var parent_div = parent ? parent.div : document.body;
-	parent_div.appendChild(div);
 
 	this.div = div;
+	this.parent = null;
+	
+	container_element.appendChild(div);
+}
+
+VipObject.prototype.createChild = function(parent, id)
+{
+	this.createChildDiv(parent.div, id);
 	this.parent = parent;
-}
-
-VipObject.prototype.setPos = function(left, top)
-{
-	this.div.style.left = left;
-	this.div.style.top = top;
-}
-
-VipObject.prototype.setSize = function(width, height)
-{
-	this.div.style.width = width;
-	this.div.style.height = height;
 }
 
 VipObject.prototype.ClearContent = function()
@@ -43,7 +38,7 @@ VipObject.prototype.ClearContent = function()
 		this.div.innerHTML = "";
 }
 
-VipObject.prototype.getFirstChild = function()
+VipObject.prototype.First = function()
 {
 	var element = this.div.firstChild;
 	
@@ -53,7 +48,7 @@ VipObject.prototype.getFirstChild = function()
 	return null;
 }
 
-VipObject.prototype.getLastChild = function()
+VipObject.prototype.Last = function()
 {
 	var element = this.div.lastChild;
 	
@@ -87,8 +82,8 @@ VipObject.prototype.Align = function(cell_start, cell_end)
 {
 	if (cell_start && cell_end)
 	{
-		this.div.style.top = cell_start.div.offsetTop;
-		this.div.style.height = (cell_end.div.offsetTop - cell_start.div.offsetTop) + cell_end.div.offsetHeight;
+		this.div.style.top = fmt("^px", cell_start.div.offsetTop);
+		this.div.style.height = fmt("^px", (cell_end.div.offsetTop - cell_start.div.offsetTop) + cell_end.div.offsetHeight);
 		this.Show(true);
 	}
 	else
@@ -107,7 +102,7 @@ VipObject.prototype.MoveLastBefore = function(vipsib)
 
 function VipDiv(parent, id)
 {
-	this.createDiv(parent, id);
+	this.createChild(parent, id);
 }
 
 VipDiv.prototype = new VipObject;
@@ -116,37 +111,21 @@ VipDiv.prototype = new VipObject;
 
 //////////////////////////////////////////////////////////////////////
 
-function VipHost()
+function VipGrid()
 {
-	this.createDiv(null, "viphost");
+	this.createChildDiv(document.body, "vipgrid");
 }
 
-VipHost.prototype = new VipObject;
+VipGrid.prototype = new VipObject;
 
-VipHost.prototype.createSingleCol = function()
+VipGrid.prototype.create = function()
 {
-	this.SingleCol = true;
+	this.div.style.left = "0px";
+	this.div.style.top = "0px";
+	this.div.style.fontSize = fmt("^em", IVipGrid.layout.font_scale);
 
-	// use fixed dimensions
-	vip.cell.width = document.body.offsetWidth;
-	vip.cell.height = 16;
-	vip.events.marker.width = 6;
-	vip.events.marker.height = 11;
-	this.div.style.fontSize = "10px";
-	vip.cell.margin = 20;
+	var colcount = IVipGrid.layout.col_count;
 
-	var vdt_start = new VipDate.Today();
-	vdt_start.MoveToStartOfWeek(1);  // monday this week
-
-	var vdt_end = new VipDate(vdt_start);
-	vdt_end.MoveDays(28);
-	
-	var vipcol = new VipCol(this, vdt_start, vdt_end);
-	vipcol.vipcelloffset.setPos(0, 5);
-}
-
-VipHost.prototype.createMultiCol = function()
-{
 	var so = "n/a";
 	if (screen.orientation)
 	if (screen.orientation.type)
@@ -154,21 +133,7 @@ VipHost.prototype.createMultiCol = function()
 	if (screen.msOrientation)  // edge, ie
 		so = screen.msOrientation;
 	if (so.includes("portrait"))
-		vip.multi_col.count = (vip.multi_col.count / 2);
-
-	// scale dimensions depending on available space
-	vip.cell.width = Math.floor(document.body.clientWidth/vip.multi_col.count);
-	vip.cell.height = Math.floor(document.body.clientHeight/(31+6+1));  // max days + max offset + month name
-	vip.events.marker.width = 6;
-	vip.events.marker.height = 11;
-	this.div.style.fontSize = "10px";
-	if (vip.cell.height > 16)
-	{
-		vip.events.marker.width = Math.floor(0.037 * vip.cell.width);
-		vip.events.marker.height = Math.floor(0.6875 * vip.cell.height);
-		this.div.style.fontSize = fmt("^px", Math.floor(0.625 * vip.cell.height));
-	}
-	vip.cell.margin = vip.cell.height+4;
+		colcount = (IVipGrid.layout.col_count / 2);
 
 	var vdt_start = new VipDate.Today();
 	vdt_start.MoveToStartOfMonth();
@@ -180,24 +145,23 @@ VipHost.prototype.createMultiCol = function()
 
 	var vdt_end = new VipDate(vdt_start);
 
-	for (var c=0; c < vip.multi_col.count; c++)
+	for (var c=0; c < colcount; c++)
 	{
 		vdt_end.MoveMonths(1);
 
 		var vipcol = new VipCol(this, vdt_start, vdt_end);
-		vipcol.addMonthHeader(vdt_start);
 		
 		vdt_start.MoveMonths(1);
 	}
-
-	this.updateLayout();
+	
+	this.updateLayout(true);
 }
 
-VipHost.prototype.scroll_col = function(offset, ui_event)
+VipGrid.prototype.scroll_col = function(offset, ui_event)
 {
-	if (this.SingleCol) return;
+	//if (this.SingleCol) return;
 
-	ga_hit('scroll', ui_event);
+	//ga_hit('scroll', ui_event);
 
 	var cols = this.div;
 	var ltor = (offset > 0);  // scroll direction
@@ -217,68 +181,33 @@ VipHost.prototype.scroll_col = function(offset, ui_event)
 		vdt_end.MoveMonths(1);
 
 		var vipcol = new VipCol(this, vdt_start, vdt_end);
-		vipcol.addMonthHeader(vdt_start);
+		vipcol.updateLayout();
 
 		if (!ltor)
-			this.MoveLastBefore(this.getFirstChild());  // move col to left
+			this.MoveLastBefore(this.First());  // move col to left
 	}
 
-	this.updateLayout();
+	this.updateLayout(false);
 }
 
-VipHost.prototype.updateLayout = function()
+VipGrid.prototype.updateLayout = function(update_cols)
 {
-	var xpos=0;
-	var col = this.div.firstChild;
+	var xpx = 0;
+	var wpx = Math.floor(this.div.offsetWidth/this.div.childElementCount);
 	
-	while(col)
-	{
-		col.style.left = xpos;
-		
-		xpos += vip.cell.width;
-		col = col.nextSibling;
-	}
-}
-
-VipHost.prototype.updateScale = function()
-{
-	var cellwidth = Math.floor(document.body.clientWidth/vip.multi_col.count) - 1;
-	var xpos=0;
-
-	var vipcol = this.getFirstChild();
+	var vipcol = this.First();
+	
 	while(vipcol)
 	{
-		vipcol.div.style.width = cellwidth;
-		vipcol.viphdr.div.style.width = cellwidth;
-
-		var vipcell = vipcol.vipcells.getFirstChild();
-		while(vipcell)
-		{
-			vipcell.div.style.width = cellwidth;
-			vipcell.vipevts.div.style.width = (cellwidth - vip.cell.margin);
-			vipcell.updateEventLayout();
-
-			vipcell = vipcell.Next();
-		}
+		vipcol.div.style.width = fmt("^px", wpx-1);
+		vipcol.div.style.left = fmt("^px", xpx);
+		xpx += wpx;
 		
-		vipcol.updateEventLayout();
-
-		vipcol.div.style.left = xpos;
-		xpos += (cellwidth + 1);
+		if (update_cols)
+			vipcol.updateLayout();
 
 		vipcol = vipcol.Next();
 	}
-}
-
-VipHost.prototype.getVipCell = function(vdt)
-{
-	var div = document.getElementById(vdt.Datestamp());
-	
-	if (div)
-	if (div.vipobj instanceof VipCell)
-		return div.vipobj;
-
-	return null;
 }
 
 
@@ -287,52 +216,56 @@ VipHost.prototype.getVipCell = function(vdt)
 
 function VipCol(parent, vdt_start, vdt_end)
 {
-	this.createDiv(parent, "vipcol");
+	this.createChild(parent, "vipcol");
 
-	this.div.style.width = vip.cell.width;
+	this.vdt_month = new VipDate(vdt_start);
+
+	if (IVipGrid.layout.col_header)
+	{
+		this.viphdr = new VipDiv(this, "vipmonthhdr");
+		this.viphdr.setText(this.vdt_month.MonthTitle());
+
+		var hdr = this.viphdr.div;
+		hdr.style.textAlign = "center";
+		hdr.style.height = "2em";
+		hdr.style.lineHeight = "2em"
+		hdr.style.pointerEvents = "all";
+		hdr.style.cursor = "pointer";
+		hdr.onclick = onclick_month_header;
+
+		if (this.vdt_month.isPastMonth())
+			this.div.style.opacity = ((100 - vip.multi_col.past_transparency) / 100);
+	}
+	
 	this.vipcelloffset = new VipDiv(this, "vipcelloffset");
 	this.vipcells = new VipCells(this.vipcelloffset, this, vdt_start, vdt_end);
+
 	this.vipevts = new VipDiv(this.vipcelloffset, "vipevts");
-	this.vipsel = new VipClrBar(this.vipcelloffset, "vipsel", "rgba(255,255,127,0.6)", 0, vip.cell.width);
-	this.vipind = new VipClrBar(this.vipcelloffset, "vipind", "rgba(0,0,0,0.3)", (vip.cell.margin-3), 1);
+
+	this.vipsel = new VipDiv(this.vipcelloffset, "vipsel");
+	this.vipsel.div.style.backgroundColor = "rgba(255,255,127,0.6)";
+	this.vipsel.Show(false);
+
+	this.vipind = new VipDiv(this.vipcelloffset, "vipind");
+	this.vipind.div.style.backgroundColor = "rgba(0,0,0,0.3)";
+	this.vipind.Show(false);
 
 	this.vipseltip = new VipDiv(this.vipcelloffset, "vipseltip");
-	this.vipseltip.Show(false);
-	this.vipseltip.div.style.fontSize = fmt("^px", Math.floor(0.5*vip.cell.height));
-	this.vipseltip.div.style.width = vip.cell.width;
+	this.vipseltip.div.style.fontSize = "0.8em";
 	this.vipseltip.div.style.textAlign = "center";
+	this.vipseltip.Show(false);
 
 	this.vipsel.div.style.zIndex = "10";
 	this.vipseltip.div.style.zIndex = "10";
 
-	this.firstcell = this.vipcells.div.firstChild.vipobj;
-	this.lastcell = this.vipcells.div.lastChild.vipobj;
+	this.firstcell = this.vipcells.First();
+	this.lastcell = this.vipcells.Last();
 	this.datespan = {start: new VipDate(vdt_start), end: new VipDate(vdt_end)};
 	
-	vip.event_req.add(this);
+	//vip.event_req.add(this);
 }
 
 VipCol.prototype = new VipObject;
-
-VipCol.prototype.addMonthHeader = function(vdt_month)
-{
-	this.vdt_month = new VipDate(vdt_month);
-	this.vipcelloffset.setPos(0, ((vdt_month.DayOfWeek() + 1) * vip.cell.height));
-
-	if (vdt_month.isPastMonth())
-		this.div.style.opacity = ((100 - vip.multi_col.past_transparency) / 100);
-
-	this.viphdr = new VipDiv(this, "vipmonthhdr");
-	this.viphdr.setSize(vip.cell.width, vip.cell.height);
-	this.viphdr.setText(vdt_month.MonthTitle());
-
-	var hdr = this.viphdr.div;
-	hdr.setAttribute('onclick', "onclick_month_header(event);");
-	hdr.style.textAlign = "center";
-	hdr.style.lineHeight = fmt("^px", vip.cell.height);  // vertical centre
-	hdr.style.pointerEvents = "all";
-	hdr.style.cursor = "pointer";
-}
 
 VipCol.prototype.updateSelectionTip = function(vipcell_start, vipcell_end)
 {
@@ -342,101 +275,53 @@ VipCol.prototype.updateSelectionTip = function(vipcell_start, vipcell_end)
 	if (!vipcell_end) return;
 	if (vipcell_start === vipcell_end) return;
 
-	this.vipseltip.div.innerHTML = vipcell_start.vipdate.TimespanTo(vipcell_end.vipdate);
-	this.vipseltip.setPos(vipcell_end.div.offsetLeft, vipcell_end.div.offsetTop + Math.floor((vipcell_end.div.clientHeight - this.vipseltip.div.clientHeight) / 2));
+	this.vipseltip.setText(vipcell_start.vipdate.TimespanTo(vipcell_end.vipdate));
+	this.vipseltip.Align(vipcell_end, vipcell_end);
 	this.vipseltip.Show(true);
 }
 
-VipCol.prototype.addEvent = function(event, vipcell)
+VipCol.prototype.updateLayout = function()
 {
-	var vipevt = null;
+	var offset=0;
+	var celltop=0;
+	var cellspace = Math.floor(this.div.offsetHeight/40);
+	var cellheight = fmt("^px", cellspace-1);
 
-	var vipsib = this.vipevts.getFirstChild();
-	while (vipsib)
+	if (this.viphdr)
+		offset += this.viphdr.div.offsetHeight;
+	
+	if (IVipGrid.layout.col_offset)
+		offset += (cellspace * this.vdt_month.DayOfWeek());
+
+	this.vipcelloffset.div.style.top = fmt("^px", offset);
+	this.vipcelloffset.div.style.height = fmt("^px", (cellspace * this.vipcells.div.childElementCount));
+	
+	this.vipseltip.div.style.lineHeight = cellheight;
+	
+	var vipcell = this.vipcells.First();
+	while(vipcell)
 	{
-		if (event.id == vipsib.evt_id)
-		{
-			vipevt = vipsib;
-			break;
-		}
+		vipcell.div.style.top = fmt("^px", celltop);
+		vipcell.div.style.height = cellheight;
+		vipcell.div.style.lineHeight = cellheight;
+		celltop += cellspace;
 
-		if (vipcell.vipdate.dt < vipsib.vipcell_start.vipdate.dt)
-			break;
-
-		vipsib = vipsib.Next();
-	}
-
-	if (!vipevt)
-	{
-		vipevt = new VipMultiDayEvent(this.vipevts, event, vipcell);
-		this.vipevts.MoveLastBefore(vipsib);
-	}
-
-	vipevt.updateEvent(vipcell);
-	vipcell.updateEventInfo();
-	this.updateEventLayout();
-}
-
-VipCol.prototype.updateEventLayout = function()
-{
-	var fixed = [];
-
-	var vipsib = this.vipevts.getFirstChild();
-	while (vipsib)
-	{
-		var x_off = (vipsib.div.clientWidth + 2);
-		vipsib.div.style.left = (this.div.offsetWidth - x_off);
-		
-		while(true)
-		{
-			var shift = false;
-
-			for (var i=0; i < fixed.length; i++)
-			{
-				if (this.intersection(vipsib, fixed[i]))
-				{
-					shift = true;
-					break;
-				}
-			}
-			
-			if (shift)
-				vipsib.div.style.left = (vipsib.div.offsetLeft - x_off);
-			else
-				break;
-		}
-
-		fixed.push(vipsib);
-		vipsib = vipsib.Next();
+		vipcell = vipcell.Next();
 	}
 }
-
-VipCol.prototype.intersection = function(evt1, evt2)
-{
-	if (evt1.div.offsetLeft == evt2.div.offsetLeft)
-	if (evt1.div.offsetTop < (evt2.div.offsetTop + evt2.div.offsetHeight + 2))
-	if ((evt1.div.offsetTop + evt1.div.offsetHeight + 2) > evt2.div.offsetTop)
-		return true;
-
-	return false;
-}
-
 
 
 //////////////////////////////////////////////////////////////////////
 
-function VipCells(parent, col, vdt_start, vdt_end)
+function VipCells(parent, vipcol, vdt_start, vdt_end)
 {
-	this.createDiv(parent, "vipcells");
-
-	var y = 0;
+	this.createChild(parent, "vipcells");
+	
 	var vdt_day = new VipDate(vdt_start);
 	while (vdt_day.dt < vdt_end.dt)
 	{
-		var vipcell = new VipCell(this, col, vdt_day);
-		vipcell.setPos(0, y);
+		var vipcell = new VipCell(this, vipcol, vdt_day);
 		vdt_day.MoveDays(1);
-		y += vip.cell.height;
 	}
 }
 
@@ -448,24 +333,22 @@ VipCells.prototype = new VipObject;
 
 function VipCell(parent, col, vdt)
 {
-	this.createDiv(parent, vdt.Datestamp());
+	this.createChild(parent, vdt.Datestamp());
 	this.vipcol = col;
 	this.vipdate = new VipDate(vdt);
 
-	this.setSize(vip.cell.width-1, vip.cell.height-1);
 	this.div.style.backgroundColor = (vdt.isWeekend() ? "#d8d8d8" : "#eaeaea");
 	this.div.style.pointerEvents = "all";
-	
-	var vipnum = new VipDiv(this);
+
+	var vipnum = new VipDiv(this, "vipnum");
 	vipnum.setText(vdt.DayOfMonth());
 
 	var num = vipnum.div;
-	num.style.lineHeight = fmt("^px", vip.cell.height-1);
-	num.style.width = vip.cell.height;
+	num.style.width = "2em";
 	num.style.textAlign = "center";
 	num.style.cursor = "pointer";
 	num.style.pointerEvents = "all";
-	num.setAttribute('onclick', "onclick_day_number(event);");
+	num.onclick = onclick_day_number;
 
 	if (vdt.isToday())
 	{
@@ -474,10 +357,12 @@ function VipCell(parent, col, vdt)
 		num.style.backgroundColor = "red";
 	}
 	
+/*
 	this.vipevts = new VipDiv(this, "vipevts");
 	this.vipevts.setPos(vip.cell.margin, 0);
 	this.vipevts.setSize((this.div.offsetWidth - vip.cell.margin), this.div.offsetHeight);
 	this.vipevts.div.style.overflow = "hidden";
+*/
 }
 
 VipCell.prototype = new VipObject;
@@ -503,293 +388,6 @@ VipCell.prototype.inDateRange = function(vdt_lo, vdt_hi)
 		return true;
 
 	return false;
-}
-
-VipCell.prototype.addEvent = function(event)
-{
-	var vtm_event = new VipTime.GCal(event.startTime);
-	var timestamp = vtm_event.Timestamp();
-
-	var vipsib = this.vipevts.getFirstChild();
-	while (vipsib)
-	{
-		if (event.id == vipsib.evt_id)
-			return;
-
-		if (timestamp < vipsib.evt_timestamp)
-			break;
-
-		vipsib = vipsib.Next();
-	}
-
-	var vipevt = new VipSingleDayEvent(this, event);
-	this.vipevts.MoveLastBefore(vipsib);  // sort in time order
-
-	this.updateEventInfo();
-	this.updateEventLayout();
-}
-
-VipCell.prototype.updateEventLayout = function()
-{
-	if (vip.events.proportional.show)
-		return;
-		
-	var sep = 2;
-
-	var tot_width = 0;
-	var vipevt = this.vipevts.getFirstChild();
-	while (vipevt)
-	{
-		if (tot_width > 0)
-			tot_width += sep;
-		
-		vipevt.initLayout();
-		tot_width += vipevt.div.offsetWidth;
-
-		vipevt = vipevt.Next();
-	}
-
-	if (vip.events.title.show)
-	{
-		while (tot_width > this.vipevts.div.offsetWidth)
-		{
-			var longest = this.vipevts.getFirstChild();
-			var vipevt = longest.Next();
-			while (vipevt)
-			{
-				if (vipevt.flex_title.length > longest.flex_title.length)
-					longest = vipevt;
-					
-				vipevt = vipevt.Next();
-			}
-			
-			if (longest.flex_title.length == 0)
-				break;
-
-			tot_width -= longest.div.offsetWidth;
-			longest.shortenTitle();
-			tot_width += longest.div.offsetWidth;
-		}
-	}
-
-	var x_off = 0;
-
-	var vipevt = this.vipevts.getFirstChild();
-	while (vipevt)
-	{
-		if (x_off > 0)
-			x_off += sep;
-		
-		vipevt.div.style.left = x_off;
-		x_off += vipevt.div.offsetWidth;
-
-		vipevt = vipevt.Next();
-	}
-}
-
-VipCell.prototype.updateEventInfo = function()
-{
-	var str_tooltip = "";
-
-	var vipevt = this.vipcol.vipevts.getFirstChild();
-	while (vipevt)
-	{
-		if (this.inRange(vipevt.vipcell_start, vipevt.vipcell_end))
-		{
-			if (str_tooltip.length > 0)
-				str_tooltip += '\n';
-			
-			str_tooltip += vipevt.tooltip;
-		}
-
-		vipevt = vipevt.Next();
-	}
-
-	vipevt = this.vipevts.getFirstChild();
-	while (vipevt)
-	{
-		if (str_tooltip.length > 0)
-			str_tooltip += '\n';
-		
-		str_tooltip += vipevt.tooltip;
-
-		vipevt = vipevt.Next();
-	}
-
-	this.div.setAttribute("title", str_tooltip);
-}
-
-
-
-//////////////////////////////////////////////////////////////////////
-
-function VipClrBar(parent, id, clr, xpos, width)
-{
-	this.createDiv(parent, id);
-	this.Show(false);
-	
-	var bar = this.div;
-	bar.style.left = xpos;
-	bar.style.width = width;
-	bar.style.backgroundColor = clr;
-}
-
-VipClrBar.prototype = new VipObject;
-
-
-
-//////////////////////////////////////////////////////////////////////
-
-function VipMultiDayEvent(parent, event, vipcell)
-{
-	this.createDiv(parent, "vipmultidayevent");
-	this.evt_id = event.id;
-	this.evt_title = html2txt(event.title);
-	this.vipcell_start = vipcell;
-	this.vipcell_end = vipcell;
-	this.div.style.zIndex = "1";
-
-	var evt = this.div;
-	evt.style.width = vip.events.marker.width;
-	evt.style.backgroundColor = event.palette.medium;
-
-	if (event.calendar)
-		this.tooltip = fmt("^ - ^", event.calendar, this.evt_title);
-	else
-		this.tooltip = this.evt_title;
-}
-
-VipMultiDayEvent.prototype = new VipObject;
-
-VipMultiDayEvent.prototype.updateEvent = function(vipcell)
-{
-	this.vipcell_end = vipcell;
-	this.Align(this.vipcell_start, this.vipcell_end);
-}
-
-
-
-//////////////////////////////////////////////////////////////////////
-
-function VipSingleDayEvent(vipcell, event)
-{
-	var vdt_start = new VipDate.GCal(event.startTime);
-	var vtm_start = new VipTime.GCal(event.startTime);
-
-	this.createDiv(vipcell.vipevts, "vipsingledayevent");
-	this.evt_id = event.id;
-	this.evt_datestamp = vdt_start.Datestamp();
-	this.evt_timestamp = vtm_start.Timestamp();
-	this.evt_title = html2txt(event.title);
-	this.evt_timed = !event.allDay;
-	this.div.style.zIndex = "2";
-
-	this.evt_title_time = "";
-	if (this.evt_timed)
-	if (this.evt_datestamp == vipcell.vipdate.Datestamp())
-		this.evt_title_time = vtm_start.TimeTitle() + " ";
-
-	this.tooltip = this.evt_title_time;
-	if (event.calendar)
-		this.tooltip += fmt("^ - ", event.calendar);
-	this.tooltip += this.evt_title;
-
-	var x_off = 0;
-	var y_off = Math.floor((vip.cell.height - vip.events.marker.height) / 2);
-
-	if (!vip.events.title.show || !vip.events.title.hide_marker)
-	{
-		this.vipmarker = new VipDiv(this, "vipevtmarker");
-		this.vipmarker.setSize(vip.events.marker.width, vip.events.marker.height);
-		this.vipmarker.setPos(0, y_off);
-		this.vipmarker.div.style.backgroundColor = event.palette.medium;
-
-		x_off = (this.vipmarker.div.offsetWidth + 2);
-	}
-
-	if (vip.events.proportional.show)
-	{
-		var vdt_start = new VipDate.GCal(event.startTime);
-		var vdt_end = new VipDate.GCal(event.endTime);
-		
-		if (vdt_start.isSameDay(vdt_end))
-			var vtm_end = new VipTime.GCal(event.endTime);
-		else
-			var vtm_end = new VipTime.HourMin(24, 0);
-		
-		var m_duration = ((vtm_end.toSeconds() - vtm_start.toSeconds()) / 60);
-		var m_start = (vtm_start.toSeconds() / 60);
-		var m_range_start = (vip.events.proportional.start_hour * 60);
-		var m_range_end = (vip.events.proportional.end_hour * 60);
-		var m_per_px = ((m_range_end - m_range_start)/vipcell.vipevts.div.offsetWidth);
-
-		this.vipmarker.div.style.left = Math.round((m_start - m_range_start) / m_per_px);
-		this.vipmarker.div.style.width = Math.round(m_duration / m_per_px);
-
-		var off_right = (this.vipmarker.div.offsetLeft + this.vipmarker.div.offsetWidth);
-		if ((off_right <= 0) || (this.vipmarker.div.offsetLeft >= vipcell.vipevts.div.offsetWidth))
-		{
-			var viphidden = new VipDiv(this, "viphiddenevt");
-			viphidden.setPos(0, y_off);
-			viphidden.setText("...");
-		}
-	}
-
-	if (vip.events.title.show)
-	{
-		this.viptitle = new VipDiv(this, "viptitle");
-		this.viptitle.div.style.whiteSpace = "nowrap";
-		this.viptitle.div.style.lineHeight = fmt("^px", vip.cell.height);
-		this.viptitle.setPos(x_off, 0);
-
-		if (vip.events.title.colour)
-			this.viptitle.div.style.color = event.palette.medium;
-	}
-}
-
-VipSingleDayEvent.prototype = new VipObject;
-
-VipSingleDayEvent.prototype.initLayout = function()
-{
-	if (this.viptitle)
-	{
-		this.flex_title = "";
-
-		if (vip.events.title.time)
-			this.flex_title += this.evt_title_time;
-
-		this.flex_title += this.evt_title;
-		
-		if (vip.events.title.hide_marker)
-		if (this.Next())
-			this.flex_title += ',';
-
-		this.viptitle.setText(this.flex_title);
-	}
-
-	this.updateWidth();
-}
-
-VipSingleDayEvent.prototype.updateWidth = function()
-{
-	if (this.viptitle)
-		this.div.style.width = (this.viptitle.div.offsetLeft + this.viptitle.div.offsetWidth);
-	else if (this.vipmarker)
-		this.div.style.width = this.vipmarker.div.offsetWidth;
-	else
-		this.div.style.width = 0;
-}
-
-VipSingleDayEvent.prototype.shortenTitle = function()
-{
-	if (this.flex_title.length > 0)
-	{
-		this.flex_title = this.flex_title.substr(0, this.flex_title.length-1);
-		this.flex_title = this.flex_title.trim();
-
-		this.viptitle.setText(this.flex_title + "...");
-		this.updateWidth();
-	}
 }
 
 
@@ -819,12 +417,14 @@ VipDate.prototype.constructor.YMD = function(yyyy, mm, dd)
 	return vdt;
 }
 
+/*
 VipDate.prototype.constructor.GCal = function(gdt)
 {
 	var dt = google.calendar.utils.toDate(gdt);
 	var vdt = new VipDate.YMD(dt.getFullYear(), dt.getMonth()+1, dt.getDate());
 	return vdt;
 }
+*/
 
 VipDate.prototype.MoveDays = function(offset)
 {
@@ -879,10 +479,12 @@ VipDate.prototype.DayTitle = function()
 	return fmt("^ ^ ^", dt_array[0], this.DayOfMonth(), dt_array[1]);
 }
 
+/*
 VipDate.prototype.GCalDate = function()
 {
 	return google.calendar.utils.fromDate(this.dt);
 }
+*/
 
 VipDate.prototype.isWeekend = function()
 {
@@ -919,7 +521,7 @@ VipDate.prototype.TimespanTo = function(vdt_end)
 
 VipDate.prototype.ShowInCalendar = function()
 {
-	google.calendar.showDate(this.dt.getFullYear(), (this.dt.getMonth() + 1), this.dt.getDate());
+	//google.calendar.showDate(this.dt.getFullYear(), (this.dt.getMonth() + 1), this.dt.getDate());
 }
 
 
@@ -949,6 +551,7 @@ VipTime.prototype.constructor.HourMin = function(hh, mm)
 	return vtm;
 }
 
+/*
 VipTime.prototype.constructor.GCal = function(gdt)
 {
 	var dt = google.calendar.utils.toDate(gdt);
@@ -959,6 +562,7 @@ VipTime.prototype.constructor.GCal = function(gdt)
 
 	return vtm;
 }
+*/
 
 VipTime.prototype.Timestamp = function()
 {
