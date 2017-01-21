@@ -1,0 +1,8 @@
+{
+	"name": "visual-planner",
+	"icons": [
+		{"src": "vip.png", "sizes": "172x172"}
+	],
+	"start_url": "vipm.html",
+	"display": "standalone"
+}
