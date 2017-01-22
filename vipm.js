@@ -36,7 +36,7 @@ function onGridLoad()
 	if (so.includes("portrait"))
 	{
 		document.body.style.fontSize = "2em";
-		ivipgrid.layout.font_scale = 1;
+		ivipgrid.layout.font_scale = 1.2;
 	}
 
 	ivipgrid.create();
