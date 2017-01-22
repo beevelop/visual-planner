@@ -9,7 +9,7 @@ function vip_init()
 	banner.style.margin = "3px 0px";
 	banner.style.backgroundColor = "#DAE4EB";
 	banner.style.lineHeight = "2.5em";
-	banner.style.fontSize = "1em";
+	banner.style.fontSize = "0.8em";
 
 	var grid = document.getElementById("grid");
 	grid.style.height = "100%";
@@ -26,7 +26,7 @@ function vip_init()
 	if (screen.msOrientation)  // edge, ie
 		so = screen.msOrientation;
 	if (so.includes("portrait"))
-		document.body.style.fontSize = "1.2em";
+		document.body.style.fontSize = "2em";
 }
 
 function onGridLoad()
@@ -34,7 +34,7 @@ function onGridLoad()
 	var ivipgrid = document.getElementById("grid").contentWindow.IVipGrid;
 
 	ivipgrid.layout.col_count = 8;
-	ivipgrid.layout.font_scale = 0.8;
+	ivipgrid.layout.font_scale = 0.5;
 
 	ivipgrid.create();
 }
