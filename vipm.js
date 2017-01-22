@@ -26,7 +26,7 @@ function vip_init()
 	if (screen.msOrientation)  // edge, ie
 		so = screen.msOrientation;
 	if (so.includes("portrait"))
-		document.body.style.fontSize = "2em";
+		document.body.style.fontSize = "20em";
 }
 
 function onGridLoad()
