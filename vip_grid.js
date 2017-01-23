@@ -50,19 +50,6 @@ function createGrid()
 	install_event_handling();
 }
 
-function onResizeView()
-{
-	vip.grid.updateLayout(true);
-}
-
-function onMediaChange(mql)
-{
-	vip.grid.updateLayout(true);
-
-	//if (mql.matches)
-		//ga_hit('media', 'print');
-}
-
 function install_event_handling()
 {
 	// resizing
@@ -96,6 +83,19 @@ function install_event_handling()
 		if (mql)
 			mql.addListener(onMediaChange);
 	}
+}
+
+function onResizeView()
+{
+	vip.grid.updateLayout(true);
+}
+
+function onMediaChange(mql)
+{
+	vip.grid.updateLayout(true);
+
+	//if (mql.matches)
+		//ga_hit('media', 'print');
 }
 
 
