@@ -7,8 +7,8 @@
 <link rel="manifest" href="vipm_manifest.json">
 <script src="vipm.js" type='text/javascript'></script>
 </head>
-<body onload="vip_init();" style="font-family:arial;">
-<div id="banner"><center><b>visual-planner</b></center></div>
-<iframe id="grid"></iframe>
+<body onload="vip_init();" style="font-family:arial; margin:0px; height:100vh; display:flex; flex-direction:column;">
+<div id="banner" style="margin-top:10px; margin-bottom:10px; background-color:#DAE4EB; line-height:2.5em; font-size:0.8em;"><center><b>visual-planner</b></center></div>
+<iframe id="grid" src="vip_grid.html" style="height:100%; width:100%; display:flex; border:0px; overflow:hidden;" scrolling="no"></iframe>
 </body>
 </html>
