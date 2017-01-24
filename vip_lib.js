@@ -111,9 +111,9 @@ VipDiv.prototype = new VipObject;
 
 //////////////////////////////////////////////////////////////////////
 
-function VipGrid()
+function VipGrid(container_element)
 {
-	this.createChildDiv(document.body, "vipgrid");
+	this.createChildDiv(container_element, "vipgrid");
 }
 
 VipGrid.prototype = new VipObject;

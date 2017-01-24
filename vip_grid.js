@@ -1,6 +1,5 @@
 // grid interface
 var IVipGrid = {
-	create: function() {},
 	layout: {
 		col_count: 8,
 		col_header: true,
@@ -31,20 +30,9 @@ var vip = {
 	event_req: {add: null, queue: [], pending: false}
 };
 
-function grid_init()
+function vip_grid_init(container_id)
 {
-	if (window.frameElement)
-	{
-		IVipGrid.create = createGrid;
-		return;
-	}
-
-	createGrid();
-}
-
-function createGrid()
-{
-	vip.grid = new VipGrid();
+	vip.grid = new VipGrid(container_id ? document.getElementById(container_id) : document.body);
 	vip.grid.create();
 
 	install_event_handling();
