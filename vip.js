@@ -1,9 +1,10 @@
 function vip_init()
 {
-	//ivipgrid.layout.col_count = 8;
-	//ivipgrid.layout.font_scale = 1;
-	//ivipgrid.layout.col_offset = false;
-	//ivipgrid.layout.highlight_weekends = false;
+	vip_init_grid("grid");
 
-	vip_grid_init("grid");
+	//vip.layout.col_count = 4;
+	//vip.layout.col_offset = false;
+	//vip.layout.highlight_weekend = false;
+
+	vip.grid.create();
 }

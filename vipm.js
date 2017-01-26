@@ -8,17 +8,17 @@ function vip_init()
 		so = screen.msOrientation;
 
 	var banner = document.getElementById("banner");
-	var ivipgrid = document.getElementById("grid").contentWindow.IVipGrid;
+	var grid = document.getElementById("grid");
 
 	banner.style.fontSize = "0.6em";
-	ivipgrid.layout.col_count = 8;
-	ivipgrid.layout.font_scale = 0.5;
+	grid.style.fontSize = "0.5em";
+	//vip.layout.col_count = 8;
 
 	if (so.includes("portrait"))
 	{
 		banner.style.fontSize = "1.5em";
-		ivipgrid.layout.font_scale = 1.2;
+		grid.style.fontSize = "1.2em";
 	}
 
-	ivipgrid.create();
+	vip.grid.create();
 }

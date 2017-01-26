@@ -120,11 +120,7 @@ VipGrid.prototype = new VipObject;
 
 VipGrid.prototype.create = function()
 {
-	this.div.style.left = "0px";
-	this.div.style.top = "0px";
-	this.div.style.fontSize = fmt("^em", IVipGrid.layout.font_scale);
-
-	var colcount = IVipGrid.layout.col_count;
+	var colcount = vip.layout.col_count;
 
 	var so = "n/a";
 	if (screen.orientation)
@@ -133,7 +129,7 @@ VipGrid.prototype.create = function()
 	if (screen.msOrientation)  // edge, ie
 		so = screen.msOrientation;
 	if (so.includes("portrait"))
-		colcount = (IVipGrid.layout.col_count / 2);
+		colcount = (vip.layout.col_count / 2);
 
 	var vdt_start = new VipDate.Today();
 	vdt_start.MoveToStartOfMonth();
@@ -220,7 +216,7 @@ function VipCol(parent, vdt_start, vdt_end)
 
 	this.vdt_month = new VipDate(vdt_start);
 
-	if (IVipGrid.layout.col_header)
+	if (vip.layout.col_header)
 	{
 		this.viphdr = new VipDiv(this, "vipmonthhdr");
 		this.viphdr.setText(this.vdt_month.MonthTitle());
@@ -282,15 +278,16 @@ VipCol.prototype.updateSelectionTip = function(vipcell_start, vipcell_end)
 
 VipCol.prototype.updateLayout = function()
 {
-	var offset=0;
-	var celltop=0;
-	var cellspace = Math.floor(this.div.offsetHeight/40);
+	var cellcount = 31;
+	if (vip.layout.col_offset)
+		cellcount += 6;
+	
+	var offset = this.viphdr ? this.viphdr.div.offsetHeight : 0;
+
+	var cellspace = Math.floor((this.div.offsetHeight-offset)/cellcount);
 	var cellheight = fmt("^px", cellspace-1);
 
-	if (this.viphdr)
-		offset += this.viphdr.div.offsetHeight;
-	
-	if (IVipGrid.layout.col_offset)
+	if (vip.layout.col_offset)
 		offset += (cellspace * this.vdt_month.DayOfWeek());
 
 	this.vipcelloffset.div.style.top = fmt("^px", offset);
@@ -298,6 +295,7 @@ VipCol.prototype.updateLayout = function()
 	
 	this.vipseltip.div.style.lineHeight = cellheight;
 	
+	var celltop=0;
 	var vipcell = this.vipcells.First();
 	while(vipcell)
 	{
@@ -337,8 +335,12 @@ function VipCell(parent, col, vdt)
 	this.vipcol = col;
 	this.vipdate = new VipDate(vdt);
 
-	this.div.style.backgroundColor = (vdt.isWeekend() ? "#d8d8d8" : "#eaeaea");
 	this.div.style.pointerEvents = "all";
+	this.div.style.backgroundColor = "#eaeaea";
+
+	if (vip.layout.highlight_weekend)
+	if (vdt.isWeekend())
+		this.div.style.backgroundColor = "#d8d8d8";
 
 	var vipnum = new VipDiv(this, "vipnum");
 	vipnum.setText(vdt.DayOfMonth());

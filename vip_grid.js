@@ -1,16 +1,16 @@
 // grid interface
 var IVipGrid = {
-	layout: {
-		col_count: 8,
-		col_header: true,
-		col_offset: true,
-		font_scale: 0.64
-	}
 };
 
 // global object
 var vip = {
 	grid: null,
+	layout: {
+		col_count: 8,
+		col_header: true,
+		col_offset: true,
+		highlight_weekend: true
+	},
 	multi_col: {
 		auto_scroll: true,
 		offset: -1,
@@ -30,10 +30,9 @@ var vip = {
 	event_req: {add: null, queue: [], pending: false}
 };
 
-function vip_grid_init(container_id)
+function vip_init_grid(container_id)
 {
 	vip.grid = new VipGrid(container_id ? document.getElementById(container_id) : document.body);
-	vip.grid.create();
 
 	install_event_handling();
 }
