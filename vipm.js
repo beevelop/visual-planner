@@ -20,5 +20,6 @@ function vip_init()
 		grid.style.fontSize = "1.2em";
 	}
 
+	vip_init_grid("grid");
 	vip.grid.create();
 }
