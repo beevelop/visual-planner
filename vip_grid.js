@@ -36,7 +36,7 @@ function vip_init_grid(container_element)
 function install_event_handling()
 {
 	// resizing
-	window.top.onresize = onResizeView;
+	window.onresize = onResizeView;
 
 	// disable default selection behaviour
 	document.body.style.webkitUserSelect = "none"; // ch
