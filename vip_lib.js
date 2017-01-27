@@ -120,17 +120,6 @@ VipGrid.prototype = new VipObject;
 
 VipGrid.prototype.create = function()
 {
-	var colcount = vip.layout.col_count;
-
-	var so = "n/a";
-	if (screen.orientation)
-	if (screen.orientation.type)
-		so = screen.orientation.type;
-	if (screen.msOrientation)  // edge, ie
-		so = screen.msOrientation;
-	if (so.includes("portrait"))
-		colcount = (vip.layout.col_count / 2);
-
 	var vdt_start = new VipDate.Today();
 	vdt_start.MoveToStartOfMonth();
 
@@ -141,7 +130,7 @@ VipGrid.prototype.create = function()
 
 	var vdt_end = new VipDate(vdt_start);
 
-	for (var c=0; c < colcount; c++)
+	for (var c=0; c < vip.layout.col_count; c++)
 	{
 		vdt_end.MoveMonths(1);
 

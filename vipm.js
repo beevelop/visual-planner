@@ -12,14 +12,15 @@ function vip_init()
 
 	banner.style.fontSize = "0.6em";
 	grid.style.fontSize = "0.5em";
-	//vip.layout.col_count = 8;
+	vip.layout.col_count = 8;
 
 	if (so.includes("portrait"))
 	{
 		banner.style.fontSize = "1.5em";
 		grid.style.fontSize = "1.2em";
+		vip.layout.col_count = 4;
 	}
 
-	vip_init_grid("grid");
+	vip_init_grid(document.getElementById("grid"));
 	vip.grid.create();
 }

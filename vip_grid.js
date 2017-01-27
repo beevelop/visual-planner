@@ -1,7 +1,3 @@
-// grid interface
-var IVipGrid = {
-};
-
 // global object
 var vip = {
 	grid: null,
@@ -30,9 +26,9 @@ var vip = {
 	event_req: {add: null, queue: [], pending: false}
 };
 
-function vip_init_grid(container_id)
+function vip_init_grid(container_element)
 {
-	vip.grid = new VipGrid(container_id ? document.getElementById(container_id) : document.body);
+	vip.grid = new VipGrid(container_element);
 
 	install_event_handling();
 }
