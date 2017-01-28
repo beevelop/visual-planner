@@ -12,11 +12,12 @@ function InitSingleColView()
 	var grid = document.getElementById("grid");
 	grid.style.marginTop = "4px";
 	grid.style.width = "100%";
-	updateSingleColLayout();
 	
 	vip_init_grid(grid);
 	vip.layout.col_header = false;
 	vip.layout.col_offset = false;
+
+	updateSingleColLayout();
 }
 
 function updateSingleColLayout()
