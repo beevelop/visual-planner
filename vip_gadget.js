@@ -17,7 +17,6 @@ function InitSingleColView()
 	vip_init_grid(grid);
 	vip.layout.col_header = false;
 	vip.layout.col_offset = false;
-	vip.grid.createSingleCol();
 }
 
 function updateSingleColLayout()
@@ -27,7 +26,11 @@ function updateSingleColLayout()
 
 	var grid = document.getElementById("grid");
 	grid.style.height = show ? "448px" : "0px";
-	grid.style.visibility = show ? "visible" : "hidden";
+
+	if (show)
+		vip.grid.createSingleCol();
+	else
+		vip.grid.ClearContent();
 
 	gadgets.window.adjustHeight();
 
