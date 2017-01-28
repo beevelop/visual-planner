@@ -8,13 +8,16 @@ function InitSingleColView()
 	//document.body.style.fontSize = "0.64em";
 	
 	init_gadget();
+
 	var grid = document.getElementById("grid");
 	grid.style.marginTop = "4px";
-	grid.style.backgroundColor = "blue";
 	grid.style.width = "100%";
-	
 	updateSingleColLayout();
-	//vip_init_grid(document.getElementById("grid"));
+	
+	vip_init_grid(grid);
+	vip.layout.col_header = false;
+	vip.layout.col_offset = false;
+	vip.grid.createSingleCol();
 }
 
 function updateSingleColLayout()

@@ -142,11 +142,24 @@ VipGrid.prototype.create = function()
 	this.updateLayout(true);
 }
 
-VipGrid.prototype.scroll_col = function(offset, ui_event)
+VipGrid.prototype.createSingleCol = function()
 {
-	//if (this.SingleCol) return;
+	this.SingleCol = true;
 
-	//ga_hit('scroll', ui_event);
+	var vdt_start = new VipDate.Today();
+	vdt_start.MoveToStartOfWeek(1);  // monday this week
+
+	var vdt_end = new VipDate(vdt_start);
+	vdt_end.MoveDays(28);
+	
+	var vipcol = new VipCol(this, vdt_start, vdt_end);
+	vipcol.updateLayout();
+}
+
+VipGrid.prototype.scroll_col = function(offset)
+{
+	if (this.SingleCol)
+		return;
 
 	var cols = this.div;
 	var ltor = (offset > 0);  // scroll direction
