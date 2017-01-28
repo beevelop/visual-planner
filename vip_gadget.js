@@ -5,21 +5,24 @@ function init_gadget()
 
 function InitSingleColView()
 {
-	document.body.style.fontSize = "0.64em";
+	//document.body.style.fontSize = "0.64em";
 	
 	init_gadget();
-	vip_init_grid(document.body);
+	//vip_init_grid(document.getElementById("grid"));
+	var grid = document.getElementById("grid");
+	grid.style.backgroundColor = "blue";
+	grid.style.width = "100%";
+	grid.style.height = "100%";
 	
 	UpdateSingleColView();
 }
 
 function UpdateSingleColView()
 {
-return;
 	var prefs = new gadgets.Prefs();
 	var show = prefs.getBool("show_single_col");
 
-	vip.grid.ClearContent();
+	//vip.grid.ClearContent();
 	gadgets.window.adjustHeight();
 
 	google.calendar.subscribeToDates(null);
@@ -27,14 +30,12 @@ return;
 
 	if (show)
 	{
-		var cellspacing = 16;
-		
-		gadgets.window.adjustHeight(26 + (28*cellspacing));
+		gadgets.window.adjustHeight(26 + (28*16));
 
-		vip.grid.createSegment();
+		//vip.grid.createSingleCol();
 
-		google.calendar.subscribeToDates(update_dates);
-		google.calendar.subscribeToDataChange(update_events);
+		//google.calendar.subscribeToDates(update_dates);
+		//google.calendar.subscribeToDataChange(update_events);
 
 		//ga_hit('event_format', vip.events.format);
 	}

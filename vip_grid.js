@@ -1,4 +1,4 @@
-// global object
+// global object and settings
 var vip = {
 	grid: null,
 	layout: {
