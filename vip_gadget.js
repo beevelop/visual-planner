@@ -27,7 +27,7 @@ function updateSingleColLayout()
 
 	var grid = document.getElementById("grid");
 	grid.style.height = show ? "448px" : "0px";
-	vip.grid.updateLayout(true);
+	grid.style.visibility = show ? "visible" : "hidden";
 
 	gadgets.window.adjustHeight();
 
