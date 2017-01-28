@@ -10,6 +10,7 @@ function InitSingleColView()
 	init_gadget();
 	//vip_init_grid(document.getElementById("grid"));
 	var grid = document.getElementById("grid");
+	grid.style.marginTop = "4px";
 	grid.style.backgroundColor = "blue";
 	grid.style.width = "100%";
 	
@@ -31,7 +32,7 @@ function UpdateSingleColView()
 
 	if (show)
 	{
-		grid.style.height = "100px";
+		grid.style.height = "200px";
 		//vip.grid.createSingleCol();
 
 		//gadgets.window.adjustHeight(26 + (28*16));
