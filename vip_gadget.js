@@ -12,7 +12,6 @@ function InitSingleColView()
 	var grid = document.getElementById("grid");
 	grid.style.backgroundColor = "blue";
 	grid.style.width = "100%";
-	grid.style.height = "100%";
 	
 	UpdateSingleColView();
 }
@@ -22,6 +21,8 @@ function UpdateSingleColView()
 	var prefs = new gadgets.Prefs();
 	var show = prefs.getBool("show_single_col");
 
+	var grid = document.getElementById("grid");
+	grid.style.height = "0px";
 	//vip.grid.ClearContent();
 	gadgets.window.adjustHeight();
 
@@ -30,9 +31,11 @@ function UpdateSingleColView()
 
 	if (show)
 	{
-		gadgets.window.adjustHeight(26 + (28*16));
-
+		grid.style.height = "100px";
 		//vip.grid.createSingleCol();
+
+		//gadgets.window.adjustHeight(26 + (28*16));
+		gadgets.window.adjustHeight();
 
 		//google.calendar.subscribeToDates(update_dates);
 		//google.calendar.subscribeToDataChange(update_events);
