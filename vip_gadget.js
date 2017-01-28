@@ -23,7 +23,7 @@ function updateSingleColLayout()
 	var show = prefs.getBool("show_single_col");
 
 	var grid = document.getElementById("grid");
-	grid.style.height = show ? "200px" : "0px";
+	grid.style.height = show ? "448px" : "0px";
 
 	gadgets.window.adjustHeight();
 

@@ -14,7 +14,7 @@
 <button type="button" title="Single-column View" onclick="toggle_single_col();"><b>|</b></button>
 <button type="button" title="Settings" onclick="show_settings();"><b>*</b></button>
 </center>
-<div id="grid">Grid</div>
+<div id="grid"></div>
 <script type="text/javascript">function ga_hit() {}</script>
 <script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_lib.js"></script>
 <script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_grid.js"></script>
