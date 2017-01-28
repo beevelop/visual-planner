@@ -1,20 +1,38 @@
+function init_gadget()
+{
+	google.calendar.getPreferences(receive_GCalPrefs);
+}
+
 function InitSingleColView()
 {
-return;
-	google.calendar.getPreferences(receive_GCalPrefs);
-	var prefs = new gadgets.Prefs();
-	vip.single_col.show = prefs.getBool("show_single_col");
+	document.body.style.fontSize = "0.64em";
+	
+	init_gadget();
+	vip_init_grid(document.body);
+	
+	UpdateSingleColView();
+}
 
-	vip.host.ClearContent();
+function UpdateSingleColView()
+{
+return;
+	var prefs = new gadgets.Prefs();
+	var show = prefs.getBool("show_single_col");
+
+	vip.grid.ClearContent();
 	gadgets.window.adjustHeight();
 
-	if (vip.single_col.show)
+	google.calendar.subscribeToDates(null);
+	google.calendar.subscribeToDataChange(null);
+
+	if (show)
 	{
-		gadgets.window.adjustHeight(26 + (28*vip.cell.height));
+		var cellspacing = 16;
+		
+		gadgets.window.adjustHeight(26 + (28*cellspacing));
 
-		vip.host.createSingleCol();
+		vip.grid.createSegment();
 
-		// calendar notifications
 		google.calendar.subscribeToDates(update_dates);
 		google.calendar.subscribeToDataChange(update_events);
 
@@ -33,6 +51,7 @@ function InitMultiColView()
 
 	document.body.style.fontSize = "0.64em";
 	
+	init_gadget();
 	vip_init_grid(document.body);
 	vip.grid.create();
 }
@@ -46,11 +65,11 @@ function show_multi_col()
 
 function toggle_single_col()
 {
-return;
 	var prefs = new gadgets.Prefs();
-	prefs.set("show_single_col", (!vip.single_col.show).toString());
+	var show = prefs.getBool("show_single_col");
+	prefs.set("show_single_col", (!show).toString());
 
-	InitSingleColView();
+	UpdateSingleColView();
 }
 
 function show_settings()
