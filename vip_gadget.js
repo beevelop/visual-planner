@@ -13,6 +13,7 @@ function InitSingleColView()
 	grid.style.position = "relative";
 	grid.style.marginTop = "4px";
 	grid.style.width = "100%";
+	grid.style.height = "448px";
 	grid.style.visibility = "hidden";
 	
 	vip_init_grid(grid);
