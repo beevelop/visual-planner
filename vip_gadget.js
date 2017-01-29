@@ -14,7 +14,8 @@ function InitSingleColView()
 	grid.style.marginTop = "4px";
 	grid.style.width = "100%";
 	grid.style.height = "448px";
-	grid.style.visibility = "hidden";
+	//grid.style.visibility = "hidden";
+	gadgets.window.adjustHeight(0);
 	
 	vip_init_grid(grid);
 	vip.layout.col_header = false;
