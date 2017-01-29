@@ -13,6 +13,7 @@ function InitSingleColView()
 	grid.style.position = "relative";
 	grid.style.marginTop = "4px";
 	grid.style.width = "100%";
+	grid.style.visibility = "hidden";
 	
 	vip_init_grid(grid);
 	vip.layout.col_header = false;
@@ -28,7 +29,7 @@ function updateSingleColLayout()
 	var show = prefs.getBool("show_single_col");
 
 	var grid = document.getElementById("grid");
-	grid.style.height = show ? "448px" : "0px";
+	grid.style.visibility = show ? "visible" : "hidden";
 
 	gadgets.window.adjustHeight(show ? grid.offsetBottom : grid.offsetTop);
 
