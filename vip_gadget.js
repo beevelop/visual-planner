@@ -30,7 +30,7 @@ function updateSingleColLayout()
 	var grid = document.getElementById("grid");
 	grid.style.height = show ? "448px" : "0px";
 
-	gadgets.window.adjustHeight();
+	gadgets.window.adjustHeight(show ? grid.offsetBottom : grid.offsetTop);
 
 	google.calendar.subscribeToDates(show ? update_dates : null);
 	google.calendar.subscribeToDataChange(show ? update_events : null);
