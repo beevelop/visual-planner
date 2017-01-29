@@ -1,11 +1,14 @@
 // global object and settings
 var vip = {
 	grid: null,
+	scrolling_enabled: true,
 	layout: {
 		col_count: 8,
 		col_header: true,
 		col_offset: true,
-		highlight_weekend: true
+		highlight_weekend: true,
+		max_cells: 31,
+		font_scale: 0.64
 	},
 	multi_col: {
 		auto_scroll: true,

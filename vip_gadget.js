@@ -5,17 +5,7 @@ function init_gadget()
 
 function InitSingleColView()
 {
-	//document.body.style.fontSize = "0.64em";
-	
 	init_gadget();
-
-	var grid = document.getElementById("grid");
-	grid.style.position = "relative";
-	grid.style.marginTop = "4px";
-	grid.style.width = "100%";
-	grid.style.height = "448px";
-	//grid.style.visibility = "hidden";
-	gadgets.window.adjustHeight(0);
 	
 	vip_init_grid(grid);
 	vip.layout.col_header = false;

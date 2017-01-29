@@ -7,19 +7,14 @@ function vip_init()
 	if (screen.msOrientation)  // edge, ie
 		so = screen.msOrientation;
 
+	var portrait = so.includes("portrait");
+
 	var banner = document.getElementById("banner");
 	var grid = document.getElementById("grid");
 
-	banner.style.fontSize = "0.6em";
-	grid.style.fontSize = "0.5em";
-	vip.layout.col_count = 8;
-
-	if (so.includes("portrait"))
-	{
-		banner.style.fontSize = "1.5em";
-		grid.style.fontSize = "1.2em";
-		vip.layout.col_count = 4;
-	}
+	banner.style.fontSize = portrait ? "1.5em" : "0.6em";
+	vip.layout.font_scale = portrait ? 1.2 : 0.5;
+	vip.layout.col_count = portrait ? 4 : 8;
 
 	vip_init_grid(document.getElementById("grid"));
 	vip.grid.create();

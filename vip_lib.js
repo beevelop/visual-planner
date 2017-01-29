@@ -114,6 +114,8 @@ VipDiv.prototype = new VipObject;
 function VipGrid(container_element)
 {
 	this.createChildDiv(container_element, "vipgrid");
+	
+	this.div.style.fontSize = fmt("^em", vip.layout.font_scale);
 }
 
 VipGrid.prototype = new VipObject;
