@@ -10,12 +10,14 @@ function InitSingleColView()
 	init_gadget();
 
 	var grid = document.getElementById("grid");
+	grid.style.position = "relative";
 	grid.style.marginTop = "4px";
 	grid.style.width = "100%";
 	
 	vip_init_grid(grid);
 	vip.layout.col_header = false;
 	vip.layout.col_offset = false;
+	vip.grid.createSingleCol();
 
 	updateSingleColLayout();
 }
@@ -27,11 +29,6 @@ function updateSingleColLayout()
 
 	var grid = document.getElementById("grid");
 	grid.style.height = show ? "448px" : "0px";
-
-	if (show)
-		vip.grid.createSingleCol();
-	else
-		vip.grid.ClearContent();
 
 	gadgets.window.adjustHeight();
 
