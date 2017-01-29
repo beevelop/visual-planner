@@ -280,7 +280,7 @@ VipCol.prototype.updateSelectionTip = function(vipcell_start, vipcell_end)
 
 VipCol.prototype.updateLayout = function()
 {
-	var cellcount = 31;
+	var cellcount = vip.grid.SingleCol ? 28 : 31;
 	if (vip.layout.col_offset)
 		cellcount += 6;
 	
