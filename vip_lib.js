@@ -114,8 +114,6 @@ VipDiv.prototype = new VipObject;
 function VipGrid(container_element)
 {
 	this.createChildDiv(container_element, "vipgrid");
-	
-	this.div.style.fontSize = fmt("^em", vip.layout.font_scale);
 }
 
 VipGrid.prototype = new VipObject;
@@ -156,6 +154,8 @@ VipGrid.prototype.createSingleCol = function()
 	
 	var vipcol = new VipCol(this, vdt_start, vdt_end);
 	vipcol.updateLayout();
+	
+	this.div.style.fontSize = fmt("^em", vip.layout.font_scale);
 }
 
 VipGrid.prototype.scroll_col = function(offset)
