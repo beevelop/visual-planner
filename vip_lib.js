@@ -154,8 +154,6 @@ VipGrid.prototype.createSingleCol = function()
 	
 	var vipcol = new VipCol(this, vdt_start, vdt_end);
 	vipcol.updateLayout();
-	
-	this.div.style.fontSize = fmt("^em", vip.layout.font_scale);
 }
 
 VipGrid.prototype.scroll_col = function(offset)
@@ -218,6 +216,7 @@ function VipCol(parent, vdt_start, vdt_end)
 {
 	this.createChild(parent, "vipcol");
 
+	this.div.style.fontSize = fmt("^em", vip.layout.font_scale);
 	this.vdt_month = new VipDate(vdt_start);
 
 	if (vip.layout.col_header)
