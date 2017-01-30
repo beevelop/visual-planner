@@ -37,8 +37,6 @@ function InitMultiColView()
 	//ga_hit('multi_col_count', vip.multi_col.count);
 	//ga_hit('multi_col_scroll_offset', vip.multi_col.auto_scroll ? vip.multi_col.offset : 'n/a');
 	//ga_hit('event_format', vip.events.format);
-
-	document.body.style.fontSize = "0.64em";
 	
 	init_gadget();
 	vip_init_grid(document.body);
