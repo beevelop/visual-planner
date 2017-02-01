@@ -212,8 +212,8 @@ VipGrid.prototype.updateLayout = function()
 	var vipcol = this.First();
 	while(vipcol)
 	{
-		vipcol.div.style.width = this.colwidth;
 		vipcol.div.style.left = fmt("^px", xpx);
+		vipcol.div.style.width = this.colwidth;
 		vipcol.updateLayout();
 
 		xpx += this.colspacing;
