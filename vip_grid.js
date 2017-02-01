@@ -2,6 +2,7 @@
 var vip = {
 	grid: null,
 	scrolling_enabled: true,
+	indicator_enabled: true,
 	layout: {
 		col_count: 8,
 		col_header: true,
@@ -26,7 +27,7 @@ var vip = {
 	},
 	selection: {start: null, end: null},
 	touch: {id: null, start: {x:0, y:0}},
-	event_req: {add: null, queue: [], pending: false}
+	event_req: {add: function(){}, queue: [], pending: false}
 };
 
 function vip_init_grid(container_element)
@@ -73,12 +74,12 @@ function install_event_handling()
 
 function onResizeView()
 {
-	vip.grid.updateLayout(true);
+	vip.grid.updateLayout();
 }
 
 function onMediaChange(mql)
 {
-	vip.grid.updateLayout(true);
+	vip.grid.updateLayout();
 
 	//if (mql.matches)
 		//ga_hit('media', 'print');

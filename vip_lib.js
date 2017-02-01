@@ -139,7 +139,7 @@ VipGrid.prototype.create = function()
 		vdt_start.MoveMonths(1);
 	}
 	
-	this.updateLayout(true);
+	this.updateLayout();
 }
 
 VipGrid.prototype.createSingleCol = function()
@@ -153,7 +153,8 @@ VipGrid.prototype.createSingleCol = function()
 	vdt_end.MoveDays(28);
 	
 	var vipcol = new VipCol(this, vdt_start, vdt_end);
-	vipcol.updateLayout();
+
+	this.updateLayout();
 }
 
 VipGrid.prototype.scroll_col = function(offset)
@@ -179,31 +180,43 @@ VipGrid.prototype.scroll_col = function(offset)
 		vdt_end.MoveMonths(1);
 
 		var vipcol = new VipCol(this, vdt_start, vdt_end);
-		vipcol.updateLayout();
 
 		if (!ltor)
 			this.MoveLastBefore(this.First());  // move col to left
 	}
 
-	this.updateLayout(false);
-}
-
-VipGrid.prototype.updateLayout = function(update_cols)
-{
 	var xpx = 0;
-	var wpx = Math.floor(this.div.offsetWidth/this.div.childElementCount);
-	
 	var vipcol = this.First();
-	
 	while(vipcol)
 	{
-		vipcol.div.style.width = fmt("^px", wpx-1);
 		vipcol.div.style.left = fmt("^px", xpx);
-		xpx += wpx;
 		
-		if (update_cols)
+		if (vipcol.div.style.width != this.colwidth)
+		{
+			vipcol.div.style.width = this.colwidth;
 			vipcol.updateLayout();
+		}
 
+		xpx += this.colspacing;
+		vipcol = vipcol.Next();
+	}
+}
+
+VipGrid.prototype.updateLayout = function()
+{
+	this.colspacing = Math.floor(this.div.offsetWidth/this.div.childElementCount);
+	this.colwidth = fmt("^px", this.colspacing-1);
+	
+	var xpx = 0;
+
+	var vipcol = this.First();
+	while(vipcol)
+	{
+		vipcol.div.style.width = this.colwidth;
+		vipcol.div.style.left = fmt("^px", xpx);
+		vipcol.updateLayout();
+
+		xpx += this.colspacing;
 		vipcol = vipcol.Next();
 	}
 }
@@ -261,7 +274,7 @@ function VipCol(parent, vdt_start, vdt_end)
 	this.lastcell = this.vipcells.Last();
 	this.datespan = {start: new VipDate(vdt_start), end: new VipDate(vdt_end)};
 	
-	//vip.event_req.add(this);
+	vip.event_req.add(this);
 }
 
 VipCol.prototype = new VipObject;
@@ -298,8 +311,14 @@ VipCol.prototype.updateLayout = function()
 	
 	this.vipseltip.div.style.lineHeight = cellheight;
 	
-	var celltop=0;
 	var vipcell = this.vipcells.First();
+	var cy = vipcell.vipnum.div.offsetWidth + 1;
+
+	this.vipevts.div.style.backgroundColor = "rgba(255,0,0,0.6)";
+	this.vipevts.div.style.left = fmt("^px", cy);
+	this.vipevts.div.style.width = fmt("^px", this.div.offsetWidth - cy);
+	
+	var celltop=0;
 	while(vipcell)
 	{
 		vipcell.div.style.top = fmt("^px", celltop);
@@ -345,10 +364,10 @@ function VipCell(parent, col, vdt)
 	if (vdt.isWeekend())
 		this.div.style.backgroundColor = "#d8d8d8";
 
-	var vipnum = new VipDiv(this, "vipnum");
-	vipnum.setText(vdt.DayOfMonth());
+	this.vipnum = new VipDiv(this, "vipnum");
+	this.vipnum.setText(vdt.DayOfMonth());
 
-	var num = vipnum.div;
+	var num = this.vipnum.div;
 	num.style.width = "2em";
 	num.style.textAlign = "center";
 	num.style.cursor = "pointer";
