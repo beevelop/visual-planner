@@ -1,8 +1,6 @@
 // global object and settings
 var vip = {
 	grid: null,
-	scrolling_enabled: true,
-	indicator_enabled: true,
 	layout: {
 		col_count: 8,
 		col_header: true,

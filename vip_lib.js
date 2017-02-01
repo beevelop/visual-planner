@@ -114,6 +114,14 @@ VipDiv.prototype = new VipObject;
 function VipGrid(container_element)
 {
 	this.createChildDiv(container_element, "vipgrid");
+
+	this.colcount = 8;
+	this.cellcount = 31;
+	this.font_scale = 0.64;
+	this.autoscroll = true;
+	this.col_offset = -1;
+	this.scrolling_disabled = false;
+	this.indicator = false;
 }
 
 VipGrid.prototype = new VipObject;
@@ -123,14 +131,14 @@ VipGrid.prototype.create = function()
 	var vdt_start = new VipDate.Today();
 	vdt_start.MoveToStartOfMonth();
 
-	if (vip.multi_col.auto_scroll)
-		vdt_start.MoveMonths(vip.multi_col.offset);
+	if (this.autoscroll)
+		vdt_start.MoveMonths(this.col_offset);
 	else
 		vdt_start.MoveToStartOfYear();
 
 	var vdt_end = new VipDate(vdt_start);
 
-	for (var c=0; c < vip.layout.col_count; c++)
+	for (var c=0; c < this.colcount; c++)
 	{
 		vdt_end.MoveMonths(1);
 
@@ -144,7 +152,9 @@ VipGrid.prototype.create = function()
 
 VipGrid.prototype.createSingleCol = function()
 {
-	this.SingleCol = true;
+	this.cellcount = 28;
+	this.scrolling_disabled = true;
+	this.indicator = true;
 
 	var vdt_start = new VipDate.Today();
 	vdt_start.MoveToStartOfWeek(1);  // monday this week
@@ -159,7 +169,7 @@ VipGrid.prototype.createSingleCol = function()
 
 VipGrid.prototype.scroll_col = function(offset)
 {
-	if (this.SingleCol)
+	if (this.scrolling_disabled)
 		return;
 
 	var cols = this.div;
@@ -193,6 +203,7 @@ VipGrid.prototype.scroll_col = function(offset)
 		
 		if (vipcol.div.style.width != this.colwidth)
 		{
+			console.log(vipcol);
 			vipcol.div.style.width = this.colwidth;
 			vipcol.updateLayout();
 		}
@@ -258,9 +269,12 @@ function VipCol(parent, vdt_start, vdt_end)
 	this.vipsel.div.style.backgroundColor = "rgba(255,255,127,0.6)";
 	this.vipsel.Show(false);
 
-	this.vipind = new VipDiv(this.vipcelloffset, "vipind");
-	this.vipind.div.style.backgroundColor = "rgba(0,0,0,0.3)";
-	this.vipind.Show(false);
+	if (vip.grid.indicator)
+	{
+		this.vipind = new VipDiv(this.vipcelloffset, "vipind");
+		this.vipind.div.style.backgroundColor = "rgba(0,0,0,0.3)";
+		this.vipind.Show(false);
+	}
 
 	this.vipseltip = new VipDiv(this.vipcelloffset, "vipseltip");
 	this.vipseltip.div.style.fontSize = "0.8em";
@@ -294,13 +308,13 @@ VipCol.prototype.updateSelectionTip = function(vipcell_start, vipcell_end)
 
 VipCol.prototype.updateLayout = function()
 {
-	var cellcount = vip.grid.SingleCol ? 28 : 31;
+	var c = vip.grid.cellcount;
 	if (vip.layout.col_offset)
-		cellcount += 6;
+		c += 6;
 	
 	var offset = this.viphdr ? this.viphdr.div.offsetHeight : 0;
 
-	var cellspace = Math.floor((this.div.offsetHeight-offset)/cellcount);
+	var cellspace = Math.floor((this.div.offsetHeight-offset)/c);
 	var cellheight = fmt("^px", cellspace-1);
 
 	if (vip.layout.col_offset)
@@ -313,6 +327,14 @@ VipCol.prototype.updateLayout = function()
 	
 	var vipcell = this.vipcells.First();
 	var cy = vipcell.vipnum.div.offsetWidth + 1;
+
+	if (this.vipind)
+	{
+		this.vipind.div.style.left = fmt("^px", cy);
+		this.vipind.div.style.width = "1px";
+		cy += 2;
+this.vipind.Show(true);
+	}
 
 	this.vipevts.div.style.backgroundColor = "rgba(255,0,0,0.6)";
 	this.vipevts.div.style.left = fmt("^px", cy);
