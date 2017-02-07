@@ -26,7 +26,7 @@ function updateSingleColLayout()
 	gadgets.window.adjustHeight(show ? grid.offsetBottom : grid.offsetTop);
 
 	google.calendar.subscribeToDates(show ? update_dates : null);
-	google.calendar.subscribeToDataChange(show ? update_events : null);
+	//google.calendar.subscribeToDataChange(show ? update_events : null);
 
 	//ga_hit('view', vip.single_col.show ? 'single_col' : 'none');
 }
@@ -96,8 +96,8 @@ function onclick_day_number(event)
 	if ("vipobj" in num)
 	if (num.vipobj.parent instanceof VipCell)
 	{
-		var vdt = num.vipobj.parent.vipdate;
-		google.calendar.showDate(vdt.getFullYear(), (vdt.getMonth() + 1), vdt.getDate());
+		var dt = num.vipobj.parent.vipdate.dt;
+		google.calendar.showDate(dt.getFullYear(), (dt.getMonth() + 1), dt.getDate());
 	}
 }
 
