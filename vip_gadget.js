@@ -89,6 +89,18 @@ function create_calendar_event()
 	google.calendar.composeEvent({allDay: true, startTime: vdt_start.GCalDate(), endTime: vdt_end.GCalDate()});
 }
 
+function onclick_day_number(event)
+{
+	var num = event.target;
+
+	if ("vipobj" in num)
+	if (num.vipobj.parent instanceof VipCell)
+	{
+		var vdt = num.vipobj.parent.vipdate;
+		google.calendar.showDate(vdt.getFullYear(), (vdt.getMonth() + 1), vdt.getDate());
+	}
+}
+
 
 /////////////////////////////////////////////////////////////////
 // calendar event handlers

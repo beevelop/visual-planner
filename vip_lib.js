@@ -566,11 +566,6 @@ VipDate.prototype.TimespanTo = function(vdt_end)
 	return (w > 0 ? fmt("^, ^-^", c, w, d) : fmt("^", c));
 }
 
-VipDate.prototype.ShowInCalendar = function()
-{
-	//google.calendar.showDate(this.dt.getFullYear(), (this.dt.getMonth() + 1), this.dt.getDate());
-}
-
 
 
 //////////////////////////////////////////////////////////////////////
