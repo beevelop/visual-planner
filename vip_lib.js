@@ -344,10 +344,9 @@ VipCol.prototype.updateLayout = function()
 		this.vipind.div.style.left = fmt("^px", cy);
 		this.vipind.div.style.width = "1px";
 		cy += 2;
-this.vipind.Show(true);
 	}
 
-	this.vipevts.div.style.backgroundColor = "rgba(255,0,0,0.6)";
+	//this.vipevts.div.style.backgroundColor = "rgba(255,0,0,0.6)";
 	this.vipevts.div.style.left = fmt("^px", cy);
 	this.vipevts.div.style.width = fmt("^px", this.div.offsetWidth - cy);
 	
