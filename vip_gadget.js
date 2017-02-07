@@ -102,17 +102,17 @@ function update_dates(cal_dates)
 function update_indicator(cal_dates)
 // redraw date range indicator
 {
-	var vipcol = vip.host.getFirstChild();
+	var vipcol = vip.grid.First();
 	if (!vipcol) return;
 	vipcol.vipind.Align(null);
 
-	var vdt_start = new VipDate.GCal(cal_dates.startTime);
-	var vdt_end = new VipDate.GCal(cal_dates.endTime);
+	var vdt_start = gdt2vdt(cal_dates.startTime);
+	var vdt_end = gdt2vdt(cal_dates.endTime);
 
-	var cell_top = vip.host.getVipCell(vdt_start);
-	var cell_bottom = vip.host.getVipCell(vdt_end);
-	var cell_first = vipcol.vipcells.getFirstChild();
-	var cell_last = vipcol.vipcells.getLastChild();
+	var cell_top = vip.grid.getVipCell(vdt_start);
+	var cell_bottom = vip.grid.getVipCell(vdt_end);
+	var cell_first = vipcol.vipcells.First();
+	var cell_last = vipcol.vipcells.Last();
 
 	if (!cell_top)
 	if (cell_first.inDateRange(vdt_start, vdt_end))
@@ -124,6 +124,13 @@ function update_indicator(cal_dates)
 	
 	if (cell_top && cell_bottom)
 		vipcol.vipind.Align(cell_top, cell_bottom);
+}
+
+function gdt2vdt(gdt)
+{
+	var dt = google.calendar.utils.toDate(gdt);
+	var vdt = new VipDate.YMD(dt.getFullYear(), dt.getMonth()+1, dt.getDate());
+	return vdt;
 }
 
 function update_events()

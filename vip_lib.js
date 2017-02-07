@@ -232,6 +232,17 @@ VipGrid.prototype.updateLayout = function()
 	}
 }
 
+VipGrid.prototype.getVipCell = function(vdt)
+{
+	var div = document.getElementById(vdt.Datestamp());
+	
+	if (div)
+	if (div.vipobj instanceof VipCell)
+		return div.vipobj;
+
+	return null;
+}
+
 
 
 //////////////////////////////////////////////////////////////////////
@@ -462,15 +473,6 @@ VipDate.prototype.constructor.YMD = function(yyyy, mm, dd)
 	vdt.dt = new Date(yyyy, mm-1, dd);
 	return vdt;
 }
-
-/*
-VipDate.prototype.constructor.GCal = function(gdt)
-{
-	var dt = google.calendar.utils.toDate(gdt);
-	var vdt = new VipDate.YMD(dt.getFullYear(), dt.getMonth()+1, dt.getDate());
-	return vdt;
-}
-*/
 
 VipDate.prototype.MoveDays = function(offset)
 {
