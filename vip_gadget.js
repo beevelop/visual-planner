@@ -8,8 +8,6 @@ function InitSingleColView()
 	init_gadget();
 	
 	vip_init_grid(grid);
-	vip.layout.col_header = false;
-	vip.layout.col_offset = false;
 	vip.grid.createSingleCol();
 
 	updateSingleColLayout();

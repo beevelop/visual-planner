@@ -1,20 +1,6 @@
-// global object and settings
+// global object
 var vip = {
 	grid: null,
-	layout: {
-		col_count: 8,
-		col_header: true,
-		col_offset: true,
-		highlight_weekend: true,
-		max_cells: 31,
-		font_scale: 0.64
-	},
-	multi_col: {
-		auto_scroll: true,
-		offset: -1,
-		count: 8,
-		past_transparency: 30
-	},
 	events: {
 		time_24hr: true,
 		proportional: {show: false, start_hour:8, end_hour:20},
