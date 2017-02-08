@@ -1,3 +1,6 @@
+vip.event_req = {queue: [], pending: false};
+
+
 function init_gadget()
 {
 	google.calendar.getPreferences(receive_GCalPrefs);
@@ -8,6 +11,7 @@ function InitSingleColView()
 	init_gadget();
 	
 	vip_init_grid(grid);
+	vip.grid.onloadVipCol = addVipEventRequest;
 	vip.grid.createSingleCol();
 
 	updateSingleColLayout();
@@ -24,7 +28,7 @@ function updateSingleColLayout()
 	gadgets.window.adjustHeight(show ? grid.offsetBottom : grid.offsetTop);
 
 	google.calendar.subscribeToDates(show ? update_dates : null);
-	//google.calendar.subscribeToDataChange(show ? update_events : null);
+	google.calendar.subscribeToDataChange(show ? update_events : null);
 
 	//ga_hit('view', vip.single_col.show ? 'single_col' : 'none');
 }
@@ -38,6 +42,7 @@ function InitMultiColView()
 	
 	init_gadget();
 	vip_init_grid(document.body);
+	vip.grid.onloadVipCol = addVipEventRequest;
 	vip.grid.create();
 }
 
@@ -99,6 +104,12 @@ function onclickVipDayNumber(event)
 	}
 }
 
+function addVipEventRequest(vipcol)
+{
+	vip.event_req.queue.push(vipcol);
+	request_events();
+}
+
 
 /////////////////////////////////////////////////////////////////
 // calendar event handlers
@@ -149,12 +160,13 @@ function update_events()
 	vip.event_req.queue = [];
 	
 	// clear existing event items
-	var vipcol = vip.host.getFirstChild();
+	var vipcol = vip.grid.First();
 	while (vipcol)
 	{
 		vipcol.vipevts.ClearContent();
 		
-		var vipcell = vipcol.vipcells.getFirstChild();
+/*
+		var vipcell = vipcol.vipcells.First();
 		while (vipcell)
 		{
 			vipcell.vipevts.ClearContent();
@@ -162,6 +174,7 @@ function update_events()
 
 			vipcell = vipcell.Next();
 		}
+*/
 
 		vip.event_req.queue.push(vipcol);
 		
@@ -182,8 +195,9 @@ function request_events()
 
 	vip.event_req.pending = true;
 
-	var vipcol = vip.event_req.queue.shift();
-	google.calendar.read.getEvents(receive_events, "selected", vipcol.ReqDateStart, vipcol.ReqDateEnd);
+	var gdtStart = google.calendar.utils.fromDate(vipcol.datespan.start.dt);
+	var gdtEnd = google.calendar.utils.fromDate(vipcol.datespan.end.dt);
+	google.calendar.read.getEvents(receive_events, "selected", gdtStart, gdtEnd);
 }
 
 function receive_events(data)
@@ -220,6 +234,7 @@ function receive_events(data)
 
 function add_all_day_event(event)
 {
+console.log(event);
 	if (!vip.events.allday.show)
 		return;
 	
@@ -250,6 +265,7 @@ function add_all_day_event(event)
 
 function add_timed_event(event)
 {
+return;
 	if (!vip.events.timed.show)
 		return;
 	

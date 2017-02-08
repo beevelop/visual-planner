@@ -126,6 +126,7 @@ function VipGrid(container_element)
 	this.past_transparency = 30;
 	this.scrolling_disabled = false;
 	this.date_indicator = false;
+	this.onloadVipCol = function() {};
 }
 
 VipGrid.prototype = new VipObject;
@@ -305,7 +306,7 @@ function VipCol(parent, vdt_start, vdt_end)
 	this.lastcell = this.vipcells.Last();
 	this.datespan = {start: new VipDate(vdt_start), end: new VipDate(vdt_end)};
 	
-	vip.event_req.add(this);
+	vip.grid.onloadVipCol(this);
 }
 
 VipCol.prototype = new VipObject;
