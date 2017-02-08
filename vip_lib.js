@@ -203,7 +203,6 @@ VipGrid.prototype.scroll_col = function(offset)
 		
 		if (vipcol.div.style.width != this.colwidth)
 		{
-			console.log(vipcol);
 			vipcol.div.style.width = this.colwidth;
 			vipcol.updateLayout();
 		}
