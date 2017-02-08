@@ -87,7 +87,7 @@ function onMediaChange(mql)
 /////////////////////////////////////////////////////////////////
 // mouse/keyboard event handlers
 
-function onclick_day_number(event)
+function onclickVipDayNumber(event)
 {
 	var num = event.target;
 
@@ -99,7 +99,7 @@ function onclick_day_number(event)
 	}
 }
 
-function onclick_month_header(event)
+function onclickVipMonthHeader(event)
 {
 	var cell = event.target;
 

@@ -264,7 +264,7 @@ function VipCol(parent, vdt_start, vdt_end)
 		hdr.style.lineHeight = "2em"
 		hdr.style.pointerEvents = "all";
 		hdr.style.cursor = "pointer";
-		hdr.onclick = onclick_month_header;
+		hdr.onclick = onclickVipMonthHeader;
 
 		if (this.vdt_month.isPastMonth())
 			this.div.style.opacity = ((100 - vip.multi_col.past_transparency) / 100);
@@ -407,7 +407,7 @@ function VipCell(parent, col, vdt)
 	num.style.textAlign = "center";
 	num.style.cursor = "pointer";
 	num.style.pointerEvents = "all";
-	num.onclick = onclick_day_number;
+	num.onclick = onclickVipDayNumber;
 
 	if (vdt.isToday())
 	{

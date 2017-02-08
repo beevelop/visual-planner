@@ -89,7 +89,7 @@ function create_calendar_event()
 	google.calendar.composeEvent({allDay: true, startTime: vdt_start.GCalDate(), endTime: vdt_end.GCalDate()});
 }
 
-function onclick_day_number(event)
+function onclickVipDayNumber(event)
 {
 	var num = event.target;
 
