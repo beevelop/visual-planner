@@ -327,6 +327,7 @@ VipCol.prototype.updateLayout = function()
 
 	var cellspace = Math.floor((this.div.offsetHeight-offset)/c);
 	var cellheight = fmt("^px", cellspace-1);
+	var numheight = fmt("^px", cellspace-3);
 
 	if (vip.layout.col_offset)
 		offset += (cellspace * this.vdt_month.DayOfWeek());
@@ -337,7 +338,22 @@ VipCol.prototype.updateLayout = function()
 	this.vipseltip.div.style.lineHeight = cellheight;
 	
 	var vipcell = this.vipcells.First();
-	var cy = vipcell.vipnum.div.offsetWidth + 1;
+	var cy = vipcell.vipnum.div.offsetWidth + 2;
+	
+	var celltop=0;
+	while(vipcell)
+	{
+		vipcell.div.style.top = fmt("^px", celltop);
+		vipcell.div.style.height = cellheight;
+		vipcell.div.style.lineHeight = cellheight;
+		vipcell.vipnum.div.style.top = "1px";
+		vipcell.vipnum.div.style.left = "1px";
+		vipcell.vipnum.div.style.height = numheight;
+		vipcell.vipnum.div.style.lineHeight = numheight;
+		celltop += cellspace;
+
+		vipcell = vipcell.Next();
+	}
 
 	if (this.vipind)
 	{
@@ -346,20 +362,9 @@ VipCol.prototype.updateLayout = function()
 		cy += 2;
 	}
 
-	//this.vipevts.div.style.backgroundColor = "rgba(255,0,0,0.6)";
+	this.vipevts.div.style.backgroundColor = "rgba(255,0,0,0.6)";
 	this.vipevts.div.style.left = fmt("^px", cy);
 	this.vipevts.div.style.width = fmt("^px", this.div.offsetWidth - cy);
-	
-	var celltop=0;
-	while(vipcell)
-	{
-		vipcell.div.style.top = fmt("^px", celltop);
-		vipcell.div.style.height = cellheight;
-		vipcell.div.style.lineHeight = cellheight;
-		celltop += cellspace;
-
-		vipcell = vipcell.Next();
-	}
 }
 
 
@@ -400,7 +405,7 @@ function VipCell(parent, col, vdt)
 	this.vipnum.setText(vdt.DayOfMonth());
 
 	var num = this.vipnum.div;
-	num.style.width = "2em";
+	num.style.width = "1.6em";
 	num.style.textAlign = "center";
 	num.style.cursor = "pointer";
 	num.style.pointerEvents = "all";
