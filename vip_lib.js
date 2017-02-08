@@ -362,7 +362,6 @@ VipCol.prototype.updateLayout = function()
 		cy += 2;
 	}
 
-	this.vipevts.div.style.backgroundColor = "rgba(255,0,0,0.6)";
 	this.vipevts.div.style.left = fmt("^px", cy);
 	this.vipevts.div.style.width = fmt("^px", this.div.offsetWidth - cy);
 }
