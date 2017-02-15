@@ -377,7 +377,7 @@ VipCol.prototype.addEvent = function(event, vipcell)
 {
 	var vipevt = null;
 
-	var vipsib = this.vipevts.getFirstChild();
+	var vipsib = this.vipevts.First();
 	while (vipsib)
 	{
 		if (event.id == vipsib.evt_id)
@@ -407,7 +407,7 @@ VipCol.prototype.updateEventLayout = function()
 {
 	var fixed = [];
 
-	var vipsib = this.vipevts.getFirstChild();
+	var vipsib = this.vipevts.First();
 	while (vipsib)
 	{
 		var x_off = (vipsib.div.clientWidth + 2);
@@ -536,7 +536,7 @@ VipCell.prototype.updateEventInfo = function()
 {
 	var str_tooltip = "";
 
-	var vipevt = this.vipcol.vipevts.getFirstChild();
+	var vipevt = this.vipcol.vipevts.First();
 	while (vipevt)
 	{
 		if (this.inRange(vipevt.vipcell_start, vipevt.vipcell_end))
@@ -550,7 +550,7 @@ VipCell.prototype.updateEventInfo = function()
 		vipevt = vipevt.Next();
 	}
 
-	vipevt = this.vipevts.getFirstChild();
+	vipevt = this.vipevts.First();
 	while (vipevt)
 	{
 		if (str_tooltip.length > 0)
