@@ -570,7 +570,7 @@ VipCell.prototype.updateEventInfo = function()
 
 function VipMultiDayEvent(parent, event, vipcell)
 {
-	this.createDiv(parent, "vipmultidayevent");
+	this.createChild(parent, "vipmultidayevent");
 	this.evt_id = event.id;
 	this.evt_title = html2txt(event.title);
 	this.vipcell_start = vipcell;
