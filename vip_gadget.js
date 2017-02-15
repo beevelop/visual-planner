@@ -147,13 +147,6 @@ function update_indicator(cal_dates)
 		vipcol.vipind.Align(cell_top, cell_bottom);
 }
 
-function gdt2vdt(gdt)
-{
-	var dt = google.calendar.utils.toDate(gdt);
-	var vdt = new VipDate.YMD(dt.getFullYear(), dt.getMonth()+1, dt.getDate());
-	return vdt;
-}
-
 function update_events()
 // callback when calendar events have changed
 {
@@ -214,7 +207,7 @@ function receive_events(data)
 
 		if (cal_data.error)
 		{
-			alert(fmt("visual-planner: error retrieving event data : ^", cal_data.error));
+			alert(fmt("visual-planner - error retrieving event data : ^", cal_data.error));
 			return;
 		}
 		
@@ -236,12 +229,13 @@ function receive_events(data)
 
 function add_all_day_event(event)
 {
-console.log(event);
+/*
 	if (!vip.events.allday.show)
 		return;
+*/
 	
-	var vdt_start = new VipDate.GCal(event.startTime);
-	var vdt_end = new VipDate.GCal(event.endTime);
+	var vdt_start = gdt2vdt(event.startTime);
+	var vdt_end = gdt2vdt(event.endTime);
 
 	var vdt_nextday = new VipDate(vdt_start);
 	vdt_nextday.MoveDays(1);
@@ -249,8 +243,9 @@ console.log(event);
 
 	while (vdt_start.Datestamp() < vdt_end.Datestamp())
 	{
-		var vipcell = vip.host.getVipCell(vdt_start);
+		var vipcell = vip.grid.getVipCell(vdt_start);
 
+/*
 		if (vipcell)
 		{
 			if (vip.events.allday.one_day_as_timed && one_day_evt)
@@ -260,6 +255,10 @@ console.log(event);
 			else
 				vipcell.vipcol.addEvent(event, vipcell);
 		}
+*/
+
+		if (vipcell)
+			vipcell.vipcol.addEvent(event, vipcell);
 
 		vdt_start.MoveDays(1);
 	}
@@ -298,4 +297,16 @@ return;
 			vdt_start.MoveDays(1);
 		}
 	}
+}
+
+function gdt2vdt(gdt)
+{
+	var dt = google.calendar.utils.toDate(gdt);
+	var vdt = new VipDate.YMD(dt.getFullYear(), dt.getMonth()+1, dt.getDate());
+	return vdt;
+}
+
+function vdt2gdt(vdt)
+{
+	return google.calendar.utils.fromDate(vdt.dt);
 }
