@@ -6,7 +6,7 @@ var vip = {
 		proportional: {show: false, start_hour:8, end_hour:20},
 		title: {show: true, time: true, colour: false, hide_marker: false},
 		marker: {hide: false},
-		timed: {show: true, multi_day_as_all_day: false},
+		timed: {show: true, multi_day_as_all_day: true},
 		allday: {show: true, one_day_as_timed: true, multi_day_as_timed: false, width_chars: 1}
 	},
 	selection: {start: null, end: null},

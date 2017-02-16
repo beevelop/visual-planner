@@ -245,7 +245,6 @@ function add_all_day_event(event)
 	{
 		var vipcell = vip.grid.getVipCell(vdt_start);
 
-/*
 		if (vipcell)
 		{
 			if (vip.events.allday.one_day_as_timed && one_day_evt)
@@ -253,12 +252,6 @@ function add_all_day_event(event)
 			else if (vip.events.allday.multi_day_as_timed && !one_day_evt)
 				vipcell.addEvent(event);
 			else
-				vipcell.vipcol.addEvent(event, vipcell);
-		}
-*/
-		if (vipcell)
-		{
-			if (!one_day_evt)
 				vipcell.vipcol.addEvent(event, vipcell);
 		}
 
