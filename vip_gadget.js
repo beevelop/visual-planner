@@ -259,16 +259,15 @@ function add_all_day_event(event)
 
 function add_timed_event(event)
 {
-return;
 	if (!vip.events.timed.show)
 		return;
 	
-	var vdt_start = new VipDate.GCal(event.startTime);
-	var vdt_end = new VipDate.GCal(event.endTime);
+	var vdt_start = gdt2vdt(event.startTime);
+	var vdt_end = gdt2vdt(event.endTime);
 
 	if (vdt_start.isSameDay(vdt_end))
 	{
-		var vipcell = vip.host.getVipCell(vdt_start);
+		var vipcell = vip.grid.getVipCell(vdt_start);
 		
 		if (vipcell)
 			vipcell.addEvent(event);
@@ -277,7 +276,7 @@ return;
 	{
 		while (vdt_start.Datestamp() <= vdt_end.Datestamp())
 		{
-			var vipcell = vip.host.getVipCell(vdt_start);
+			var vipcell = vip.grid.getVipCell(vdt_start);
 
 			if (vipcell)
 			{
