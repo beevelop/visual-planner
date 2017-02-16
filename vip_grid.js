@@ -252,23 +252,6 @@ function cancel_selection()
 
 function create_calendar_event()
 {
-	if (vip.selection.start.isBefore(vip.selection.end))
-	{
-		var vdt_start = new VipDate(vip.selection.start.vipdate);
-		var vdt_end = new VipDate(vip.selection.end.vipdate);
-	}
-	else
-	{
-		var vdt_start = new VipDate(vip.selection.end.vipdate);
-		var vdt_end = new VipDate(vip.selection.start.vipdate);
-	}
-	
-	vdt_end.MoveDays(1);  // end date is exclusive
-
-	//google.calendar.composeEvent({allDay: true, startTime: vdt_start.GCalDate(), endTime: vdt_end.GCalDate()});
-	console.log("create calendar event:");
-	console.log(vdt_start);
-	console.log(vdt_end);
 }
 
 function ontouchstart(event)

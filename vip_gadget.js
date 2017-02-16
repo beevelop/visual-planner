@@ -89,7 +89,7 @@ function create_calendar_event()
 	
 	vdt_end.MoveDays(1);  // end date is exclusive
 
-	google.calendar.composeEvent({allDay: true, startTime: vdt_start.GCalDate(), endTime: vdt_end.GCalDate()});
+	google.calendar.composeEvent({allDay: true, startTime: vdt2gdt(vdt_start), endTime: vdt2gdt(vdt_end)});
 }
 
 function onclickVipDayNumber(event)
