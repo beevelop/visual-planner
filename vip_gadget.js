@@ -158,7 +158,6 @@ function update_events()
 	{
 		vipcol.vipevts.ClearContent();
 		
-/*
 		var vipcell = vipcol.vipcells.First();
 		while (vipcell)
 		{
@@ -167,7 +166,6 @@ function update_events()
 
 			vipcell = vipcell.Next();
 		}
-*/
 
 		vip.event_req.queue.push(vipcol);
 		
@@ -229,10 +227,10 @@ function receive_events(data)
 
 function add_all_day_event(event)
 {
-/*
 	if (!vip.events.allday.show)
 		return;
-*/
+
+	event.vtmStart = gdt2vtm(event.startTime);
 	
 	var vdt_start = gdt2vdt(event.startTime);
 	var vdt_end = gdt2vdt(event.endTime);
@@ -299,6 +297,17 @@ function gdt2vdt(gdt)
 	var dt = google.calendar.utils.toDate(gdt);
 	var vdt = new VipDate.YMD(dt.getFullYear(), dt.getMonth()+1, dt.getDate());
 	return vdt;
+}
+
+function gdt2vtm(gdt)
+{
+	var dt = google.calendar.utils.toDate(gdt);
+
+	var vtm = new VipTime;
+	vtm.hh = dt.getHours();
+	vtm.mm = dt.getMinutes();
+
+	return vtm;
 }
 
 function vdt2gdt(vdt)

@@ -399,7 +399,7 @@ VipCol.prototype.addEvent = function(event, vipcell)
 	}
 
 	vipevt.updateEvent(vipcell);
-	//vipcell.updateEventInfo();
+	vipcell.updateEventInfo();
 	this.updateEventLayout();
 }
 
@@ -499,12 +499,8 @@ function VipCell(parent, col, vdt)
 		num.style.backgroundColor = "red";
 	}
 	
-/*
 	this.vipevts = new VipDiv(this, "vipevts");
-	this.vipevts.setPos(vip.cell.margin, 0);
-	this.vipevts.setSize((this.div.offsetWidth - vip.cell.margin), this.div.offsetHeight);
 	this.vipevts.div.style.overflow = "hidden";
-*/
 }
 
 VipCell.prototype = new VipObject;
@@ -530,6 +526,121 @@ VipCell.prototype.inDateRange = function(vdt_lo, vdt_hi)
 		return true;
 
 	return false;
+}
+
+VipCell.prototype.addEvent = function(event)
+{
+return;
+	var timestamp = event.vtmStart.Timestamp();
+
+	var vipsib = this.vipevts.First();
+	while (vipsib)
+	{
+		if (event.id == vipsib.evt_id)
+			return;
+
+		if (timestamp < vipsib.evt_timestamp)
+			break;
+
+		vipsib = vipsib.Next();
+	}
+
+	var vipevt = new VipSingleDayEvent(this, event);
+	this.vipevts.MoveLastBefore(vipsib);  // sort in time order
+
+	this.updateEventInfo();
+	this.updateEventLayout();
+}
+
+VipCell.prototype.updateEventLayout = function()
+{
+return;
+	if (vip.events.proportional.show)
+		return;
+		
+	var sep = 2;
+
+	var tot_width = 0;
+	var vipevt = this.vipevts.First();
+	while (vipevt)
+	{
+		if (tot_width > 0)
+			tot_width += sep;
+		
+		vipevt.initLayout();
+		tot_width += vipevt.div.offsetWidth;
+
+		vipevt = vipevt.Next();
+	}
+
+	if (vip.events.title.show)
+	{
+		while (tot_width > this.vipevts.div.offsetWidth)
+		{
+			var longest = this.vipevts.First();
+			var vipevt = longest.Next();
+			while (vipevt)
+			{
+				if (vipevt.flex_title.length > longest.flex_title.length)
+					longest = vipevt;
+					
+				vipevt = vipevt.Next();
+			}
+			
+			if (longest.flex_title.length == 0)
+				break;
+
+			tot_width -= longest.div.offsetWidth;
+			longest.shortenTitle();
+			tot_width += longest.div.offsetWidth;
+		}
+	}
+
+	var x_off = 0;
+
+	var vipevt = this.vipevts.First();
+	while (vipevt)
+	{
+		if (x_off > 0)
+			x_off += sep;
+		
+		vipevt.div.style.left = x_off;
+		x_off += vipevt.div.offsetWidth;
+
+		vipevt = vipevt.Next();
+	}
+}
+
+VipCell.prototype.updateEventInfo = function()
+{
+	var str_tooltip = "";
+
+	var vipevt = this.vipcol.vipevts.First();
+	while (vipevt)
+	{
+		if (this.inRange(vipevt.vipcell_start, vipevt.vipcell_end))
+		{
+			if (str_tooltip.length > 0)
+				str_tooltip += '\n';
+			
+			str_tooltip += vipevt.tooltip;
+		}
+
+		vipevt = vipevt.Next();
+	}
+
+	vipevt = this.vipevts.First();
+	while (vipevt)
+	{
+		if (str_tooltip.length > 0)
+			str_tooltip += '\n';
+		
+		str_tooltip += vipevt.tooltip;
+
+		vipevt = vipevt.Next();
+	}
+
+	this.div.title = str_tooltip;
 }
 
 
@@ -703,19 +814,6 @@ VipTime.prototype.constructor.HourMin = function(hh, mm)
 
 	return vtm;
 }
-
-/*
-VipTime.prototype.constructor.GCal = function(gdt)
-{
-	var dt = google.calendar.utils.toDate(gdt);
-
-	var vtm = new VipTime;
-	vtm.hh = dt.getHours();
-	vtm.mm = dt.getMinutes();
-
-	return vtm;
-}
-*/
 
 VipTime.prototype.Timestamp = function()
 {
