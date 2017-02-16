@@ -256,9 +256,11 @@ function add_all_day_event(event)
 				vipcell.vipcol.addEvent(event, vipcell);
 		}
 */
-
 		if (vipcell)
-			vipcell.vipcol.addEvent(event, vipcell);
+		{
+			if (!one_day_evt)
+				vipcell.vipcol.addEvent(event, vipcell);
+		}
 
 		vdt_start.MoveDays(1);
 	}

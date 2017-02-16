@@ -399,7 +399,7 @@ VipCol.prototype.addEvent = function(event, vipcell)
 	}
 
 	vipevt.updateEvent(vipcell);
-	vipcell.updateEventInfo();
+	//vipcell.updateEventInfo();
 	this.updateEventLayout();
 }
 
@@ -530,38 +530,6 @@ VipCell.prototype.inDateRange = function(vdt_lo, vdt_hi)
 		return true;
 
 	return false;
-}
-
-VipCell.prototype.updateEventInfo = function()
-{
-	var str_tooltip = "";
-
-	var vipevt = this.vipcol.vipevts.First();
-	while (vipevt)
-	{
-		if (this.inRange(vipevt.vipcell_start, vipevt.vipcell_end))
-		{
-			if (str_tooltip.length > 0)
-				str_tooltip += '\n';
-			
-			str_tooltip += vipevt.tooltip;
-		}
-
-		vipevt = vipevt.Next();
-	}
-
-	vipevt = this.vipevts.First();
-	while (vipevt)
-	{
-		if (str_tooltip.length > 0)
-			str_tooltip += '\n';
-		
-		str_tooltip += vipevt.tooltip;
-
-		vipevt = vipevt.Next();
-	}
-
-	this.div.setAttribute("title", str_tooltip);
 }
 
 
