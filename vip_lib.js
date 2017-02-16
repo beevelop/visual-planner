@@ -371,6 +371,7 @@ VipCol.prototype.updateLayout = function()
 
 	this.vipevts.div.style.left = fmt("^px", cy);
 	this.vipevts.div.style.width = fmt("^px", this.div.offsetWidth - cy);
+	this.updateEventLayout();
 }
 
 VipCol.prototype.addEvent = function(event, vipcell)
