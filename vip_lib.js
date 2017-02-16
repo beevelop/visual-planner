@@ -579,6 +579,7 @@ function VipMultiDayEvent(parent, event, vipcell)
 
 	var evt = this.div;
 	evt.style.width = "1em";
+	evt.style.height = "1em";
 	evt.style.backgroundColor = event.palette.medium;
 
 	if (event.calendar)
