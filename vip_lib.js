@@ -411,8 +411,8 @@ VipCol.prototype.updateEventLayout = function()
 	var vipsib = this.vipevts.First();
 	while (vipsib)
 	{
-		var x_off = (vipsib.div.clientWidth + 2);
-		vipsib.div.style.left = fmt("^px", this.div.offsetWidth - x_off);
+		var x_off = (vipsib.div.offsetWidth + 2);
+		vipsib.div.style.left = fmt("^px", this.vipevts.div.offsetWidth - x_off);
 		
 		while(true)
 		{
