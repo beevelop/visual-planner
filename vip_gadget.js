@@ -27,8 +27,8 @@ function updateSingleColLayout()
 
 	gadgets.window.adjustHeight(show ? grid.offsetBottom : grid.offsetTop);
 
-	google.calendar.subscribeToDates(show ? update_dates : null);
-	google.calendar.subscribeToDataChange(show ? update_events : null);
+	google.calendar.subscribeToDates(show ? update_dates : function() {});
+	google.calendar.subscribeToDataChange(show ? update_events : function() {});
 
 	//ga_hit('view', vip.single_col.show ? 'single_col' : 'none');
 }
