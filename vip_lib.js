@@ -531,7 +531,6 @@ VipCell.prototype.inDateRange = function(vdt_lo, vdt_hi)
 
 VipCell.prototype.addEvent = function(event)
 {
-return;
 	var timestamp = event.vtmStart.Timestamp();
 
 	var vipsib = this.vipevts.First();
@@ -555,7 +554,6 @@ return;
 
 VipCell.prototype.updateEventLayout = function()
 {
-return;
 	if (vip.events.proportional.show)
 		return;
 		
@@ -673,6 +671,134 @@ VipMultiDayEvent.prototype.updateEvent = function(vipcell)
 {
 	this.vipcell_end = vipcell;
 	this.Align(this.vipcell_start, this.vipcell_end);
+}
+
+
+
+//////////////////////////////////////////////////////////////////////
+
+function VipSingleDayEvent(vipcell, event)
+{
+	var vdt_start = event.vdtStart;
+	var vtm_start = event.vtmStart;
+
+	this.createChild(vipcell.vipevts, "vipsingledayevent");
+	this.evt_id = event.id;
+	this.evt_datestamp = vdt_start.Datestamp();
+	this.evt_timestamp = vtm_start.Timestamp();
+	this.evt_title = html2txt(event.title);
+	this.evt_timed = !event.allDay;
+	this.div.style.zIndex = "2";
+
+	this.evt_title_time = "";
+	if (this.evt_timed)
+	if (this.evt_datestamp == vipcell.vipdate.Datestamp())
+		this.evt_title_time = vtm_start.TimeTitle() + " ";
+
+	this.tooltip = this.evt_title_time;
+	if (event.calendar)
+		this.tooltip += fmt("^ - ", event.calendar);
+	this.tooltip += this.evt_title;
+
+	var x_off = 0;
+	var y_off = 0;//Math.floor((vip.cell.height - vip.events.marker.height) / 2);
+
+	if (!vip.events.title.show || !vip.events.title.hide_marker)
+	{
+		this.vipmarker = new VipDiv(this, "vipevtmarker");
+		this.vipmarker.div.style.width = "1em";
+		this.vipmarker.div.style.height = "1em";
+		//this.vipmarker.setPos(0, y_off);
+		this.vipmarker.div.style.backgroundColor = event.palette.medium;
+
+		x_off = (this.vipmarker.div.offsetWidth + 2);
+	}
+
+	if (vip.events.proportional.show)
+	{
+/*
+		var vdt_start = new VipDate.GCal(event.startTime);
+		var vdt_end = new VipDate.GCal(event.endTime);
+		
+		if (vdt_start.isSameDay(vdt_end))
+			var vtm_end = new VipTime.GCal(event.endTime);
+		else
+			var vtm_end = new VipTime.HourMin(24, 0);
+		
+		var m_duration = ((vtm_end.toSeconds() - vtm_start.toSeconds()) / 60);
+		var m_start = (vtm_start.toSeconds() / 60);
+		var m_range_start = (vip.events.proportional.start_hour * 60);
+		var m_range_end = (vip.events.proportional.end_hour * 60);
+		var m_per_px = ((m_range_end - m_range_start)/vipcell.vipevts.div.offsetWidth);
+
+		this.vipmarker.div.style.left = Math.round((m_start - m_range_start) / m_per_px);
+		this.vipmarker.div.style.width = Math.round(m_duration / m_per_px);
+
+		var off_right = (this.vipmarker.div.offsetLeft + this.vipmarker.div.offsetWidth);
+		if ((off_right <= 0) || (this.vipmarker.div.offsetLeft >= vipcell.vipevts.div.offsetWidth))
+		{
+			var viphidden = new VipDiv(this, "viphiddenevt");
+			viphidden.setPos(0, y_off);
+			viphidden.setText("...");
+		}
+*/
+	}
+
+	if (vip.events.title.show)
+	{
+		this.viptitle = new VipDiv(this, "viptitle");
+		this.viptitle.div.style.whiteSpace = "nowrap";
+		this.viptitle.div.style.lineHeight = fmt("^px", vipcell.offsetHeight);
+		this.viptitle.div.style.left = fmt("^px", x_off);
+
+		if (vip.events.title.colour)
+			this.viptitle.div.style.color = event.palette.medium;
+	}
+}
+
+VipSingleDayEvent.prototype = new VipObject;
+
+VipSingleDayEvent.prototype.initLayout = function()
+{
+	if (this.viptitle)
+	{
+		this.flex_title = "";
+
+		if (vip.events.title.time)
+			this.flex_title += this.evt_title_time;
+
+		this.flex_title += this.evt_title;
+		
+		if (vip.events.title.hide_marker)
+		if (this.Next())
+			this.flex_title += ',';
+
+		this.viptitle.setText(this.flex_title);
+	}
+
+	this.updateWidth();
+}
+
+VipSingleDayEvent.prototype.updateWidth = function()
+{
+	if (this.viptitle)
+		this.div.style.width = (this.viptitle.div.offsetLeft + this.viptitle.div.offsetWidth);
+	else if (this.vipmarker)
+		this.div.style.width = this.vipmarker.div.offsetWidth;
+	else
+		this.div.style.width = 0;
+}
+
+VipSingleDayEvent.prototype.shortenTitle = function()
+{
+	if (this.flex_title.length > 0)
+	{
+		this.flex_title = this.flex_title.substr(0, this.flex_title.length-1);
+		this.flex_title = this.flex_title.trim();
+
+		this.viptitle.setText(this.flex_title + "...");
+		this.updateWidth();
+	}
 }
 
 

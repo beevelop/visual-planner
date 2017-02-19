@@ -213,6 +213,11 @@ function receive_events(data)
 		for (var k in cal_data.events)
 		{
 			var event = cal_data.events[k];
+
+			event.vdtStart = gdt2vdt(event.startTime);
+			event.vdtEnd = gdt2vdt(event.endTime);
+			event.vtmStart = gdt2vtm(event.startTime);
+			event.vtmEnd = gdt2vtm(event.endTime);
 			
 			if (cal_data.name)
 				event.calendar = cal_data.name;
@@ -229,8 +234,6 @@ function add_all_day_event(event)
 {
 	if (!vip.events.allday.show)
 		return;
-
-	event.vtmStart = gdt2vtm(event.startTime);
 	
 	var vdt_start = gdt2vdt(event.startTime);
 	var vdt_end = gdt2vdt(event.endTime);
