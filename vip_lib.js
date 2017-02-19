@@ -14,8 +14,8 @@ VipObject.prototype.createChildDiv = function(container_element, id)
 		div.id = id;
 
 	div.style.position = "absolute";
-	div.style.width = "100%";
-	div.style.height = "100%";
+	//div.style.width = "100%";
+	//div.style.height = "100%";
 	div.style.pointerEvents = "none";
 	div.style.MozUserSelect = "none";  // ff fix
 	div.vipobj = this;
