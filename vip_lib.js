@@ -260,6 +260,7 @@ function VipCol(parent, vdt_start, vdt_end)
 	this.createChild(parent, "vipcol");
 
 	this.div.style.fontSize = fmt("^em", vip.grid.font_scale);
+	this.div.style.height = "100%";
 	this.vdt_month = new VipDate(vdt_start);
 
 	if (vip.grid.col_header)
