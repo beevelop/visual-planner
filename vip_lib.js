@@ -457,6 +457,8 @@ VipCol.prototype.intersection = function(evt1, evt2)
 function VipCells(parent, vipcol, vdt_start, vdt_end)
 {
 	this.createChild(parent, "vipcells");
+
+	this.div.style.width = "100%";
 	
 	var vdt_day = new VipDate(vdt_start);
 	while (vdt_day.dt < vdt_end.dt)
@@ -478,6 +480,7 @@ function VipCell(parent, col, vdt)
 	this.vipcol = col;
 	this.vipdate = new VipDate(vdt);
 
+	this.div.style.width = "100%";
 	this.div.style.pointerEvents = "all";
 	this.div.style.backgroundColor = "#eaeaea";
 
