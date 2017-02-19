@@ -14,8 +14,6 @@ VipObject.prototype.createChildDiv = function(container_element, id)
 		div.id = id;
 
 	div.style.position = "absolute";
-	//div.style.width = "100%";
-	//div.style.height = "100%";
 	div.style.pointerEvents = "none";
 	div.style.MozUserSelect = "none";  // ff fix
 	div.vipobj = this;
@@ -114,6 +112,9 @@ VipDiv.prototype = new VipObject;
 function VipGrid(container_element)
 {
 	this.createChildDiv(container_element, "vipgrid");
+
+	this.div.style.width = "100%";
+	this.div.style.height = "100%";
 
 	this.colcount = 8;
 	this.cellcount = 31;
