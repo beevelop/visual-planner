@@ -287,7 +287,7 @@ function VipCol(parent, vdt_start, vdt_end)
 	this.vipcells = new VipCells(this.vipcelloffset, this, vdt_start, vdt_end);
 
 	this.vipevts = new VipDiv(this.vipcelloffset, "vipevts");
-	this.vipevts.div.style.width = "100%";
+	this.vipevts.div.style.height = "100%";
 
 	this.vipsel = new VipDiv(this.vipcelloffset, "vipsel");
 	this.vipsel.div.style.width = "100%";
