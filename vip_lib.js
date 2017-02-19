@@ -270,6 +270,7 @@ function VipCol(parent, vdt_start, vdt_end)
 
 		var hdr = this.viphdr.div;
 		hdr.style.textAlign = "center";
+		hdr.style.width = "100%";
 		hdr.style.height = "2em";
 		hdr.style.lineHeight = "2em"
 		hdr.style.pointerEvents = "all";
@@ -281,11 +282,15 @@ function VipCol(parent, vdt_start, vdt_end)
 	}
 	
 	this.vipcelloffset = new VipDiv(this, "vipcelloffset");
+	this.vipcelloffset.div.style.width = "100%";
+
 	this.vipcells = new VipCells(this.vipcelloffset, this, vdt_start, vdt_end);
 
 	this.vipevts = new VipDiv(this.vipcelloffset, "vipevts");
+	this.vipevts.div.style.width = "100%";
 
 	this.vipsel = new VipDiv(this.vipcelloffset, "vipsel");
+	this.vipsel.div.style.width = "100%";
 	this.vipsel.div.style.backgroundColor = "rgba(255,255,127,0.6)";
 	this.vipsel.Show(false);
 
@@ -297,6 +302,7 @@ function VipCol(parent, vdt_start, vdt_end)
 	}
 
 	this.vipseltip = new VipDiv(this.vipcelloffset, "vipseltip");
+	this.vipseltip.div.style.width = "100%";
 	this.vipseltip.div.style.fontSize = "0.8em";
 	this.vipseltip.div.style.textAlign = "center";
 	this.vipseltip.Show(false);
@@ -459,6 +465,7 @@ function VipCells(parent, vipcol, vdt_start, vdt_end)
 	this.createChild(parent, "vipcells");
 
 	this.div.style.width = "100%";
+	this.div.style.height = "100%";
 	
 	var vdt_day = new VipDate(vdt_start);
 	while (vdt_day.dt < vdt_end.dt)
