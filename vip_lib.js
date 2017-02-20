@@ -500,8 +500,8 @@ function VipCell(parent, col, vdt)
 	}
 	
 	this.vipevts = new VipDiv(this, "vipevts");
-	this.vipevts.div.style.overflow = "hidden";
-	this.vipevts.div.style.backgroundColor = "rgba(200,0,0,0.5)";
+	//this.vipevts.div.style.overflow = "hidden";
+	//this.vipevts.div.style.backgroundColor = "rgba(200,0,0,0.5)";
 }
 
 VipCell.prototype = new VipObject;
@@ -559,6 +559,7 @@ VipCell.prototype.updateEventLayout = function()
 		
 	var sep = 2;
 
+/*
 	var tot_width = 0;
 	var vipevt = this.vipevts.First();
 	while (vipevt)
@@ -594,6 +595,7 @@ VipCell.prototype.updateEventLayout = function()
 			tot_width += longest.div.offsetWidth;
 		}
 	}
+*/
 
 	var x_off = 0;
 
@@ -748,6 +750,8 @@ function VipSingleDayEvent(vipcell, event)
 	{
 		this.viptitle = new VipDiv(this, "viptitle");
 		this.viptitle.div.style.whiteSpace = "nowrap";
+		this.viptitle.div.style.overflow = "hidden";
+		this.viptitle.div.style.textOverflow = "ellipsis";
 		this.viptitle.div.style.lineHeight = fmt("^px", vipcell.offsetHeight);
 		this.viptitle.div.style.left = fmt("^px", x_off);
 
@@ -758,6 +762,7 @@ function VipSingleDayEvent(vipcell, event)
 
 VipSingleDayEvent.prototype = new VipObject;
 
+/*
 VipSingleDayEvent.prototype.initLayout = function()
 {
 	if (this.viptitle)
@@ -800,6 +805,7 @@ VipSingleDayEvent.prototype.shortenTitle = function()
 		this.updateWidth();
 	}
 }
+*/
 
 
 
