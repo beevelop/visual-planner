@@ -783,7 +783,6 @@ VipSingleDayEvent.prototype.initLayout = function()
 	this.updateWidth();
 }
 
-/*
 VipSingleDayEvent.prototype.updateWidth = function()
 {
 	if (this.viptitle)
@@ -796,6 +795,7 @@ VipSingleDayEvent.prototype.updateWidth = function()
 
 VipSingleDayEvent.prototype.shortenTitle = function()
 {
+return;
 	if (this.flex_title.length > 0)
 	{
 		this.flex_title = this.flex_title.substr(0, this.flex_title.length-1);
@@ -805,7 +805,6 @@ VipSingleDayEvent.prototype.shortenTitle = function()
 		this.updateWidth();
 	}
 }
-*/
 
 
 
