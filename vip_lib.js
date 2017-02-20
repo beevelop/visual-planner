@@ -501,6 +501,7 @@ function VipCell(parent, col, vdt)
 	
 	this.vipevts = new VipDiv(this, "vipevts");
 	this.vipevts.div.style.overflow = "hidden";
+	this.vipevts.div.style.backgroundColor = "rgba(200,0,0,0.5)";
 }
 
 VipCell.prototype = new VipObject;
