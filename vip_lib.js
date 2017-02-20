@@ -689,6 +689,7 @@ function VipSingleDayEvent(vipcell, event)
 	this.evt_title = html2txt(event.title);
 	this.evt_timed = !event.allDay;
 	this.div.style.zIndex = "2";
+	this.div.style.width = "";
 
 	this.evt_title_time = "";
 	if (this.evt_timed)
@@ -747,6 +748,7 @@ function VipSingleDayEvent(vipcell, event)
 	if (vip.events.title.show)
 	{
 		this.viptitle = new VipDiv(this, "viptitle");
+		this.viptitle.div.style.width = "";
 		this.viptitle.div.style.whiteSpace = "nowrap";
 		this.viptitle.div.style.overflow = "hidden";
 		this.viptitle.div.style.textOverflow = "ellipsis";
