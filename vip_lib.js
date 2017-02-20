@@ -559,7 +559,6 @@ VipCell.prototype.updateEventLayout = function()
 		
 	var sep = 2;
 
-/*
 	var tot_width = 0;
 	var vipevt = this.vipevts.First();
 	while (vipevt)
@@ -573,6 +572,7 @@ VipCell.prototype.updateEventLayout = function()
 		vipevt = vipevt.Next();
 	}
 
+/*
 	if (vip.events.title.show)
 	{
 		while (tot_width > this.vipevts.div.offsetWidth)
@@ -762,7 +762,6 @@ function VipSingleDayEvent(vipcell, event)
 
 VipSingleDayEvent.prototype = new VipObject;
 
-/*
 VipSingleDayEvent.prototype.initLayout = function()
 {
 	if (this.viptitle)
@@ -784,6 +783,7 @@ VipSingleDayEvent.prototype.initLayout = function()
 	this.updateWidth();
 }
 
+/*
 VipSingleDayEvent.prototype.updateWidth = function()
 {
 	if (this.viptitle)
