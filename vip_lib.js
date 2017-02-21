@@ -692,7 +692,6 @@ function VipSingleDayEvent(vipcell, event)
 	this.evt_timed = !event.allDay;
 	this.div.style.zIndex = "2";
 	this.div.style.width = "";
-	//this.div.style.paddingLeft = "3em";
 
 	this.evt_title_time = "";
 	if (this.evt_timed)
