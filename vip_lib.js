@@ -707,8 +707,8 @@ function VipSingleDayEvent(vipcell, event)
 	if (!vip.events.title.show || !vip.events.title.hide_marker)
 	{
 		this.vipmarker = new VipDiv(this, "vipevtmarker");
-		this.vipmarker.div.style.width = "1em";
-		this.vipmarker.div.style.height = "1em";
+		this.vipmarker.div.style.width = "0.58em";
+		this.vipmarker.div.style.height = "100%";
 		//this.vipmarker.setPos(0, y_off);
 		this.vipmarker.div.style.backgroundColor = event.palette.medium;
 
