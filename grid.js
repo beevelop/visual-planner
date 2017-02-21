@@ -13,7 +13,7 @@ function init()
 	banner.style.fontSize = "0.8em";
 
 	var grid = document.getElementById("grid");
-	grid.style.fontSize = "0.64em";
+	//grid.style.fontSize = "0.64em";
 	grid.style.display = "flex";
 	grid.style.flexDirection = "row";
 	grid.style.height = "100%";
@@ -63,4 +63,15 @@ function init()
 	var col3 = document.getElementById("col3");
 	col3.style.backgroundColor = "orange";
 	col3.style.width = "33.33%";
+
+	
+	
+
+	var vipevt = document.getElementById("vipevt");
+	vipevt.style.whiteSpace = "nowrap";
+	vipevt.style.overflow = "hidden";
+	vipevt.style.textOverflow = "ellipsis";
+	vipevt.style.lineHeight = "" + vipevt.offsetHeight + "px";
+	vipevt.style.boxSizing = "border-box";
+	vipevt.style.paddingLeft = "3em";
 }
