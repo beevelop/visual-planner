@@ -754,7 +754,7 @@ function VipSingleDayEvent(vipcell, event)
 		this.viptitle.div.style.overflow = "hidden";
 		this.viptitle.div.style.textOverflow = "ellipsis";
 		this.viptitle.div.style.lineHeight = fmt("^px", vipcell.offsetHeight);
-		this.viptitle.div.style.left = fmt("^px", x_off);
+		//this.viptitle.div.style.left = fmt("^px", x_off);
 
 		if (vip.events.title.colour)
 			this.viptitle.div.style.color = event.palette.medium;
