@@ -572,6 +572,7 @@ VipCell.prototype.updateEventLayout = function()
 		vipevt = vipevt.Next();
 	}
 
+/*
 	if (vip.events.title.show)
 	{
 		while (tot_width > this.vipevts.div.offsetWidth)
@@ -594,6 +595,7 @@ VipCell.prototype.updateEventLayout = function()
 			tot_width += longest.div.offsetWidth;
 		}
 	}
+*/
 
 	var x_off = 0;
 
