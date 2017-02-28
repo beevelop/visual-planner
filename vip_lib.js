@@ -296,6 +296,7 @@ function VipCol(parent, vdt_start, vdt_end)
 	this.vipseltip = new VipDiv(this.vipcelloffset, "vipseltip");
 	this.vipseltip.div.style.fontSize = "0.8em";
 	this.vipseltip.div.style.textAlign = "center";
+	this.vipseltip.div.style.lineHeight = "2em";
 	this.vipseltip.Show(false);
 
 	this.vipsel.div.style.zIndex = "10";
@@ -310,6 +311,62 @@ function VipCol(parent, vdt_start, vdt_end)
 
 VipCol.prototype = new VipObject;
 
+VipCol.prototype.updateLayout = function()
+{
+	var c = vip.grid.cellcount;
+	if (vip.grid.offset_col)
+		c += 6;
+	
+	var offset = this.viphdr ? this.viphdr.div.offsetHeight : 0;
+
+	var cellspace = Math.floor((this.div.offsetHeight-offset)/c);
+	var cellheight = px(cellspace-1);
+
+	if (vip.grid.offset_col)
+		offset += (cellspace * this.vdt_month.DayOfWeek());
+
+	this.vipcelloffset.div.style.top = px(offset);
+	this.vipcelloffset.div.style.height = px(cellspace * this.vipcells.div.childElementCount);
+
+	var celltop=0;
+	var vipcell = this.vipcells.First();
+	while(vipcell)
+	{
+		vipcell.div.style.top = px(celltop);
+		vipcell.div.style.height = cellheight;
+		vipcell.div.style.lineHeight = cellheight;
+		celltop += cellspace;
+		
+		vipcell.updateLayout();
+
+		vipcell = vipcell.Next();
+	}
+
+	var vipcell = this.vipcells.First();
+	this.vipevts.div.style.left = vipcell.vipevts.div.style.left;
+	this.vipevts.div.style.width = vipcell.vipevts.div.style.width;
+
+	if (this.vipind)
+	{
+		this.vipind.div.style.left = this.vipevts.div.offsetLeft;
+		this.vipind.div.style.width = px(1);
+
+		this.vipevts.div.style.left = px(this.vipevts.div.offsetLeft + 2);
+		this.vipevts.div.style.width = px(this.vipevts.div.offsetWidth - 2);
+
+		var vipcell = this.vipcells.First();
+		while(vipcell)
+		{
+			vipcell.vipevts.div.style.left = px(vipcell.vipevts.div.offsetLeft + 2);
+			vipcell.vipevts.div.style.width = px(vipcell.vipevts.div.offsetWidth - 2);
+
+			vipcell = vipcell.Next();
+		}
+	}
+
+	this.updateEventLayout();
+}
+
 VipCol.prototype.updateSelectionTip = function(vipcell_start, vipcell_end)
 {
 	this.vipseltip.Show(false);
@@ -321,56 +378,6 @@ VipCol.prototype.updateSelectionTip = function(vipcell_start, vipcell_end)
 	this.vipseltip.setText(vipcell_start.vipdate.TimespanTo(vipcell_end.vipdate));
 	this.vipseltip.Align(vipcell_end, vipcell_end);
 	this.vipseltip.Show(true);
-}
-
-VipCol.prototype.updateLayout = function()
-{
-	var c = vip.grid.cellcount;
-	if (vip.grid.offset_col)
-		c += 6;
-	
-	var offset = this.viphdr ? this.viphdr.div.offsetHeight : 0;
-
-	var cellspace = Math.floor((this.div.offsetHeight-offset)/c);
-	var cellheight = fmt("^px", cellspace-1);
-	var numheight = fmt("^px", cellspace-3);
-
-	if (vip.grid.offset_col)
-		offset += (cellspace * this.vdt_month.DayOfWeek());
-
-	this.vipcelloffset.div.style.top = fmt("^px", offset);
-	this.vipcelloffset.div.style.height = fmt("^px", (cellspace * this.vipcells.div.childElementCount));
-	
-	this.vipseltip.div.style.lineHeight = cellheight;
-	
-	var vipcell = this.vipcells.First();
-	var cy = vipcell.vipnum.div.offsetWidth + 2;
-	
-	var celltop=0;
-	while(vipcell)
-	{
-		vipcell.div.style.top = fmt("^px", celltop);
-		vipcell.div.style.height = cellheight;
-		vipcell.div.style.lineHeight = cellheight;
-		vipcell.vipnum.div.style.top = "1px";
-		vipcell.vipnum.div.style.left = "1px";
-		vipcell.vipnum.div.style.height = numheight;
-		vipcell.vipnum.div.style.lineHeight = numheight;
-		celltop += cellspace;
-
-		vipcell = vipcell.Next();
-	}
-
-	if (this.vipind)
-	{
-		this.vipind.div.style.left = fmt("^px", cy);
-		this.vipind.div.style.width = "1px";
-		cy += 2;
-	}
-
-	this.vipevts.div.style.left = fmt("^px", cy);
-	this.vipevts.div.style.width = fmt("^px", this.div.offsetWidth - cy);
-	this.updateEventLayout();
 }
 
 VipCol.prototype.addEvent = function(event, vipcell)
@@ -486,7 +493,6 @@ function VipCell(parent, col, vdt)
 	this.vipnum.setText(vdt.DayOfMonth());
 
 	var num = this.vipnum.div;
-	num.style.width = "1.6em";
 	num.style.textAlign = "center";
 	num.style.cursor = "pointer";
 	num.style.pointerEvents = "all";
@@ -500,11 +506,21 @@ function VipCell(parent, col, vdt)
 	}
 	
 	this.vipevts = new VipDiv(this, "vipevts");
-	//this.vipevts.div.style.overflow = "hidden";
-	//this.vipevts.div.style.backgroundColor = "rgba(200,0,0,0.5)";
 }
 
 VipCell.prototype = new VipObject;
+
+VipCell.prototype.updateLayout = function()
+{
+	this.vipnum.div.style.width = "1.6em";
+	this.vipnum.div.style.top = px(1);
+	this.vipnum.div.style.height = px(this.div.offsetHeight - 2);
+	this.vipnum.div.style.lineHeight = this.vipnum.div.style.height;
+
+	this.vipevts.div.style.left = px(this.vipnum.div.offsetWidth + 1);
+	this.vipevts.div.style.width = px(this.div.offsetWidth - this.vipevts.div.offsetLeft);
+	this.vipevts.div.style.lineHeight = px(this.div.offsetHeight);
+}
 
 VipCell.prototype.isBefore = function(vipcell)
 {
@@ -999,6 +1015,11 @@ function fmt(fmtspec)
 	}
 
 	return str;
+}
+
+function px(n)
+{
+	return "" + n + "px";
 }
 
 function html2txt(html)
