@@ -67,11 +67,19 @@ function init()
 	
 	
 
-	var vipevt = document.getElementById("vipevt");
-	vipevt.style.whiteSpace = "nowrap";
-	vipevt.style.overflow = "hidden";
-	vipevt.style.textOverflow = "ellipsis";
-	vipevt.style.lineHeight = "" + vipevt.offsetHeight + "px";
-	vipevt.style.boxSizing = "border-box";
-	vipevt.style.paddingLeft = "3em";
+	var vipevt1 = document.getElementById("vipevt1");
+	vipevt1.style.whiteSpace = "nowrap";
+	vipevt1.style.overflow = "hidden";
+	vipevt1.style.textOverflow = "ellipsis";
+	vipevt1.style.lineHeight = "" + vipevt1.offsetHeight + "px";
+	//vipevt1.style.boxSizing = "border-box";
+	//vipevt1.style.paddingLeft = "3em";
+
+	var vipevt2 = document.getElementById("vipevt2");
+	vipevt2.style.whiteSpace = "nowrap";
+	vipevt2.style.overflow = "hidden";
+	vipevt2.style.textOverflow = "ellipsis";
+	vipevt2.style.lineHeight = "" + vipevt2.offsetHeight + "px";
+	//vipevt2.style.boxSizing = "border-box";
+	//vipevt2.style.paddingLeft = "3em";
 }

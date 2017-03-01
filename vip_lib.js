@@ -405,7 +405,7 @@ VipCol.prototype.addEvent = function(event, vipcell)
 		this.vipevts.MoveLastBefore(vipsib);
 	}
 
-	vipevt.updateEvent(vipcell);
+	vipevt.extend(vipcell);
 	vipcell.updateEventInfo();
 	this.updateEventLayout();
 }
@@ -417,6 +417,8 @@ VipCol.prototype.updateEventLayout = function()
 	var vipsib = this.vipevts.First();
 	while (vipsib)
 	{
+		vipsib.updateLayout();
+
 		var x_off = (vipsib.div.offsetWidth + 2);
 		vipsib.div.style.left = fmt("^px", this.vipevts.div.offsetWidth - x_off);
 		
@@ -440,6 +442,7 @@ VipCol.prototype.updateEventLayout = function()
 		}
 
 		fixed.push(vipsib);
+
 		vipsib = vipsib.Next();
 	}
 }
@@ -521,7 +524,8 @@ VipCell.prototype.updateLayout = function()
 
 	this.vipevts.div.style.left = px(this.vipnum.div.offsetWidth + 1);
 	this.vipevts.div.style.width = px(this.div.offsetWidth - this.vipevts.div.offsetLeft);
-	this.vipevts.div.style.lineHeight = px(this.div.offsetHeight);
+	
+	this.updateEventLayout();
 }
 
 VipCell.prototype.isBefore = function(vipcell)
@@ -575,60 +579,40 @@ VipCell.prototype.updateEventLayout = function()
 	if (vip.events.proportional.show)
 		return;
 		
-/*
-	var sep = 2;
-
-	var tot_width = 0;
 	var vipevt = this.vipevts.First();
 	while (vipevt)
 	{
-		if (tot_width > 0)
-			tot_width += sep;
-		
-		vipevt.initLayout();
-		tot_width += vipevt.div.offsetWidth;
-
+		vipevt.div.style.width = "";
 		vipevt = vipevt.Next();
 	}
-*/
 
-/*
-	if (vip.events.title.show)
+	while (true)
 	{
-		while (tot_width > this.vipevts.div.offsetWidth)
+		var x_off = 0;
+		var longest = this.vipevts.First();
+
+		var vipevt = this.vipevts.First();
+		while (vipevt)
 		{
-			var longest = this.vipevts.First();
-			var vipevt = longest.Next();
-			while (vipevt)
-			{
-				if (vipevt.flex_title.length > longest.flex_title.length)
-					longest = vipevt;
-					
-				vipevt = vipevt.Next();
-			}
+			if (x_off > 0)
+				x_off += 1;
 			
-			if (longest.flex_title.length == 0)
-				break;
+			vipevt.div.style.left = px(x_off);
+			x_off += vipevt.div.offsetWidth;
+			
+			if (vipevt.div.offsetWidth > longest.div.offsetWidth)
+				longest = vipevt;
 
-			tot_width -= longest.div.offsetWidth;
-			longest.shortenTitle();
-			tot_width += longest.div.offsetWidth;
+			vipevt = vipevt.Next();
 		}
-	}
-*/
 
-	var x_off = 0;
-
-	var vipevt = this.vipevts.First();
-	while (vipevt)
-	{
-		if (x_off > 0)
-			x_off += 1;
-		
-		vipevt.div.style.left = px(x_off);
-		x_off += vipevt.div.offsetWidth;
-
-		vipevt = vipevt.Next();
+		if (x_off > this.vipevts.div.offsetWidth)
+		{
+			longest.truncate(5);
+			continue;
+		}
+			
+		break;
 	}
 }
 
@@ -689,9 +673,13 @@ function VipMultiDayEvent(parent, event, vipcell)
 
 VipMultiDayEvent.prototype = new VipObject;
 
-VipMultiDayEvent.prototype.updateEvent = function(vipcell)
+VipMultiDayEvent.prototype.extend = function(vipcell)
 {
 	this.vipcell_end = vipcell;
+}
+
+VipMultiDayEvent.prototype.updateLayout = function()
+{
 	this.Align(this.vipcell_start, this.vipcell_end);
 }
 
@@ -709,6 +697,7 @@ function VipSingleDayEvent(vipcell, event)
 	this.evt_timed = !event.allDay;
 	this.div.style.zIndex = "2";
 	this.div.style.width = "";
+	this.padding=0;
 
 	this.evt_title_time = "";
 	if (this.evt_timed)
@@ -719,9 +708,6 @@ function VipSingleDayEvent(vipcell, event)
 	if (event.calendar)
 		this.tooltip += fmt("^ - ", event.calendar);
 	this.tooltip += this.evt_title;
-
-	//var x_off = 0;
-	//var y_off = Math.floor((vip.cell.height - vip.events.marker.height) / 2);
 
 	if (!vip.events.title.show || !vip.events.title.hide_marker)
 	{
@@ -734,7 +720,8 @@ function VipSingleDayEvent(vipcell, event)
 		this.vipmarker.div.style.width = "0.58em";
 		this.vipmarker.div.style.height = px(this.vipmarker.div.offsetHeight - (2*m));
 		
-		this.div.style.paddingLeft = px(this.vipmarker.div.offsetWidth + 1);
+		this.padding = (this.vipmarker.div.offsetWidth + 1);
+		this.div.style.paddingLeft = px(this.padding);
 	}
 
 	if (vip.events.proportional.show)
@@ -769,21 +756,12 @@ function VipSingleDayEvent(vipcell, event)
 
 	if (vip.events.title.show)
 	{
-/*
-		this.viptitle = new VipDiv(this, "viptitle");
-		this.viptitle.div.style.width = "";
-		this.viptitle.div.style.whiteSpace = "nowrap";
-		this.viptitle.div.style.overflow = "hidden";
-		this.viptitle.div.style.textOverflow = "ellipsis";
-		this.viptitle.div.style.lineHeight = fmt("^px", vipcell.offsetHeight);
-		//this.viptitle.div.style.left = fmt("^px", x_off);
-*/
+		this.div.appendChild(document.createTextNode(this.evt_title_time + this.evt_title));
+
 		this.div.style.whiteSpace = "nowrap";
 		this.div.style.overflow = "hidden";
 		this.div.style.textOverflow = "ellipsis";
 		this.div.style.lineHeight = px(vipcell.div.offsetHeight);
-
-		this.div.appendChild(document.createTextNode(this.evt_title_time + this.evt_title));
 
 		if (vip.events.title.colour)
 			this.div.style.color = event.palette.medium;
@@ -792,47 +770,9 @@ function VipSingleDayEvent(vipcell, event)
 
 VipSingleDayEvent.prototype = new VipObject;
 
-VipSingleDayEvent.prototype.initLayout = function()
+VipSingleDayEvent.prototype.truncate = function(x)
 {
-	if (this.viptitle)
-	{
-		this.flex_title = "";
-
-		if (vip.events.title.time)
-			this.flex_title += this.evt_title_time;
-
-		this.flex_title += this.evt_title;
-		
-		if (vip.events.title.hide_marker)
-		if (this.Next())
-			this.flex_title += ',';
-
-		this.viptitle.setText(this.flex_title);
-	}
-
-	this.updateWidth();
-}
-
-VipSingleDayEvent.prototype.updateWidth = function()
-{
-	if (this.viptitle)
-		this.div.style.width = px(this.viptitle.div.offsetLeft + this.viptitle.div.offsetWidth);
-	else if (this.vipmarker)
-		this.div.style.width = px(this.vipmarker.div.offsetWidth);
-	else
-		this.div.style.width = "";
-}
-
-VipSingleDayEvent.prototype.shortenTitle = function()
-{
-	if (this.flex_title.length > 0)
-	{
-		this.flex_title = this.flex_title.substr(0, this.flex_title.length-1);
-		this.flex_title = this.flex_title.trim();
-
-		this.viptitle.setText(this.flex_title + "...");
-		this.updateWidth();
-	}
+	this.div.style.width = px(this.div.offsetWidth - (this.padding + x));
 }
 
 
