@@ -573,6 +573,7 @@ VipCell.prototype.updateEventLayout = function()
 	if (vip.events.proportional.show)
 		return;
 		
+/*
 	var sep = 2;
 
 	var tot_width = 0;
@@ -587,6 +588,7 @@ VipCell.prototype.updateEventLayout = function()
 
 		vipevt = vipevt.Next();
 	}
+*/
 
 /*
 	if (vip.events.title.show)
@@ -619,9 +621,9 @@ VipCell.prototype.updateEventLayout = function()
 	while (vipevt)
 	{
 		if (x_off > 0)
-			x_off += sep;
+			x_off += 1;
 		
-		vipevt.div.style.left = x_off;
+		vipevt.div.style.left = px(x_off);
 		x_off += vipevt.div.offsetWidth;
 
 		vipevt = vipevt.Next();
@@ -697,13 +699,10 @@ VipMultiDayEvent.prototype.updateEvent = function(vipcell)
 
 function VipSingleDayEvent(vipcell, event)
 {
-	var vdt_start = event.vdtStart;
-	var vtm_start = event.vtmStart;
-
 	this.createChild(vipcell.vipevts, "vipsingledayevent");
 	this.evt_id = event.id;
-	this.evt_datestamp = vdt_start.Datestamp();
-	this.evt_timestamp = vtm_start.Timestamp();
+	this.evt_datestamp = event.vdtStart.Datestamp();
+	this.evt_timestamp = event.vtmStart.Timestamp();
 	this.evt_title = html2txt(event.title);
 	this.evt_timed = !event.allDay;
 	this.div.style.zIndex = "2";
@@ -712,25 +711,28 @@ function VipSingleDayEvent(vipcell, event)
 	this.evt_title_time = "";
 	if (this.evt_timed)
 	if (this.evt_datestamp == vipcell.vipdate.Datestamp())
-		this.evt_title_time = vtm_start.TimeTitle() + " ";
+		this.evt_title_time = event.vtmStart.TimeTitle() + " ";
 
 	this.tooltip = this.evt_title_time;
 	if (event.calendar)
 		this.tooltip += fmt("^ - ", event.calendar);
 	this.tooltip += this.evt_title;
 
-	var x_off = 0;
-	var y_off = 0;//Math.floor((vip.cell.height - vip.events.marker.height) / 2);
+	//var x_off = 0;
+	//var y_off = Math.floor((vip.cell.height - vip.events.marker.height) / 2);
 
 	if (!vip.events.title.show || !vip.events.title.hide_marker)
 	{
 		this.vipmarker = new VipDiv(this, "vipevtmarker");
+		this.vipmarker.div.style.left = px(0);
 		this.vipmarker.div.style.width = "0.58em";
 		this.vipmarker.div.style.height = "100%";
 		//this.vipmarker.setPos(0, y_off);
 		this.vipmarker.div.style.backgroundColor = event.palette.medium;
+		
+		this.div.style.paddingLeft = px(this.vipmarker.div.offsetWidth + 1);
 
-		x_off = (this.vipmarker.div.offsetWidth + 2);
+		//x_off = (this.vipmarker.div.offsetWidth + 2);
 	}
 
 	if (vip.events.proportional.show)
@@ -765,6 +767,7 @@ function VipSingleDayEvent(vipcell, event)
 
 	if (vip.events.title.show)
 	{
+/*
 		this.viptitle = new VipDiv(this, "viptitle");
 		this.viptitle.div.style.width = "";
 		this.viptitle.div.style.whiteSpace = "nowrap";
@@ -772,9 +775,17 @@ function VipSingleDayEvent(vipcell, event)
 		this.viptitle.div.style.textOverflow = "ellipsis";
 		this.viptitle.div.style.lineHeight = fmt("^px", vipcell.offsetHeight);
 		//this.viptitle.div.style.left = fmt("^px", x_off);
+*/
+		this.div.style.whiteSpace = "nowrap";
+		this.div.style.overflow = "hidden";
+		this.div.style.textOverflow = "ellipsis";
+		this.div.style.lineHeight = px(vipcell.div.offsetHeight);
 
+		this.div.appendChild(document.createTextNode(this.evt_title));
+
+		
 		if (vip.events.title.colour)
-			this.viptitle.div.style.color = event.palette.medium;
+			this.div.style.color = event.palette.medium;
 	}
 }
 
@@ -804,11 +815,11 @@ VipSingleDayEvent.prototype.initLayout = function()
 VipSingleDayEvent.prototype.updateWidth = function()
 {
 	if (this.viptitle)
-		this.div.style.width = (this.viptitle.div.offsetLeft + this.viptitle.div.offsetWidth);
+		this.div.style.width = px(this.viptitle.div.offsetLeft + this.viptitle.div.offsetWidth);
 	else if (this.vipmarker)
-		this.div.style.width = this.vipmarker.div.offsetWidth;
+		this.div.style.width = px(this.vipmarker.div.offsetWidth);
 	else
-		this.div.style.width = 0;
+		this.div.style.width = "";
 }
 
 VipSingleDayEvent.prototype.shortenTitle = function()
