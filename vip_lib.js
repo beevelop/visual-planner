@@ -725,8 +725,9 @@ function VipSingleDayEvent(vipcell, event)
 	{
 		this.vipmarker = new VipDiv(this, "vipevtmarker");
 		this.vipmarker.div.style.left = px(0);
+		this.vipmarker.div.style.top = px(2);
 		this.vipmarker.div.style.width = "0.58em";
-		this.vipmarker.div.style.height = "100%";
+		this.vipmarker.div.style.height = px(this.vipmarker.div.offsetHeight - 4);
 		//this.vipmarker.setPos(0, y_off);
 		this.vipmarker.div.style.backgroundColor = event.palette.medium;
 		
@@ -783,7 +784,6 @@ function VipSingleDayEvent(vipcell, event)
 
 		this.div.appendChild(document.createTextNode(this.evt_title));
 
-		
 		if (vip.events.title.colour)
 			this.div.style.color = event.palette.medium;
 	}
