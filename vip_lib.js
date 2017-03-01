@@ -512,9 +512,11 @@ VipCell.prototype = new VipObject;
 
 VipCell.prototype.updateLayout = function()
 {
+	var m = Math.floor(this.vipnum.div.offsetHeight * 0.1);
+	this.vipnum.div.style.left = px(0);
+	this.vipnum.div.style.top = px(m);
 	this.vipnum.div.style.width = "1.6em";
-	this.vipnum.div.style.top = px(1);
-	this.vipnum.div.style.height = px(this.div.offsetHeight - 2);
+	this.vipnum.div.style.height = px(this.div.offsetHeight - (2*m));
 	this.vipnum.div.style.lineHeight = this.vipnum.div.style.height;
 
 	this.vipevts.div.style.left = px(this.vipnum.div.offsetWidth + 1);
@@ -724,16 +726,15 @@ function VipSingleDayEvent(vipcell, event)
 	if (!vip.events.title.show || !vip.events.title.hide_marker)
 	{
 		this.vipmarker = new VipDiv(this, "vipevtmarker");
-		this.vipmarker.div.style.left = px(0);
-		this.vipmarker.div.style.top = px(2);
-		this.vipmarker.div.style.width = "0.58em";
-		this.vipmarker.div.style.height = px(this.vipmarker.div.offsetHeight - 4);
-		//this.vipmarker.setPos(0, y_off);
 		this.vipmarker.div.style.backgroundColor = event.palette.medium;
+
+		var m = Math.floor(this.vipmarker.div.offsetHeight * 0.16);
+		this.vipmarker.div.style.left = px(0);
+		this.vipmarker.div.style.top = px(m);
+		this.vipmarker.div.style.width = "0.58em";
+		this.vipmarker.div.style.height = px(this.vipmarker.div.offsetHeight - (2*m));
 		
 		this.div.style.paddingLeft = px(this.vipmarker.div.offsetWidth + 1);
-
-		//x_off = (this.vipmarker.div.offsetWidth + 2);
 	}
 
 	if (vip.events.proportional.show)
@@ -782,7 +783,7 @@ function VipSingleDayEvent(vipcell, event)
 		this.div.style.textOverflow = "ellipsis";
 		this.div.style.lineHeight = px(vipcell.div.offsetHeight);
 
-		this.div.appendChild(document.createTextNode(this.evt_title));
+		this.div.appendChild(document.createTextNode(this.evt_title_time + this.evt_title));
 
 		if (vip.events.title.colour)
 			this.div.style.color = event.palette.medium;
