@@ -6,8 +6,6 @@ function VipObject()
 
 VipObject.prototype.createChildDiv = function(container_element, id)
 {
-	if (this.div) console.error("vip: div element already created");
-	
 	var div = document.createElement('div');
 
 	if (id)
@@ -82,8 +80,8 @@ VipObject.prototype.Align = function(cell_start, cell_end)
 {
 	if (cell_start && cell_end)
 	{
-		this.div.style.top = fmt("^px", cell_start.div.offsetTop);
-		this.div.style.height = fmt("^px", (cell_end.div.offsetTop - cell_start.div.offsetTop) + cell_end.div.offsetHeight);
+		this.div.style.top = px(cell_start.div.offsetTop);
+		this.div.style.height = px((cell_end.div.offsetTop - cell_start.div.offsetTop) + cell_end.div.offsetHeight);
 		this.Show(true);
 	}
 	else
@@ -207,7 +205,7 @@ VipGrid.prototype.scroll_col = function(offset)
 	var vipcol = this.First();
 	while(vipcol)
 	{
-		vipcol.div.style.left = fmt("^px", xpx);
+		vipcol.div.style.left = px(xpx);
 		
 		if (vipcol.div.style.width != this.colwidth)
 		{
@@ -223,14 +221,14 @@ VipGrid.prototype.scroll_col = function(offset)
 VipGrid.prototype.updateLayout = function()
 {
 	this.colspacing = Math.floor(this.div.offsetWidth/this.div.childElementCount);
-	this.colwidth = fmt("^px", this.colspacing-1);
+	this.colwidth = px(this.colspacing-1);
 	
 	var xpx = 0;
 
 	var vipcol = this.First();
 	while(vipcol)
 	{
-		vipcol.div.style.left = fmt("^px", xpx);
+		vipcol.div.style.left = px(xpx);
 		vipcol.div.style.width = this.colwidth;
 		vipcol.updateLayout();
 
@@ -420,7 +418,7 @@ VipCol.prototype.updateEventLayout = function()
 		vipsib.updateLayout();
 
 		var x_off = (vipsib.div.offsetWidth + 2);
-		vipsib.div.style.left = fmt("^px", this.vipevts.div.offsetWidth - x_off);
+		vipsib.div.style.left = px(this.vipevts.div.offsetWidth - x_off);
 		
 		while(true)
 		{
@@ -436,7 +434,7 @@ VipCol.prototype.updateEventLayout = function()
 			}
 			
 			if (shift)
-				vipsib.div.style.left = fmt("^px", vipsib.div.offsetLeft - x_off);
+				vipsib.div.style.left = px(vipsib.div.offsetLeft - x_off);
 			else
 				break;
 		}
