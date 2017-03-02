@@ -522,12 +522,15 @@ VipCell.prototype = new VipObject;
 
 VipCell.prototype.updateLayout = function()
 {
-	var m = Math.floor(this.vipnum.div.offsetHeight * 0.1);
-	this.vipnum.div.style.left = px(0);
-	this.vipnum.div.style.top = px(m);
-	this.vipnum.div.style.width = "1.6em";
-	this.vipnum.div.style.height = px(this.div.offsetHeight - (2*m));
-	this.vipnum.div.style.lineHeight = this.vipnum.div.style.height;
+	var num = this.vipnum.div;
+	var h = num.offsetHeight;
+	num.style.height = "1.2em";
+	var m = Math.floor((h - num.offsetHeight)/2);
+	num.style.left = px(0);
+	num.style.top = px(m);
+	num.style.width = "1.6em";
+	num.style.height = px(h-(2*m));
+	num.style.lineHeight = num.style.height;
 
 	this.vipevts.div.style.left = px(this.vipnum.div.offsetWidth + 1);
 	this.vipevts.div.style.width = px(this.div.offsetWidth - this.vipevts.div.offsetLeft);
