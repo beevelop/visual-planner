@@ -523,6 +523,7 @@ VipCell.prototype = new VipObject;
 VipCell.prototype.updateLayout = function()
 {
 	var num = this.vipnum.div;
+	num.style.height = "100%";
 	var h = num.offsetHeight;
 	num.style.height = "1.2em";
 	var m = Math.floor((h - num.offsetHeight)/2);
