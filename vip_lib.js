@@ -720,12 +720,15 @@ function VipSingleDayEvent(vipcell, event)
 	{
 		this.vipmarker = new VipDiv(this, "vipevtmarker");
 		this.vipmarker.div.style.backgroundColor = event.palette.medium;
+		
+		var h = this.vipmarker.div.offsetHeight;
+		this.vipmarker.div.style.height = "1em";
+		var m = Math.floor((h - this.vipmarker.div.offsetHeight)/2);
 
-		var m = Math.floor(this.vipmarker.div.offsetHeight * 0.16);
 		this.vipmarker.div.style.left = px(0);
 		this.vipmarker.div.style.top = px(m);
 		this.vipmarker.div.style.width = "0.58em";
-		this.vipmarker.div.style.height = px(this.vipmarker.div.offsetHeight - (2*m));
+		this.vipmarker.div.style.height = px(h-(2*m));
 		
 		this.padding = (this.vipmarker.div.offsetWidth + 1);
 		this.div.style.paddingLeft = px(this.padding);
