@@ -38,7 +38,7 @@ function InitMultiColView()
 	//ga_hit('view', 'multi_col');
 	//ga_hit('multi_col_count', vip.multi_col.count);
 	//ga_hit('multi_col_scroll_offset', vip.multi_col.auto_scroll ? vip.multi_col.offset : 'n/a');
-	//ga_hit('event_format', vip.events.format);
+	//ga_hit('event_format', vip.grid.events.format);
 	
 	init_gadget();
 	vip_init_grid(document.body);
@@ -71,7 +71,7 @@ function show_settings()
 function receive_GCalPrefs(prefs)
 {
 	if ('military' in prefs)
-		vip.events.time_24hr = prefs.military;
+		vip.grid.events.time_24hr = prefs.military;
 }
 
 function create_calendar_event()
@@ -232,7 +232,7 @@ function receive_events(data)
 
 function add_all_day_event(event)
 {
-	if (!vip.events.allday.show)
+	if (!vip.grid.events.allday.show)
 		return;
 	
 	var vdt_start = gdt2vdt(event.startTime);
@@ -248,9 +248,9 @@ function add_all_day_event(event)
 
 		if (vipcell)
 		{
-			if (vip.events.allday.one_day_as_timed && one_day_evt)
+			if (vip.grid.events.allday.one_day_as_timed && one_day_evt)
 				vipcell.addEvent(event);
-			else if (vip.events.allday.multi_day_as_timed && !one_day_evt)
+			else if (vip.grid.events.allday.multi_day_as_timed && !one_day_evt)
 				vipcell.addEvent(event);
 			else
 				vipcell.vipcol.addEvent(event, vipcell);
@@ -262,7 +262,7 @@ function add_all_day_event(event)
 
 function add_timed_event(event)
 {
-	if (!vip.events.timed.show)
+	if (!vip.grid.events.timed.show)
 		return;
 	
 	var vdt_start = gdt2vdt(event.startTime);
@@ -283,7 +283,7 @@ function add_timed_event(event)
 
 			if (vipcell)
 			{
-				if (vip.events.timed.multi_day_as_all_day)
+				if (vip.grid.events.timed.multi_day_as_all_day)
 					vipcell.vipcol.addEvent(event, vipcell);
 				else
 					vipcell.addEvent(event);
