@@ -66,6 +66,16 @@ VipObject.prototype.Next = function()
 	return null;
 }
 
+VipObject.prototype.Prev = function()
+{
+	var sib = this.div.previousSibling;
+	
+	if (sib)
+		return sib.vipobj;
+	
+	return null;
+}
+
 VipObject.prototype.setText = function(txt)
 {
 	this.div.innerHTML = txt;
@@ -522,19 +532,35 @@ VipCell.prototype = new VipObject;
 
 VipCell.prototype.updateLayout = function()
 {
-	var num = this.vipnum.div;
-	num.style.height = "100%";
-	var h = num.offsetHeight;
-	num.style.height = "1.3em";
-	var m = Math.floor((h - num.offsetHeight)/2);
-	num.style.left = px(0);
-	num.style.top = px(m);
-	num.style.width = "1.6em";
-	num.style.height = px(h-(2*m));
-	num.style.lineHeight = num.style.height;
+	var prev = this.Prev();
+	
+	if (prev)
+	{
+		this.vipnum.div.style.left = prev.vipnum.div.style.left;
+		this.vipnum.div.style.top = prev.vipnum.div.style.top;
+		this.vipnum.div.style.width = prev.vipnum.div.style.width;
+		this.vipnum.div.style.height = prev.vipnum.div.style.height;
+		this.vipnum.div.style.lineHeight = prev.vipnum.div.style.lineHeight;
 
-	this.vipevts.div.style.left = px(this.vipnum.div.offsetWidth + 1);
-	this.vipevts.div.style.width = px(this.div.offsetWidth - this.vipevts.div.offsetLeft);
+		this.vipevts.div.style.left = prev.vipevts.div.style.left;
+		this.vipevts.div.style.width = prev.vipevts.div.style.width;
+	}
+	else
+	{
+		var num = this.vipnum.div;
+		num.style.height = "100%";
+		var h = num.offsetHeight;
+		num.style.height = "1.3em";
+		var m = Math.floor((h - num.offsetHeight)/2);
+		num.style.left = px(0);
+		num.style.top = px(m);
+		num.style.width = "1.6em";
+		num.style.height = px(h-(2*m));
+		num.style.lineHeight = num.style.height;
+
+		this.vipevts.div.style.left = px(this.vipnum.div.offsetWidth + 1);
+		this.vipevts.div.style.width = px(this.div.offsetWidth - this.vipevts.div.offsetLeft);
+	}
 	
 	this.updateEventLayout();
 }
