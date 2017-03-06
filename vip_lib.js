@@ -130,7 +130,7 @@ function VipGrid(container_element)
 		time_24hr: true,
 		proportional: {show: false, start_hour:8, end_hour:20},
 		title: {show: true, time: true, colour: false, hide_marker: false},
-		marker: {hide: false},
+		marker: {hide: false, width: 0.58},
 		timed: {show: true, multi_day_as_all_day: true},
 		allday: {show: true, one_day_as_timed: true, multi_day_as_timed: false, width_chars: 1}
 	};
@@ -673,7 +673,7 @@ function VipMultiDayEvent(parent, event, vipcell)
 	this.div.style.zIndex = "1";
 
 	var evt = this.div;
-	evt.style.width = "0.58em";
+	evt.style.width = fmt("^em", vip.grid.events.marker.width);
 	evt.style.backgroundColor = event.palette.medium;
 
 	if (event.calendar)
@@ -731,7 +731,7 @@ function VipSingleDayEvent(vipcell, event)
 
 		this.vipmarker.div.style.left = px(0);
 		this.vipmarker.div.style.top = px(m);
-		this.vipmarker.div.style.width = "0.58em";
+		this.vipmarker.div.style.width = fmt("^em", vip.grid.events.marker.width);
 		this.vipmarker.div.style.height = px(h-(2*m));
 		
 		this.padding = (this.vipmarker.div.offsetWidth + 1);
