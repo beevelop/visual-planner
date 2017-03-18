@@ -2,6 +2,9 @@ function vip_init()
 {
 	vip_init_grid(document.getElementById("grid"));
 
+	vip.grid.events.proportional.show = true;
+	vip.grid.events.title.show = false;
+
 	vip.grid.create();
 	
 	evt_test();
@@ -47,6 +50,7 @@ function evt_test()
 				create_evt("five5", false, "e5", {dayoff:12, hour:9, min:0}, {dayoff:12, hour:12, min:0}, 'green'),
 				create_evt("six", true, "e-six", {dayoff:2, hour:0, min:0}, {dayoff:3, hour:0, min:0}, 'grey'),
 				create_evt("arseid", false, "&#39;arse&#39;", {dayoff:24, hour:11, min:45}, {dayoff:25, hour:13, min:15}, 'magenta'),
+				create_evt("prop1", false, "proportional 1", {dayoff:26, hour:12, min:45}, {dayoff:26, hour:17, min:30}, 'coral'),
 				create_evt("oneeventid", true, "one event", {dayoff:28, hour:0, min:0}, {dayoff:29, hour:0, min:0}, 'gold'),
 				create_evt("twoeventid", true, "two event", {dayoff:28, hour:0, min:0}, {dayoff:29, hour:0, min:0}, 'gold')
 		    ]

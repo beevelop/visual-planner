@@ -19,7 +19,8 @@
 <script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_lib.js"></script>
 <script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_grid.js"></script>
 <script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_gadget.js"></script>
-<script type="text/javascript">gadgets.util.registerOnLoadHandler(InitSingleColView);</script>
+<script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_bills.js"></script>
+<script type="text/javascript">gadgets.util.registerOnLoadHandler(InitBillsView);</script>
 ]]>
 </Content>
 <Content type="html" view="canvas">

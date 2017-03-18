@@ -613,15 +613,19 @@ VipCell.prototype.addEvent = function(event)
 
 VipCell.prototype.updateEventLayout = function()
 {
-	if (vip.grid.events.proportional.show)
-		return;
-		
 	var vipevt = this.vipevts.First();
 	while (vipevt)
 	{
 		vipevt.div.style.width = "";
+
+		if (vip.grid.events.proportional.show)
+			vipevt.setProportionalWidth(this.vipevts.div.offsetWidth);
+
 		vipevt = vipevt.Next();
 	}
+
+	if (vip.grid.events.proportional.show)
+		return;
 
 	while (true)
 	{
@@ -732,10 +736,17 @@ function VipSingleDayEvent(vipcell, event)
 	this.evt_timestamp = event.vtmStart.Timestamp();
 	this.evt_title = html2txt(event.title);
 	this.evt_timed = !event.allDay;
+	this.vdtStart = event.vdtStart;
+	this.vdtEnd = event.vdtEnd;
+	this.vdmStart = event.vdmStart;
+	this.vdmEnd = event.vdmEnd;
 	this.div.style.zIndex = "2";
 	this.div.style.width = "";
 	this.padding=0;
 
+	this.evt_start_seconds = event.vtmStart.toSeconds();
+	this.evt_end_seconds = event.vdtStart.isSameDay(event.vdtEnd) ? event.vtmEnd.toSeconds() : (new VipTime.HourMin(24, 0)).toSeconds();
+	
 	this.evt_title_time = "";
 	if (this.evt_timed)
 	if (this.evt_datestamp == vipcell.vipdate.Datestamp())
@@ -746,7 +757,7 @@ function VipSingleDayEvent(vipcell, event)
 		this.tooltip += fmt("^ - ", event.calendar);
 	this.tooltip += this.evt_title;
 
-	if (!vip.grid.events.title.show || !vip.grid.events.title.hide_marker)
+	if (!vip.grid.events.title.show || !vip.grid.events.title.hide_marker || vip.grid.events.proportional.show)
 	{
 		this.vipmarker = new VipDiv(this, "vipevtmarker");
 		this.vipmarker.div.style.backgroundColor = event.palette.medium;
@@ -761,37 +772,6 @@ function VipSingleDayEvent(vipcell, event)
 		this.vipmarker.div.style.height = px(h-(2*m));
 		
 		this.padding = (this.vipmarker.div.offsetWidth + 1);
-		this.div.style.paddingLeft = px(this.padding);
-	}
-
-	if (vip.grid.events.proportional.show)
-	{
-/*
-		var vdt_start = new VipDate.GCal(event.startTime);
-		var vdt_end = new VipDate.GCal(event.endTime);
-		
-		if (vdt_start.isSameDay(vdt_end))
-			var vtm_end = new VipTime.GCal(event.endTime);
-		else
-			var vtm_end = new VipTime.HourMin(24, 0);
-		
-		var m_duration = ((vtm_end.toSeconds() - vtm_start.toSeconds()) / 60);
-		var m_start = (vtm_start.toSeconds() / 60);
-		var m_range_start = (vip.grid.events.proportional.start_hour * 60);
-		var m_range_end = (vip.grid.events.proportional.end_hour * 60);
-		var m_per_px = ((m_range_end - m_range_start)/vipcell.vipevts.div.offsetWidth);
-
-		this.vipmarker.div.style.left = Math.round((m_start - m_range_start) / m_per_px);
-		this.vipmarker.div.style.width = Math.round(m_duration / m_per_px);
-
-		var off_right = (this.vipmarker.div.offsetLeft + this.vipmarker.div.offsetWidth);
-		if ((off_right <= 0) || (this.vipmarker.div.offsetLeft >= vipcell.vipevts.div.offsetWidth))
-		{
-			var viphidden = new VipDiv(this, "viphiddenevt");
-			viphidden.setPos(0, y_off);
-			viphidden.setText("...");
-		}
-*/
 	}
 
 	if (vip.grid.events.title.show)
@@ -802,6 +782,7 @@ function VipSingleDayEvent(vipcell, event)
 		this.div.style.overflow = "hidden";
 		this.div.style.textOverflow = "ellipsis";
 		this.div.style.lineHeight = px(vipcell.div.offsetHeight);
+		this.div.style.paddingLeft = px(this.padding);
 
 		if (vip.grid.events.title.colour)
 			this.div.style.color = event.palette.medium;
@@ -813,6 +794,28 @@ VipSingleDayEvent.prototype = new VipObject;
 VipSingleDayEvent.prototype.truncate = function(x)
 {
 	this.div.style.width = px(this.div.offsetWidth - (this.padding + x));
+}
+
+VipSingleDayEvent.prototype.setProportionalWidth = function(max_width)
+{
+	var m_duration = ((this.evt_end_seconds - this.evt_start_seconds) / 60);
+	var m_start = (this.evt_start_seconds / 60);
+	var m_range_start = (vip.grid.events.proportional.start_hour * 60);
+	var m_range_end = (vip.grid.events.proportional.end_hour * 60);
+	var m_per_px = ((m_range_end - m_range_start)/max_width);
+
+	this.vipmarker.div.style.left = px(Math.round((m_start - m_range_start) / m_per_px));
+	this.vipmarker.div.style.width = px(Math.round(m_duration / m_per_px));
+
+/*
+	var off_right = (this.vipmarker.div.offsetLeft + this.vipmarker.div.offsetWidth);
+	if ((off_right <= 0) || (this.vipmarker.div.offsetLeft >= vipcell.vipevts.div.offsetWidth))
+	{
+		var viphidden = new VipDiv(this, "viphiddenevt");
+		viphidden.setPos(0, y_off);
+		viphidden.setText("...");
+	}
+*/
 }
 
 
