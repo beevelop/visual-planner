@@ -559,7 +559,7 @@ VipCell.prototype.updateLayout = function()
 		num.style.lineHeight = num.style.height;
 
 		this.vipevts.div.style.left = px(this.vipnum.div.offsetWidth + 1);
-		this.vipevts.div.style.width = px(this.div.offsetWidth - this.vipevts.div.offsetLeft);
+		this.vipevts.div.style.width = px(this.div.offsetWidth - this.vipevts.div.offsetLeft - 1);
 	}
 	
 	this.updateEventLayout();
