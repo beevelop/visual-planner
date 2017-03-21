@@ -436,8 +436,7 @@ VipCol.prototype.updateEventLayout = function()
 	{
 		vipsib.updateLayout();
 
-		var x_off = (vipsib.div.offsetWidth + 2);
-		vipsib.div.style.left = px(this.vipevts.div.offsetWidth - x_off);
+		vipsib.div.style.left = px(this.vipevts.div.offsetWidth - vipsib.div.offsetWidth);
 		
 		while(true)
 		{
@@ -453,7 +452,7 @@ VipCol.prototype.updateEventLayout = function()
 			}
 			
 			if (shift)
-				vipsib.div.style.left = px(vipsib.div.offsetLeft - x_off);
+				vipsib.div.style.left = px(vipsib.div.offsetLeft - vipsib.div.offsetWidth - 2);
 			else
 				break;
 		}
@@ -559,7 +558,7 @@ VipCell.prototype.updateLayout = function()
 		num.style.lineHeight = num.style.height;
 
 		this.vipevts.div.style.left = px(this.vipnum.div.offsetWidth + 1);
-		this.vipevts.div.style.width = px(this.div.offsetWidth - this.vipevts.div.offsetLeft - 10);
+		this.vipevts.div.style.width = px(this.div.offsetWidth - this.vipevts.div.offsetLeft - 2);
 	}
 	
 	this.updateEventLayout();
