@@ -8,8 +8,8 @@
 <body onload="InitSettings();">
 
 <div id="settings" style="font-family:Arial; margin:40px; width:800px;">
-	<div>
-		<b>Multi-column view</b>
+	<div style="margin-top: 40px">
+		<b>View</b>
 		<div style="margin-left:20px">
 			<div style="margin-top:30px">
 				<select id="multi_col_count" style="width: 50px">
@@ -30,12 +30,28 @@
 				</div>
 			</div>
 			<div style="margin-top:30px">
-				<input id="past_transparency" type="number" min="0" max="100" style="width: 50px">
-				%  Transparency of past months.  Set to 0 to show past months without transparency.
+				<input id="open_standalone" type="checkbox">
+				Open as a stand-alone web page: <a href='https://rawgit.com/ctcode/visual-planner/dev/vip.html' target="_blank">https://rawgit.com/ctcode/visual-planner/dev/vip.html</a>
+				<div style="margin-left:30px; margin-top:10px">
+					<input id="banner_text" style="width: 200px">
+					Banner text.
+				</div>
 			</div>
 			<div style="margin-top:30px">
-				<input id="open_standalone" type="checkbox">
-				Open as a stand-alone web page.
+				<input id="highlight_weekends" type="checkbox">
+				Highlight weekends.
+			</div>
+			<div style="margin-top:30px">
+				<input id="align_weekends" type="checkbox">
+				Align weekends with adjacent columns.
+			</div>
+			<div style="margin-top:30px">
+				<input id="font_scale" type="number" style="width: 50px">
+				Font scale.
+			</div>
+			<div style="margin-top:30px">
+				<input id="past_transparency" type="number" min="0" max="100" style="width: 50px">
+				%  Transparency of past months.  (0 = no transparency)
 			</div>
 		</div>
 	</div>
@@ -43,7 +59,7 @@
 		<b>Events</b>
 		<div style="margin-left:20px">
 			<div style="margin-top:30px">
-				<input id="show_event_title" type="radio" name="event_group">
+				<input id="show_event_title" type="radio" name="event_format">
 				Display event titles.
 				<div style="margin-left:30px; margin-top:10px">
 					<input id="show_evt_time" type="checkbox">
@@ -59,7 +75,7 @@
 				</div>
 			</div>
 			<div style="margin-top:30px">
-				<input id="proportional_events" type="radio" name="event_group">
+				<input id="proportional_events" type="radio" name="event_format">
 				Display event markers in proportion to their actual duration.  Some events may not be visible if this option is used.
 				<div style="margin-left:30px; margin-top:10px">
 					<input id="evt_start_hour" type="number" min="0" max="24" style="width: 50px">
@@ -71,24 +87,40 @@
 				</div>
 			</div>
 			<div style="margin-top:30px">
-				<input id="basic_marker" type="radio" name="event_group">
+				<input id="basic_marker" type="radio" name="event_format">
 				Display basic event markers.
 			</div>
-			<div style="margin-top:30px">
-				<input id="multi_day_separate_all" type="checkbox">
-				Show multi-day events as a separate event on each day.
+			<div style="margin-top:50px">
+				<input id="multi_day_with_first_single_day" type="checkbox">
+				Show multi-day events with a single-day event on first day.
 			</div>
 			<div style="margin-top:30px">
-				<input id="multi_day_separate_first" type="checkbox">
-				Show multi-day events with a separate event on first day.
+				<input id="multi_day_as_single_day" type="checkbox">
+				Show multi-day events as single-day events on each day.
 			</div>
 			<div style="margin-top:30px">
-				<input id="marker_width" type="number" min="1" max="10" style="width: 50px">
+				<input id="single_day_as_multi_day" type="checkbox">
+				Show single-day events as multi-day event.
+			</div>
+			<div style="margin-top:30px">
+				<input id="marker_width" type="number" style="width: 50px">
 				Width of coloured event marker.
+			</div>
+			<div style="margin-top:30px">
+				<input id="marker_transparency" type="number" min="0" max="100" style="width: 50px">
+				%  Transparency of coloured event marker.  (0 = no transparency)
+			</div>
+			<div style="margin-top:30px">
+				<input id="tooltip_titles_for_day" type="checkbox">
+				Show titles of all events in tooltip for each day. If not selected, titles are shown in tooltip for each event.
+			</div>
+			<div style="margin-top:30px">
+				<input id="auto_refresh" type="checkbox">
+				Refresh automatically when calendar events are updated.
 			</div>
 		</div>
 	</div>
-	<div id="save_btn" style="height:30; margin-top: 40px">
+	<div id="save_btn" style="height:30; margin-top: 50px">
 		<button onclick="onSaveSettings();">Save Settings</button>
 		<button onclick="onCancel();">Cancel</button>
 	</div>
