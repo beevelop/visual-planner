@@ -41,7 +41,7 @@ function evt_test()
 		{ // cal data
 			name: "test calendar",
 		    events: [
-				create_evt("mdt", false, "multi-day timed", {dayoff:5, hour:10, min:0}, {dayoff:9, hour:10, min:0}, 'orange'),
+				create_evt("mdt", false, "multi-day timed", {dayoff:5, hour:10, min:0}, {dayoff:9, hour:13, min:15}, 'orange'),
 				create_evt("one1", false, "very extremely long event's title", {dayoff:2, hour:1, min:30}, {dayoff:2, hour:13, min:0}, 'red'),
 				create_evt("ad1", true, "all day &#39;1&#39;", {dayoff:4, hour:0, min:0}, {dayoff:14, hour:0, min:0}, 'blue'),
 				create_evt("two2", false, "e2 &#39;timed&#39;", {dayoff:12, hour:9, min:30}, {dayoff:12, hour:12, min:0}, 'blue'),
