@@ -1,144 +1,154 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>visual-planner : Settings</title>
 <link rel="icon" href="vip_64.png">
 <script type="text/javascript">function ga_hit() {}</script>
 <script type="text/javascript" src="vip_settings.js"></script>
+<style>
+body {
+    font-family: Arial;
+}
+div {
+    padding-top: 1em;
+    padding-left: 2em;
+}
+</style>
 </head>
 <body onload="InitSettings();">
-
-<div id="settings" style="font-family:Arial; margin:40px; width:800px;">
-	<div style="margin-top: 40px">
+<div>
+	<div>
 		<b>View</b>
-		<div style="margin-left:20px">
-			<div style="margin-top:30px">
-				<select id="multi_col_count" style="width: 50px">
-					<option value="4">4</option>
-					<option value="6">6</option>
-					<option value="8">8</option>
-					<option value="10">10</option>
-					<option value="12">12</option>
-				</select>
-				Number of columns to display.  More columns can be scrolled into view using the mouse wheel or cursor keys.
-			</div>
-			<div style="margin-top:30px">
-				<input id="auto_scroll" type="checkbox">
-				Auto-scroll to current month.  If not selected, the view will always start at the beginning of the year.
-				<div style="margin-left:30px; margin-top:10px">
-					<input id="start_month_offset" type="number" min="-12" max="12" style="width: 50px">
-					Auto-scroll offset.  For example, -2 will cause the date range to start from two months ago, 0 will start with the current month.
-				</div>
-			</div>
-			<div style="margin-top:30px">
-				<input id="open_standalone" type="checkbox">
-				Open as a stand-alone web page: <a href='https://rawgit.com/ctcode/visual-planner/dev/vip.html' target="_blank">https://rawgit.com/ctcode/visual-planner/dev/vip.html</a>
-				<div style="margin-left:30px; margin-top:10px">
-					<input id="banner_text" style="width: 200px">
-					Banner text.
-				</div>
-			</div>
-			<div style="margin-top:30px">
-				<input id="highlight_weekends" type="checkbox">
-				Highlight weekends.
-			</div>
-			<div style="margin-top:30px">
-				<input id="align_weekends" type="checkbox">
-				Align weekends with adjacent columns.
-			</div>
-			<div style="margin-top:30px">
-				<input id="font_scale" type="number" style="width: 50px">
-				Font scale.
-			</div>
-			<div style="margin-top:30px">
-				<input id="past_transparency" type="number" min="0" max="100" style="width: 50px">
-				%  Transparency of past months.  (0 = no transparency)
+		<div>
+			<select id="multi_col_count" style="width: 4em">
+				<option value="4">4</option>
+				<option value="6">6</option>
+				<option value="8">8</option>
+				<option value="10">10</option>
+				<option value="12">12</option>
+			</select>
+			Number of columns to display.  More columns can be scrolled into view using the mouse wheel or cursor keys.
+		</div>
+		<div>
+			<input id="auto_scroll" type="checkbox">
+			Auto-scroll to current month.  If not selected, the view will always start at the beginning of the year.
+			<div>
+				<input id="start_month_offset" type="number" min="-12" max="12" style="width: 4em">
+				Auto-scroll offset.  For example, -2 will cause the date range to start from two months ago, 0 will start with the current month.
 			</div>
 		</div>
+		<div>
+			<input id="open_standalone" type="checkbox">
+			Open as a stand-alone web page: <a href='https://rawgit.com/ctcode/visual-planner/dev/vip.html' target="_blank">https://rawgit.com/ctcode/visual-planner/dev/vip.html</a>
+			<div>
+				<input id="banner_text" style="width: 20em">
+				Banner text.
+			</div>
+		</div>
+		<div>
+			<input id="highlight_weekends" type="checkbox">
+			Highlight weekends.
+		</div>
+		<div>
+			<input id="align_weekends" type="checkbox">
+			Align weekends with adjacent columns.
+		</div>
+		<div>
+			<input id="font_scale" type="number" style="width: 4em">
+			Font scale.
+		</div>
+		<div>
+			<input id="past_transparency" type="number" min="0" max="100" style="width: 4em">
+			%  Transparency of past months.  (0 = no transparency)
+		</div>
 	</div>
-	<div style="margin-top: 40px">
+</div>
+<div>
+	<div>
 		<b>Events</b>
-		<div style="margin-left:20px">
-			<div style="margin-top:30px">
-				<input id="show_event_title" type="radio" name="event_format">
-				Display event titles.
-				<div style="margin-left:30px; margin-top:10px">
-					<input id="show_evt_time" type="checkbox">
-					Show time of event.
-				</div>
-				<div style="margin-left:30px; margin-top:10px">
-					<input id="use_evt_colour" type="checkbox">
-					Use event colour for title text.
-				</div>
-				<div style="margin-left:30px; margin-top:10px">
-					<input id="hide_evt_marker" type="checkbox">
-					Hide coloured event marker.
-				</div>
+		<div>
+			<input id="show_time" type="checkbox">
+			Show event time.
+		</div>
+		<div>
+			<input id="show_title" type="checkbox">
+			Show event title.
+		</div>
+		<div>
+			<input id="show_marker" type="checkbox">
+			Show event marker.
+		</div>
+		<div>
+			<input id="title_colour" type="checkbox">
+			Use event colour for title text.
+		</div>
+		<div>
+			<input id="proportional_events" type="checkbox">
+			Display event markers in proportion to their actual duration.  Some events may not be visible if this option is used.
+			<div>
+				<input id="evt_start_hour" type="number" min="0" max="24" style="width: 4em">
+				Start hour of visible event range.
 			</div>
-			<div style="margin-top:30px">
-				<input id="proportional_events" type="radio" name="event_format">
-				Display event markers in proportion to their actual duration.  Some events may not be visible if this option is used.
-				<div style="margin-left:30px; margin-top:10px">
-					<input id="evt_start_hour" type="number" min="0" max="24" style="width: 50px">
-					Start hour of visible event range.
-				</div>
-				<div style="margin-left:30px; margin-top:10px">
-					<input id="evt_end_hour" type="number" min="0" max="24" style="width: 50px">
-					End hour of visible event range.
-				</div>
-			</div>
-			<div style="margin-top:30px">
-				<input id="basic_marker" type="radio" name="event_format">
-				Display basic event markers.
-			</div>
-			<div style="margin-top:50px">
-				<input id="multi_day_with_first_single_day" type="checkbox">
-				Show multi-day events with a single-day event on first day.
-			</div>
-			<div style="margin-top:30px">
-				<input id="multi_day_as_single_day" type="checkbox">
-				Show multi-day events as single-day events on each day.
-			</div>
-			<div style="margin-top:30px">
-				<input id="single_day_as_multi_day" type="checkbox">
-				Show single-day events as multi-day event.
-			</div>
-			<div style="margin-top:30px">
-				<input id="marker_width" type="number" style="width: 50px">
-				Width of coloured event marker.
-			</div>
-			<div style="margin-top:30px">
-				<input id="marker_transparency" type="number" min="0" max="100" style="width: 50px">
-				%  Transparency of coloured event marker.  (0 = no transparency)
-			</div>
-			<div style="margin-top:30px">
-				<input id="tooltip_titles_for_day" type="checkbox">
-				Show titles of all events in tooltip for each day. If not selected, titles are shown in tooltip for each event.
-			</div>
-			<div style="margin-top:30px">
-				<input id="auto_refresh" type="checkbox">
-				Refresh automatically when calendar events are updated.
+			<div>
+				<input id="evt_end_hour" type="number" min="0" max="24" style="width: 4em">
+				End hour of visible event range.
 			</div>
 		</div>
+		<div>
+			<input id="multi_day_with_first_single_day" type="checkbox">
+			Show multi-day events with a single-day event on first day.
+		</div>
+		<div>
+			<input id="multi_day_as_single_day" type="checkbox">
+			Show multi-day events as single-day events on each day.
+		</div>
+		<div>
+			<input id="single_day_as_multi_day" type="checkbox">
+			Show single-day events as multi-day event.
+		</div>
+		<div>
+			<input id="marker_width" type="number" style="width: 4em">
+			Width of event marker.
+		</div>
+		<div>
+			<input id="marker_transparency" type="number" min="0" max="100" style="width: 4em">
+			%  Transparency of event marker.  (0 = no transparency)
+		</div>
+		<div>
+			<input id="tooltip_titles_for_day" type="checkbox">
+			Show titles of all events in tooltip for each day. If not selected, titles are shown in tooltip for each event.
+		</div>
+		<div>
+			<input id="auto_refresh" type="checkbox">
+			Refresh automatically when calendar events are updated.
+		</div>
 	</div>
-	<div id="save_btn" style="height:30; margin-top: 50px">
+</div>
+<div>
+	<div id="save_btn">
 		<button onclick="onSaveSettings();">Save Settings</button>
 		<button onclick="onCancel();">Cancel</button>
 	</div>
-	<div style="text-align: center; margin-top: 40px">
+</div>
+<div style="text-align: center;">
+	<div>
 		This software project is funded by voluntary donation.
-		<div style="margin-top: 10px">
-			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-			<input type="hidden" name="cmd" value="_s-xclick">
-			<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----MIIHJwYJKoZIhvcNAQcEoIIHGDCCBxQCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYByw+D281Blf5bcBnagO1b6Uuyh9Jub0L3WKfZrcC10lDp81+0HMK9CxEMrDRmHR6z7BZqK4dQjJBDlcWmaerZCK67l8a8E1+9Bp0wTwz24APqaV6fbBa4hr+w9u8/mkqMIcqrSQnwM/eCF6xL9RyTYdgOu7J0W2U1FmJKOzazPCTELMAkGBSsOAwIaBQAwgaQGCSqGSIb3DQEHATAUBggqhkiG9w0DBwQIP+SkfVioGoWAgYAjkOpvL21KMafJXX+NA8hFFbPaf792SFHKdcDAyCP7ZXfxqGbzJIR24AEJdHnWcGcdDrPmIFFiKb3KjkmsiW3MP8SkgzsM9wNZW3ek1PxEpLUBXnaxBA9Hx0565+Xr4MxvyqGZ6N6j/XjCYkKPZZa7gQ0BzpvVz/1uoyhdCgqRFKCCA4cwggODMIIC7KADAgECAgEAMA0GCSqGSIb3DQEBBQUAMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbTAeFw0wNDAyMTMxMDEzMTVaFw0zNTAyMTMxMDEzMTVaMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAwUdO3fxEzEtcnI7ZKZL412XvZPugoni7i7D7prCe0AtaHTc97CYgm7NsAtJyxNLixmhLV8pyIEaiHXWAh8fPKW+R017+EmXrr9EaquPmsVvTywAAE1PMNOKqo2kl4Gxiz9zZqIajOm1fZGWcGS0f5JQ2kBqNbvbg2/Za+GJ/qwUCAwEAAaOB7jCB6zAdBgNVHQ4EFgQUlp98u8ZvF71ZP1LXChvsENZklGswgbsGA1UdIwSBszCBsIAUlp98u8ZvF71ZP1LXChvsENZklGuhgZSkgZEwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tggEAMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEFBQADgYEAgV86VpqAWuXvX6Oro4qJ1tYVIT5DgWpE692Ag422H7yRIr/9j/iKG4Thia/Oflx4TdL+IFJBAyPK9v6zZNZtBgPBynXb048hsP16l2vi0k5Q2JKiPDsEfBhGI+HnxLXEaUWAcVfCsQFvd2A1sxRr67ip5y2wwBelUecP3AjJ+YcxggGaMIIBlgIBATCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwCQYFKw4DAhoFAKBdMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE0MTIxNDE3MzUxNFowIwYJKoZIhvcNAQkEMRYEFCYl086NHFlOE8KLctkJO2GMSy1UMA0GCSqGSIb3DQEBAQUABIGAZL0Kl5pe9QpzmkmGeV3PNS1JqbfSMz9mzTHTeWrXNmlfc38zKWv5H3vIeSM4BphWySaTmgonz9OTY/TCdAbDyfdTduvV01fMbdVNv1T63+BaIX2UmuvmbpEjfR6TDKY+iqFBgAbCSskdmGMPJUyMpKPU9lSbIElHvrFVjgxWMYE=-----END PKCS7-----">
-			<input type="image" src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal � The safer, easier way to pay online.">
-			<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
-			</form>
-		</div>
 	</div>
-	<div style="margin-top: 40px">
+	<div>
+		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+		<input type="hidden" name="cmd" value="_s-xclick">
+		<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+		<input type="image" src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal � The safer, easier way to pay online.">
+		<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+		</form>
+	</div>
+</div>
+<div>
+	<div>
 		<a href="https://groups.google.com/group/visual-planner-discuss" target="_blank">visual-planner discussion group</a>
 	</div>
 </div>
-
+<div>
+</div>
 </body>
 </html>
