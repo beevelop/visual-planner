@@ -2,8 +2,8 @@ function vip_init()
 {
 	vip_init_grid(document.getElementById("grid"));
 
-	vip.grid.events.proportional.show = true;
-	vip.grid.events.title.show = false;
+	vip.grid.proportional_events = true;
+	vip.grid.show_event_title = false;
 
 	vip.grid.create();
 	
@@ -98,6 +98,8 @@ function receive_events(data)
 
 function add_all_day_event(event)
 {
+vip.grid.events = {allday: {show: true, one_day_as_timed: true, multi_day_as_timed: false}};
+
 	if (!vip.grid.events.allday.show)
 		return;
 	
@@ -128,6 +130,8 @@ function add_all_day_event(event)
 
 function add_timed_event(event)
 {
+vip.grid.events = {timed: {show: true, multi_day_as_all_day: true}};
+
 	if (!vip.grid.events.timed.show)
 		return;
 	

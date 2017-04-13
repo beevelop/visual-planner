@@ -33,7 +33,7 @@ div {
 			<input id="auto_scroll" type="checkbox">
 			Auto-scroll to current month.  If not selected, the view will always start at the beginning of the year.
 			<div>
-				<input id="start_month_offset" type="number" min="-12" max="12" style="width: 4em">
+				<input id="auto_scroll_offset" type="number" min="-12" max="12" style="width: 4em">
 				Auto-scroll offset.  For example, -2 will cause the date range to start from two months ago, 0 will start with the current month.
 			</div>
 		</div>
@@ -46,12 +46,12 @@ div {
 			</div>
 		</div>
 		<div>
-			<input id="highlight_weekends" type="checkbox">
-			Highlight weekends.
+			<input id="show_weekends" type="checkbox">
+			Show weekends.
 		</div>
 		<div>
 			<input id="align_weekends" type="checkbox">
-			Align weekends with adjacent columns.
+			Align weekends.
 		</div>
 		<div>
 			<input id="font_scale" type="number" style="width: 4em">
@@ -67,30 +67,30 @@ div {
 	<div>
 		<b>Events</b>
 		<div>
-			<input id="show_time" type="checkbox">
+			<input id="show_event_time" type="checkbox">
 			Show event time.
 		</div>
 		<div>
-			<input id="show_title" type="checkbox">
+			<input id="show_event_title" type="checkbox">
 			Show event title.
 		</div>
 		<div>
-			<input id="show_marker" type="checkbox">
+			<input id="show_event_marker" type="checkbox">
 			Show event marker.
 		</div>
 		<div>
-			<input id="title_colour" type="checkbox">
+			<input id="colour_event_title" type="checkbox">
 			Use event colour for title text.
 		</div>
 		<div>
 			<input id="proportional_events" type="checkbox">
 			Display event markers in proportion to their actual duration.  Some events may not be visible if this option is used.
 			<div>
-				<input id="evt_start_hour" type="number" min="0" max="24" style="width: 4em">
+				<input id="proportional_start_hour" type="number" min="0" max="24" style="width: 4em">
 				Start hour of visible event range.
 			</div>
 			<div>
-				<input id="evt_end_hour" type="number" min="0" max="24" style="width: 4em">
+				<input id="proportional_end_hour" type="number" min="0" max="24" style="width: 4em">
 				End hour of visible event range.
 			</div>
 		</div>
@@ -103,8 +103,8 @@ div {
 			Show multi-day events as single-day events on each day.
 		</div>
 		<div>
-			<input id="single_day_as_multi_day" type="checkbox">
-			Show single-day events as multi-day event.
+			<input id="all_day_single_day_as_multi_day" type="checkbox">
+			Show all-day, single-day events as multi-day events.
 		</div>
 		<div>
 			<input id="marker_width" type="number" style="width: 4em">
@@ -115,8 +115,8 @@ div {
 			%  Transparency of event marker.  (0 = no transparency)
 		</div>
 		<div>
-			<input id="tooltip_titles_for_day" type="checkbox">
-			Show titles of all events in tooltip for each day. If not selected, titles are shown in tooltip for each event.
+			<input id="separate_event_titles" type="checkbox">
+			Show separate event titles in popup tooltip box. If not selected, all event titles are shown for each day.
 		</div>
 		<div>
 			<input id="auto_refresh" type="checkbox">

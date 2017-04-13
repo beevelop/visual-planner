@@ -71,7 +71,7 @@ function show_settings()
 function receive_GCalPrefs(prefs)
 {
 	if ('military' in prefs)
-		vip.grid.events.time_24hr = prefs.military;
+		vip.grid.time_24hr = prefs.military;
 }
 
 function create_calendar_event()
@@ -232,6 +232,8 @@ function receive_events(data)
 
 function add_all_day_event(event)
 {
+vip.grid.events = {allday: {show: true, one_day_as_timed: true, multi_day_as_timed: false}};
+
 	if (!vip.grid.events.allday.show)
 		return;
 	
@@ -262,6 +264,8 @@ function add_all_day_event(event)
 
 function add_timed_event(event)
 {
+vip.grid.events = {timed: {show: true, multi_day_as_all_day: true}};
+
 	if (!vip.grid.events.timed.show)
 		return;
 	
