@@ -26,8 +26,8 @@ function create_evt(evt_id, evt_allday, evt_title, time_start, time_end, evt_col
 		id: evt_id,
 		allDay: evt_allday,
 		title: evt_title,
-		startTime: {year: dt_evt_start.getFullYear(), month: (dt_evt_start.getMonth() + 1), day: dt_evt_start.getDate(), hour: time_start.hour, minute: time_start.min, second: 0},
-		endTime: {year: dt_evt_end.getFullYear(), month: (dt_evt_end.getMonth() + 1), day: dt_evt_end.getDate(), hour: time_end.hour, minute: time_end.min, second: 0},
+		startTime: {year: dt_evt_start.getFullYear(), month: (dt_evt_start.getMonth() + 1), date: dt_evt_start.getDate(), hour: time_start.hour, minute: time_start.min, second: 0},
+		endTime: {year: dt_evt_end.getFullYear(), month: (dt_evt_end.getMonth() + 1), date: dt_evt_end.getDate(), hour: time_end.hour, minute: time_end.min, second: 0},
 		palette: {medium: evt_colour}
 	};
 }
@@ -84,8 +84,8 @@ function receive_events(data)
 			if (cal_data.name)
 				info.calendar_name = cal_data.name;
 
-			info.vdtStart = new VipDate.YMD(calevt.startTime.year, calevt.startTime.month, calevt.startTime.day);
-			info.vdtEnd = new VipDate.YMD(calevt.endTime.year, calevt.endTime.month, calevt.endTime.day);
+			info.vdtStart = new VipDate.YMD(calevt.startTime.year, calevt.startTime.month, calevt.startTime.date);
+			info.vdtEnd = new VipDate.YMD(calevt.endTime.year, calevt.endTime.month, calevt.endTime.date);
 			info.id = calevt.id;
 			info.title = calevt.title;
 			info.colour = calevt.palette.medium;
