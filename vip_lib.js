@@ -123,15 +123,13 @@ function VipGrid(container_element)
 {
 	this.createChildDiv(container_element, "vipgrid");
 
-	this.colcount = 8;
 	this.cellcount = 31;
 	this.col_header = true;
-	this.offset_col = true;
 	this.scrolling_disabled = false;
 	this.date_indicator = false;
 	this.time_24hr = true;
 	this.onloadVipCol = function() {};
-	
+
 	// user settings
 	this.multi_col_count = 8;
 	this.auto_scroll = true;
@@ -172,7 +170,7 @@ VipGrid.prototype.create = function()
 
 	var vdt_end = new VipDate(vdt_start);
 
-	for (var c=0; c < this.colcount; c++)
+	for (var c=0; c < this.multi_col_count; c++)
 	{
 		vdt_end.MoveMonths(1);
 
@@ -186,10 +184,9 @@ VipGrid.prototype.create = function()
 
 VipGrid.prototype.createSingleCol = function()
 {
-	this.colcount = 1;
 	this.cellcount = 28;
 	this.col_header = false;
-	this.offset_col = false;
+	this.align_weekends = false;
 	this.scrolling_disabled = true;
 	this.date_indicator = true;
 
@@ -372,7 +369,7 @@ VipCol.prototype = new VipObject;
 VipCol.prototype.updateLayout = function()
 {
 	var c = vip.grid.cellcount;
-	if (vip.grid.offset_col)
+	if (vip.grid.align_weekends)
 		c += 6;
 	
 	var offset = this.viphdr ? this.viphdr.div.offsetHeight : 0;
@@ -380,7 +377,7 @@ VipCol.prototype.updateLayout = function()
 	var cellspace = Math.floor((this.div.offsetHeight-offset)/c);
 	var cellheight = px(cellspace-1);
 
-	if (vip.grid.offset_col)
+	if (vip.grid.align_weekends)
 		offset += (cellspace * this.vdt_month.DayOfWeek());
 
 	this.vipcelloffset.div.style.top = px(offset);
@@ -682,7 +679,7 @@ VipCell.prototype.updateEventLayout = function()
 		while (vipevt)
 		{
 			if (x_off > 0)
-				x_off += 1;
+				x_off += 2;
 			
 			vipevt.div.style.left = px(x_off);
 			x_off += vipevt.div.offsetWidth;
@@ -809,6 +806,7 @@ function VipSingleDayEvent(vipcell, info)
 	this.time_title = "";
 	if (this.info.timed)
 	if (this.first_day)
+	if (vip.grid.show_event_time)
 		this.time_title = info.vtmStart.TimeTitle() + " ";
 
 	//this.evt_start_seconds = event.vtmStart.toSeconds();
