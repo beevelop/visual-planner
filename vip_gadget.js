@@ -209,91 +209,34 @@ function receive_events(data)
 			return;
 		}
 		
-		// draw new events
 		for (var k in cal_data.events)
 		{
-			var event = cal_data.events[k];
+			var calevt = cal_data.events[k];
+			var info = new VipEventInfo();
 
-			event.vdtStart = gdt2vdt(event.startTime);
-			event.vdtEnd = gdt2vdt(event.endTime);
-			event.vtmStart = gdt2vtm(event.startTime);
-			event.vtmEnd = gdt2vtm(event.endTime);
-			
 			if (cal_data.name)
-				event.calendar = cal_data.name;
+				info.calendar_name = cal_data.name;
 
-			if (event.allDay)
-				add_all_day_event(event);
-			else
-				add_timed_event(event);
-		}
-	}
-}
+			info.vdtStart = new VipDate.YMD(calevt.startTime.year, calevt.startTime.month, calevt.startTime.day);
+			info.vdtEnd = new VipDate.YMD(calevt.endTime.year, calevt.endTime.month, calevt.endTime.day);
+			info.id = calevt.id;
+			info.title = calevt.title;
+			info.colour = calevt.palette.medium;
 
-function add_all_day_event(event)
-{
-vip.grid.events = {allday: {show: true, one_day_as_timed: true, multi_day_as_timed: false}};
-
-	if (!vip.grid.events.allday.show)
-		return;
-	
-	var vdt_start = gdt2vdt(event.startTime);
-	var vdt_end = gdt2vdt(event.endTime);
-
-	var vdt_nextday = new VipDate(vdt_start);
-	vdt_nextday.MoveDays(1);
-	var one_day_evt = (vdt_nextday.isSameDay(vdt_end))
-
-	while (vdt_start.Datestamp() < vdt_end.Datestamp())
-	{
-		var vipcell = vip.grid.getVipCell(vdt_start);
-
-		if (vipcell)
-		{
-			if (vip.grid.events.allday.one_day_as_timed && one_day_evt)
-				vipcell.addEvent(event);
-			else if (vip.grid.events.allday.multi_day_as_timed && !one_day_evt)
-				vipcell.addEvent(event);
-			else
-				vipcell.vipcol.addEvent(event, vipcell);
-		}
-
-		vdt_start.MoveDays(1);
-	}
-}
-
-function add_timed_event(event)
-{
-vip.grid.events = {timed: {show: true, multi_day_as_all_day: true}};
-
-	if (!vip.grid.events.timed.show)
-		return;
-	
-	var vdt_start = gdt2vdt(event.startTime);
-	var vdt_end = gdt2vdt(event.endTime);
-
-	if (vdt_start.isSameDay(vdt_end))
-	{
-		var vipcell = vip.grid.getVipCell(vdt_start);
-		
-		if (vipcell)
-			vipcell.addEvent(event);
-	}
-	else
-	{
-		while (vdt_start.Datestamp() <= vdt_end.Datestamp())
-		{
-			var vipcell = vip.grid.getVipCell(vdt_start);
-
-			if (vipcell)
+			if (calevt.allDay)
 			{
-				if (vip.grid.events.timed.multi_day_as_all_day)
-					vipcell.vipcol.addEvent(event, vipcell);
-				else
-					vipcell.addEvent(event);
+				info.timed = false;
+				info.duration = (info.vdtEnd.UTCDay() - info.vdtStart.UTCDay());
 			}
-
-			vdt_start.MoveDays(1);
+			else
+			{
+				info.timed = true;
+				info.duration = (info.vdtEnd.UTCDay() - info.vdtStart.UTCDay() + 1);
+				info.vtmStart = new VipTime.HourMin(calevt.startTime.hour, calevt.startTime.minute);
+				info.vtmEnd = new VipTime.HourMin(calevt.endTime.hour, calevt.endTime.minute);
+			}
+			
+			vip.grid.addEvent(info);
 		}
 	}
 }

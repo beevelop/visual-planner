@@ -279,6 +279,35 @@ VipGrid.prototype.getVipCell = function(vdt)
 	return null;
 }
 
+VipGrid.prototype.addEvent = function(info)
+{
+	if (info.duration == 1)
+	{
+		var vipcell = this.getVipCell(info.vdtStart);
+		
+		if (vipcell)
+			vipcell.addEvent(info);
+	}
+	else
+	{
+		var vdtNext = new VipDate(info.vdtStart);
+		var c=0;
+		
+		while (c < info.duration)
+		{
+			var vipcell = this.getVipCell(vdtNext);
+
+			if (vipcell)
+			{
+				vipcell.vipcol.addEvent(info, vipcell);
+			}
+
+			vdtNext.MoveDays(1);
+			c++;
+		}
+	}
+}
+
 
 
 //////////////////////////////////////////////////////////////////////
@@ -410,14 +439,14 @@ VipCol.prototype.updateSelectionTip = function(vipcell_start, vipcell_end)
 	this.vipseltip.Show(true);
 }
 
-VipCol.prototype.addEvent = function(event, vipcell)
+VipCol.prototype.addEvent = function(info, vipcell)
 {
 	var vipevt = null;
 
 	var vipsib = this.vipevts.First();
 	while (vipsib)
 	{
-		if (event.id == vipsib.evt_id)
+		if (info.id == vipsib.info.id)
 		{
 			vipevt = vipsib;
 			break;
@@ -431,7 +460,7 @@ VipCol.prototype.addEvent = function(event, vipcell)
 
 	if (!vipevt)
 	{
-		vipevt = new VipMultiDayEvent(this.vipevts, event, vipcell);
+		vipevt = new VipMultiDayEvent(this.vipevts, info, vipcell);
 		this.vipevts.MoveLastBefore(vipsib);
 	}
 
@@ -600,23 +629,28 @@ VipCell.prototype.inDateRange = function(vdt_lo, vdt_hi)
 	return false;
 }
 
-VipCell.prototype.addEvent = function(event)
+VipCell.prototype.addEvent = function(info)
 {
-	var timestamp = event.vtmStart.Timestamp();
+	var vipsib = this.vipevts.First();
+	while (vipsib)
+	{
+		if (info.id == vipsib.info.id)
+			return;
+
+		vipsib = vipsib.Next();
+	}
+
+	var vipevt = new VipSingleDayEvent(this, info);
 
 	var vipsib = this.vipevts.First();
 	while (vipsib)
 	{
-		if (event.id == vipsib.evt_id)
-			return;
-
-		if (timestamp < vipsib.evt_timestamp)
+		if (vipevt.timestamp < vipsib.timestamp)
 			break;
 
 		vipsib = vipsib.Next();
 	}
 
-	var vipevt = new VipSingleDayEvent(this, event);
 	this.vipevts.MoveLastBefore(vipsib);  // sort in time order
 
 	this.updateEventInfo();
@@ -705,23 +739,41 @@ VipCell.prototype.updateEventInfo = function()
 
 //////////////////////////////////////////////////////////////////////
 
-function VipMultiDayEvent(parent, event, vipcell)
+function VipEventInfo()
+{
+	this.calendar_name = undefined;
+	this.id = undefined;
+	this.title = undefined;
+	this.colour = undefined;
+	this.timed = undefined;
+	this.duration = undefined;
+	this.vdtStart = undefined;
+	this.vtmStart = undefined;
+	this.vtmEnd = undefined;
+}
+
+
+
+//////////////////////////////////////////////////////////////////////
+
+function VipMultiDayEvent(parent, info, vipcell)
 {
 	this.createChild(parent, "vipmultidayevent");
-	this.evt_id = event.id;
-	this.evt_title = html2txt(event.title);
-	this.vipcell_start = vipcell;
-	this.vipcell_end = vipcell;
-	this.div.style.zIndex = "1";
 
 	var evt = this.div;
 	evt.style.width = fmt("^em", vip.grid.marker_width);
-	evt.style.backgroundColor = event.palette.medium;
+	evt.style.backgroundColor = info.colour;
+	evt.style.zIndex = "1";
 
-	if (event.calendar)
-		this.tooltip = fmt("^ - ^", event.calendar, this.evt_title);
+	this.info = info;
+	this.title = html2txt(info.title);
+	this.vipcell_start = vipcell;
+	this.vipcell_end = vipcell;
+
+	if (info.calendar_name)
+		this.tooltip = fmt("^ - ^", info.calendar_name, this.title);
 	else
-		this.tooltip = this.evt_title;
+		this.tooltip = this.title;
 }
 
 VipMultiDayEvent.prototype = new VipObject;
@@ -740,39 +792,37 @@ VipMultiDayEvent.prototype.updateLayout = function()
 
 //////////////////////////////////////////////////////////////////////
 
-function VipSingleDayEvent(vipcell, event)
+function VipSingleDayEvent(vipcell, info)
 {
 	this.createChild(vipcell.vipevts, "vipsingledayevent");
-	this.evt_id = event.id;
-	this.evt_datestamp = event.vdtStart.Datestamp();
-	this.evt_timestamp = event.vtmStart.Timestamp();
-	this.evt_title = html2txt(event.title);
-	this.evt_timed = !event.allDay;
-	this.vdtStart = event.vdtStart;
-	this.vdtEnd = event.vdtEnd;
-	this.vdmStart = event.vdmStart;
-	this.vdmEnd = event.vdmEnd;
+
 	this.div.style.zIndex = "2";
 	this.div.style.width = "";
 	this.padding=0;
 
-	this.evt_start_seconds = event.vtmStart.toSeconds();
-	this.evt_end_seconds = event.vdtStart.isSameDay(event.vdtEnd) ? event.vtmEnd.toSeconds() : (new VipTime.HourMin(24, 0)).toSeconds();
+	this.info = info;
+	this.datestamp = info.vdtStart.Datestamp();
+	this.timestamp = info.timed ? info.vtmStart.Timestamp() : 0;
+	this.first_day = (this.datestamp == vipcell.vipdate.Datestamp());
+	this.title = html2txt(info.title);
 	
-	this.evt_title_time = "";
-	if (this.evt_timed)
-	if (this.evt_datestamp == vipcell.vipdate.Datestamp())
-		this.evt_title_time = event.vtmStart.TimeTitle() + " ";
+	this.time_title = "";
+	if (this.info.timed)
+	if (this.first_day)
+		this.time_title = info.vtmStart.TimeTitle() + " ";
 
-	this.tooltip = this.evt_title_time;
-	if (event.calendar)
-		this.tooltip += fmt("^ - ", event.calendar);
-	this.tooltip += this.evt_title;
+	//this.evt_start_seconds = event.vtmStart.toSeconds();
+	//this.evt_end_seconds = event.vdtStart.isSameDay(event.vdtEnd) ? event.vtmEnd.toSeconds() : (new VipTime.HourMin(24, 0)).toSeconds();
+
+	this.tooltip = this.time_title;
+	if (info.calendar_name)
+		this.tooltip += fmt("^ - ", info.calendar_name);
+	this.tooltip += this.title;
 
 	if (vip.grid.show_event_marker || vip.grid.proportional_events)
 	{
 		this.vipmarker = new VipDiv(this, "vipevtmarker");
-		this.vipmarker.div.style.backgroundColor = event.palette.medium;
+		this.vipmarker.div.style.backgroundColor = info.colour;
 		
 		var h = this.vipmarker.div.offsetHeight;
 		this.vipmarker.div.style.height = "1em";
@@ -788,7 +838,7 @@ function VipSingleDayEvent(vipcell, event)
 
 	if (vip.grid.show_event_title)
 	{
-		this.div.appendChild(document.createTextNode(this.evt_title_time + this.evt_title));
+		this.div.appendChild(document.createTextNode(this.time_title + this.title));
 
 		this.div.style.whiteSpace = "nowrap";
 		this.div.style.overflow = "hidden";
@@ -797,7 +847,7 @@ function VipSingleDayEvent(vipcell, event)
 		this.div.style.paddingLeft = px(this.padding);
 
 		if (vip.grid.colour_event_title)
-			this.div.style.color = event.palette.medium;
+			this.div.style.color = info.colour;
 	}
 }
 
@@ -810,6 +860,7 @@ VipSingleDayEvent.prototype.truncate = function(x)
 
 VipSingleDayEvent.prototype.setProportionalWidth = function(max_width)
 {
+/*
 	var m_duration = ((this.evt_end_seconds - this.evt_start_seconds) / 60);
 	var m_start = (this.evt_start_seconds / 60);
 	var m_range_start = (vip.grid.proportional_start_hour * 60);
@@ -819,7 +870,6 @@ VipSingleDayEvent.prototype.setProportionalWidth = function(max_width)
 	this.vipmarker.div.style.left = px(Math.round((m_start - m_range_start) / m_per_px));
 	this.vipmarker.div.style.width = px(Math.round(m_duration / m_per_px));
 
-/*
 	var off_right = (this.vipmarker.div.offsetLeft + this.vipmarker.div.offsetWidth);
 	if ((off_right <= 0) || (this.vipmarker.div.offsetLeft >= vipcell.vipevts.div.offsetWidth))
 	{
@@ -888,6 +938,12 @@ VipDate.prototype.Datestamp = function()
 	return ((this.dt.getFullYear()*10000) + ((this.dt.getMonth() + 1)*100) + this.dt.getDate());
 }
 
+VipDate.prototype.UTCDay = function()
+{
+	var s = Date.UTC(this.dt.getFullYear(), this.dt.getMonth(), this.dt.getDate());
+	return (Math.floor(s/86400000));
+}
+
 VipDate.prototype.DayOfMonth = function()
 {
 	return this.dt.getDate();
@@ -935,8 +991,7 @@ VipDate.prototype.isPastMonth = function()
 
 VipDate.prototype.TimespanTo = function(vdt_end)
 {
-	var s = Math.abs(Date.UTC(this.dt.getFullYear(), this.dt.getMonth(), this.dt.getDate()) - Date.UTC(vdt_end.dt.getFullYear(), vdt_end.dt.getMonth(), vdt_end.dt.getDate()));
-	var c = Math.floor(s/86400000);
+	var c = Math.abs(this.UTCDay() - vdt_end.UTCDay());
 	var w = Math.floor(c/7);
 	var d = (c-(w*7));
 	

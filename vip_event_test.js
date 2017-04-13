@@ -2,8 +2,8 @@ function vip_init()
 {
 	vip_init_grid(document.getElementById("grid"));
 
-	vip.grid.proportional_events = true;
-	vip.grid.show_event_title = false;
+	//vip.grid.proportional_events = true;
+	//vip.grid.show_event_title = false;
 
 	vip.grid.create();
 	
@@ -49,6 +49,7 @@ function evt_test()
 				create_evt("four4", false, "e4 timed", {dayoff:12, hour:10, min:30}, {dayoff:12, hour:12, min:0}, 'red'),
 				create_evt("five5", false, "e5", {dayoff:12, hour:9, min:0}, {dayoff:12, hour:12, min:0}, 'green'),
 				create_evt("six", true, "e-six", {dayoff:2, hour:0, min:0}, {dayoff:3, hour:0, min:0}, 'grey'),
+				create_evt("mcol_id", true, "multi-col", {dayoff:23, hour:0, min:0}, {dayoff:84, hour:0, min:0}, 'yellow'),
 				create_evt("arseid", false, "&#39;arse&#39;", {dayoff:24, hour:11, min:45}, {dayoff:25, hour:13, min:15}, 'magenta'),
 				create_evt("prop1", false, "proportional 1", {dayoff:26, hour:12, min:45}, {dayoff:26, hour:17, min:30}, 'coral'),
 				create_evt("oneeventid", true, "one event", {dayoff:28, hour:0, min:0}, {dayoff:29, hour:0, min:0}, 'gold'),
@@ -75,91 +76,34 @@ function receive_events(data)
 			return;
 		}
 		
-		// draw new events
 		for (var k in cal_data.events)
 		{
-			var event = cal_data.events[k];
+			var calevt = cal_data.events[k];
+			var info = new VipEventInfo();
 
-			event.vdtStart = new VipDate.YMD(event.startTime.year, event.startTime.month, event.startTime.day);
-			event.vdtEnd = new VipDate.YMD(event.endTime.year, event.endTime.month, event.endTime.day);
-			event.vtmStart = new VipTime.HourMin(event.startTime.hour, event.startTime.minute);
-			event.vtmEnd = new VipTime.HourMin(event.endTime.hour, event.endTime.minute);
-			
 			if (cal_data.name)
-				event.calendar = cal_data.name;
+				info.calendar_name = cal_data.name;
 
-			if (event.allDay)
-				add_all_day_event(event);
-			else
-				add_timed_event(event);
-		}
-	}
-}
+			info.vdtStart = new VipDate.YMD(calevt.startTime.year, calevt.startTime.month, calevt.startTime.day);
+			info.vdtEnd = new VipDate.YMD(calevt.endTime.year, calevt.endTime.month, calevt.endTime.day);
+			info.id = calevt.id;
+			info.title = calevt.title;
+			info.colour = calevt.palette.medium;
 
-function add_all_day_event(event)
-{
-vip.grid.events = {allday: {show: true, one_day_as_timed: true, multi_day_as_timed: false}};
-
-	if (!vip.grid.events.allday.show)
-		return;
-	
-	var vdt_start = new VipDate(event.vdtStart);
-	var vdt_end = new VipDate(event.vdtEnd);
-
-	var vdt_nextday = new VipDate(vdt_start);
-	vdt_nextday.MoveDays(1);
-	var one_day_evt = (vdt_nextday.isSameDay(vdt_end))
-
-	while (vdt_start.Datestamp() < vdt_end.Datestamp())
-	{
-		var vipcell = vip.grid.getVipCell(vdt_start);
-
-		if (vipcell)
-		{
-			if (vip.grid.events.allday.one_day_as_timed && one_day_evt)
-				vipcell.addEvent(event);
-			else if (vip.grid.events.allday.multi_day_as_timed && !one_day_evt)
-				vipcell.addEvent(event);
-			else
-				vipcell.vipcol.addEvent(event, vipcell);
-		}
-
-		vdt_start.MoveDays(1);
-	}
-}
-
-function add_timed_event(event)
-{
-vip.grid.events = {timed: {show: true, multi_day_as_all_day: true}};
-
-	if (!vip.grid.events.timed.show)
-		return;
-	
-	var vdt_start = new VipDate(event.vdtStart);
-	var vdt_end = new VipDate(event.vdtEnd);
-
-	if (vdt_start.isSameDay(vdt_end))
-	{
-		var vipcell = vip.grid.getVipCell(vdt_start);
-		
-		if (vipcell)
-			vipcell.addEvent(event);
-	}
-	else
-	{
-		while (vdt_start.Datestamp() <= vdt_end.Datestamp())
-		{
-			var vipcell = vip.grid.getVipCell(vdt_start);
-
-			if (vipcell)
+			if (calevt.allDay)
 			{
-				if (vip.grid.events.timed.multi_day_as_all_day)
-					vipcell.vipcol.addEvent(event, vipcell);
-				else
-					vipcell.addEvent(event);
+				info.timed = false;
+				info.duration = (info.vdtEnd.UTCDay() - info.vdtStart.UTCDay());
 			}
-
-			vdt_start.MoveDays(1);
+			else
+			{
+				info.timed = true;
+				info.duration = (info.vdtEnd.UTCDay() - info.vdtStart.UTCDay() + 1);
+				info.vtmStart = new VipTime.HourMin(calevt.startTime.hour, calevt.startTime.minute);
+				info.vtmEnd = new VipTime.HourMin(calevt.endTime.hour, calevt.endTime.minute);
+			}
+			
+			vip.grid.addEvent(info);
 		}
 	}
 }
