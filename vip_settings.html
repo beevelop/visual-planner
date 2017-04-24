@@ -13,6 +13,9 @@ div {
     padding-top: 1em;
     padding-left: 2em;
 }
+input[type=number] {
+	width: 4em;
+}
 </style>
 </head>
 <body onload="InitSettings();">
@@ -20,7 +23,7 @@ div {
 	<div>
 		<b>View</b>
 		<div>
-			<select id="multi_col_count" style="width: 4em">
+			<select id="multi_col_count">
 				<option value="4">4</option>
 				<option value="6">6</option>
 				<option value="8">8</option>
@@ -33,7 +36,7 @@ div {
 			<input id="auto_scroll" type="checkbox">
 			Auto-scroll to current month.  If not selected, the view will always start at the beginning of the year.
 			<div>
-				<input id="auto_scroll_offset" type="number" min="-12" max="12" style="width: 4em">
+				<input id="auto_scroll_offset" type="number" min="-12" max="12">
 				Auto-scroll offset.  For example, -2 will cause the date range to start from two months ago, 0 will start with the current month.
 			</div>
 		</div>
@@ -54,11 +57,11 @@ div {
 			Align weekends.
 		</div>
 		<div>
-			<input id="font_scale" type="number" style="width: 4em">
+			<input id="font_scale" type="number">
 			Font scale.
 		</div>
 		<div>
-			<input id="past_transparency" type="number" min="0" max="100" style="width: 4em">
+			<input id="past_transparency" type="number" min="0" max="100">
 			%  Transparency of past months.  (0 = no transparency)
 		</div>
 	</div>
@@ -86,11 +89,11 @@ div {
 			<input id="proportional_events" type="checkbox">
 			Display event markers in proportion to their actual duration.  Some events may not be visible if this option is used.
 			<div>
-				<input id="proportional_start_hour" type="number" min="0" max="24" style="width: 4em">
+				<input id="proportional_start_hour" type="number" min="0" max="24">
 				Start hour of visible event range.
 			</div>
 			<div>
-				<input id="proportional_end_hour" type="number" min="0" max="24" style="width: 4em">
+				<input id="proportional_end_hour" type="number" min="0" max="24">
 				End hour of visible event range.
 			</div>
 		</div>
@@ -107,11 +110,11 @@ div {
 			Show all-day, single-day events as multi-day events.
 		</div>
 		<div>
-			<input id="marker_width" type="number" style="width: 4em">
+			<input id="marker_width" type="number">
 			Width of event marker.
 		</div>
 		<div>
-			<input id="marker_transparency" type="number" min="0" max="100" style="width: 4em">
+			<input id="marker_transparency" type="number" min="0" max="100">
 			%  Transparency of event marker.  (0 = no transparency)
 		</div>
 		<div>
