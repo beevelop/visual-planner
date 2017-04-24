@@ -3,17 +3,49 @@
 <head>
 <meta charset="utf-8">
 <title>grid</title>
-<script src="grid.js" type='text/javascript'></script>
+<style>
+body {
+    font-family: Arial;
+	margin: 0px;
+}
+.banner {
+	margin: 3px 0px;
+	line-height: 2.5em;
+    background-color: #DAE4EB;
+}
+.vipcol {
+	float: left;
+	width: 30vw;
+}
+.vipcell {
+	margin-bottom: 1px;
+	margin-right: 1px;
+	height: 20vh;
+    background-color: Goldenrod;
+}
+</style>
 </head>
-<body onload="init();">
-<body onload="init();" style="font-family:arial;">
-<div id="banner">
+<div class="banner">
     <center>grid</center>
 </div>
-<div id="grid">
-    <div id="col1"></div>
-    <div id="col2"></div>
-    <div id="col3"></div>
+<div class="vipgrid">
+    <div class="vipcol">
+		<div class="vipcell"></div>
+		<div class="vipcell"></div>
+		<div class="vipcell"></div>
+		<div class="vipcell"></div>
+	</div>
+    <div class="vipcol">
+		<div class="vipcell"></div>
+		<div class="vipcell"></div>
+		<div class="vipcell"></div>
+		<div class="vipcell"></div>
+	</div>
+    <div class="vipcol">
+		<div class="vipcell"></div>
+		<div class="vipcell"></div>
+		<div class="vipcell"></div>
+		<div class="vipcell"></div>
 	</div>
 </div>
 </body>
