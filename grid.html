@@ -15,12 +15,12 @@ body {
 }
 .vipcol {
 	float: left;
-	width: 30vw;
+	width: 12vw;
 }
 .vipcell {
 	margin-bottom: 1px;
 	margin-right: 1px;
-	height: 20vh;
+	height: 2.5vh;
     background-color: Goldenrod;
 }
 </style>
@@ -28,25 +28,26 @@ body {
 <div class="banner">
     <center>grid</center>
 </div>
-<div class="vipgrid">
-    <div class="vipcol">
-		<div class="vipcell"></div>
-		<div class="vipcell"></div>
-		<div class="vipcell"></div>
-		<div class="vipcell"></div>
-	</div>
-    <div class="vipcol">
-		<div class="vipcell"></div>
-		<div class="vipcell"></div>
-		<div class="vipcell"></div>
-		<div class="vipcell"></div>
-	</div>
-    <div class="vipcol">
-		<div class="vipcell"></div>
-		<div class="vipcell"></div>
-		<div class="vipcell"></div>
-		<div class="vipcell"></div>
-	</div>
-</div>
+<div id="grid"></div>
 </body>
+<script type="text/javascript">
+
+
+	for (var x=0; x < 8; x++)
+	{
+		var col = document.createElement('div');
+		col.className = "vipcol";
+
+		document.getElementById("grid").appendChild(col);
+
+		for (var y=0; y < 30; y++)
+		{
+			var cell = document.createElement('div');
+			cell.className = "vipcell";
+
+			col.appendChild(cell);
+		}
+	}
+
+</script>
 </html>
