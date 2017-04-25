@@ -33,14 +33,13 @@ body {
 </body>
 <script type="text/javascript">
 
-	var sht = document.createElement('style');
-	sht.id = "vipcellcss";
-	document.body.appendChild(sht);
+	var css = document.createElement('style');
+	document.body.appendChild(css);
 
-	sht.sheet.insertRule(".vipcell {}", 0);
-	var cellheightrule = sht.sheet.cssRules[0];
+	css.sheet.insertRule(".vipcell {}", 0);
+	var vipcellcss = css.sheet.cssRules[0];
 	
-	cellheightrule.style.height = "8px";
+	vipcellcss.style.height = "8px";
 
 	for (var x=0; x < 8; x++)
 	{
