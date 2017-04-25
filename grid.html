@@ -7,20 +7,21 @@
 body {
     font-family: Arial;
 	margin: 0px;
+	overflow: hidden;
 }
 .banner {
-	margin: 3px 0px;
+	margin-top: 3px;
 	line-height: 2.5em;
     background-color: #DAE4EB;
 }
 .vipcol {
 	float: left;
-	width: 12vw;
+	margin-top: 30px;
+	width: 12.5vw;
 }
 .vipcell {
-	margin-bottom: 1px;
 	margin-right: 1px;
-	height: 2.5vh;
+	margin-bottom: 1px;
     background-color: Goldenrod;
 }
 </style>
@@ -32,6 +33,14 @@ body {
 </body>
 <script type="text/javascript">
 
+	var sht = document.createElement('style');
+	sht.id = "vipcellcss";
+	document.body.appendChild(sht);
+
+	sht.sheet.insertRule(".vipcell {}", 0);
+	var cellheightrule = sht.sheet.cssRules[0];
+	
+	cellheightrule.style.height = "8px";
 
 	for (var x=0; x < 8; x++)
 	{
