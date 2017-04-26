@@ -17,7 +17,7 @@ body {
 }
 .vipcol {
 	display: inline-block;
-	margin-top: 0px;
+	margin-top: 50px;
 }
 .vipcell {
 	box-sizing: border-box;
@@ -25,6 +25,15 @@ body {
 	border-bottom: 1px solid transparent;
 	background-clip: padding-box;
 	background-color: Goldenrod;
+}
+.vipcellnum {
+	width: 1.5em;
+	height: 100%;
+	margin: 0;
+	border: 1px solid transparent;
+	box-sizing: border-box;
+	background-clip: padding-box;
+	background-color: yellow;
 }
 </style>
 </head>
@@ -58,6 +67,10 @@ body {
 			var cell = document.createElement('div');
 			cell.className = "vipcell";
 
+			var cellnum = document.createElement('div');
+			cellnum.className = "vipcellnum";
+
+			cell.appendChild(cellnum);
 			col.appendChild(cell);
 		}
 	}
@@ -66,8 +79,13 @@ body {
 
 	function updateLayout()
 	{
-		vipcolcss.style.width = (window.innerWidth / 8) + "px";
-		vipcellcss.style.height = Math.floor((window.innerHeight - document.getElementById("grid").offsetTop) / 30) + "px";
+		var x = (window.innerWidth / 8);
+		if (x < 50) x = 50;
+		vipcolcss.style.width = x + "px";
+
+		var y = Math.floor((window.innerHeight - document.getElementById("grid").offsetTop) / 40);
+		if (y < 8) y = 8;
+		vipcellcss.style.height = y + "px";
 	}
 
 </script>
