@@ -16,7 +16,6 @@ body {
     background-color: #DAE4EB;
 }
 .vipgrid {
-	height: calc(100vh - 2.5em - 3px);
 	min-width: 600px;
 	min-height: 400px;
 }
@@ -41,8 +40,8 @@ body {
 	background-color: yellow;
 }
 .vipcellevent {
-	float: left;
-	width: calc(100% - 1.5em);
+	float: right;
+	width: calc(100% - 1.5em - 5px);
 	height: 100%;
 	background-color: lightgrey;
 }
@@ -116,6 +115,8 @@ body {
 	function updateLayout()
 	{
 		var grid = document.getElementById("grid");
+		grid.style.height = (window.innerHeight - grid.offsetTop) + "px";
+
 		vipcolcss.style.width = (grid.offsetWidth / 8) + "px";
 		vipcellcss.style.height = Math.floor(grid.offsetHeight / 40) + "px";
 	}
