@@ -1,67 +1,74 @@
-function init()
+var vipcolcss;
+var vipcellcss;
+
+function createGrid()
 {
-	document.body.style.margin = "0px";
-	document.body.style.height = "100%";
-	//document.body.style.display = "flex";
-	//document.body.style.flexDirection = "column";
+	var css = document.createElement('style');
+	document.body.appendChild(css);
 
-	var banner = document.getElementById("banner");
-	banner.style.margin = "3px 0px";
-	//banner.style.paddingLeft = "10px";
-	banner.style.backgroundColor = "#DAE4EB";
-	banner.style.lineHeight = "2.5em";
-	banner.style.fontSize = "0.8em";
+	css.sheet.insertRule(".vipcol {}", 0);
+	vipcolcss = css.sheet.cssRules[0];
 
+	css.sheet.insertRule(".vipcell {}", 1);
+	vipcellcss = css.sheet.cssRules[1];
+
+	document.body.onresize = updateLayout;
+
+	var first_cell = true;
+	for (var x=0; x < 8; x++)
+	{
+		var col = document.createElement('div');
+		col.className = "vipcol";
+
+		document.getElementById("grid").appendChild(col);
+
+		for (var y=0; y < 30; y++)
+		{
+			var cell = document.createElement('div');
+			cell.className = "vipcell";
+			col.appendChild(cell);
+
+			var cellnum = document.createElement('div');
+			cellnum.className = "vipcellnum";
+			cellnum.textContent = y;
+			cell.appendChild(cellnum);
+
+			if (first_cell)
+			{
+				first_cell = false;
+				
+				var cellevt = document.createElement('div');
+				cellevt.className = "vipcellevent";
+				cell.appendChild(cellevt);
+				
+				var red_evt = document.createElement('div');
+				red_evt.className = "vipevent";
+				red_evt.style.width = "25%";
+				red_evt.style.backgroundColor = "red";
+				cellevt.appendChild(red_evt);
+				
+				var blue_evt = document.createElement('div');
+				blue_evt.className = "vipevent";
+				blue_evt.style.width = "75%";
+				blue_evt.style.backgroundColor = "blue";
+				cellevt.appendChild(blue_evt);
+			}
+		}
+	}
+
+	updateLayout();
+}
+
+function updateLayout()
+{
 	var grid = document.getElementById("grid");
-	//grid.style.fontSize = "0.64em";
-	//grid.style.display = "flex";
-	//grid.style.flexDirection = "row";
-	grid.style.width = "100vw";
-	//grid.style.height = "80%";
+	grid.style.height = (window.innerHeight - grid.offsetTop) + "px";
+	
+	var x = (grid.offsetWidth / 8);
+	var y = Math.floor(grid.offsetHeight / 40);
 
-	var col1 = document.getElementById("col1");
-	//col1.style.display = "flex";
-	//col1.style.flexDirection = "column";
-	col1.style.backgroundColor = "green";
-	col1.style.width = "33.3vw";
-	col1.style.height = "80vh";
-	//col1.style.marginRight = "1px";
-	col1.style.cssFloat = "left";
-	//col1.style.position = "relative";
-	//col1.style.left = "1px";
-
-/*
-	var cell1 = document.getElementById("cell1");
-	cell1.style.backgroundColor = "grey";
-	cell1.style.height = "100px";
-	cell1.style.marginBottom = "1px";
-
-	var cell2 = document.getElementById("cell2");
-	cell2.style.backgroundColor = "grey";
-	cell2.style.height = "100px";
-	cell2.style.marginBottom = "1px";
-
-	var cell3 = document.getElementById("cell3");
-	cell3.style.backgroundColor = "grey";
-	cell3.style.height = "100px";
-	cell3.style.marginBottom = "1px";
-*/
-
-	var col2 = document.getElementById("col2");
-	col2.style.backgroundColor = "blue";
-	col2.style.width = "33.3vw";
-	col2.style.height = "80vh";
-	//col2.style.marginRight = "1px";
-	col2.style.cssFloat = "left";
-	//col2.style.position = "relative";
-	//col2.style.left = "1px";
-
-	var col3 = document.getElementById("col3");
-	col3.style.backgroundColor = "orange";
-	col3.style.width = "33.3vw";
-	col3.style.height = "80vh";
-	//col3.style.marginRight = "1px";
-	col3.style.cssFloat = "left";
-	//col3.style.position = "relative";
-	//col3.style.left = "1px";
+	vipcolcss.style.width = x + "px";
+	vipcellcss.style.height = y + "px";
+	vipcellcss.style.lineHeight = (y-2) + "px";
+	grid.style.fontSize = ((y / 18) * 0.64) + "em";
 }

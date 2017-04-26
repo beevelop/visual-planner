@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>grid</title>
+<script type="text/javascript" src="grid.js"></script>
 <style>
 body {
     font-family: Arial;
@@ -32,8 +33,10 @@ body {
 }
 .vipcellnum {
 	float: left;
-	width: 1.5em;
+	width: 2em;
 	height: 100%;
+	text-align: center;
+	line-height: inherit;
 	border: 1px solid transparent;
 	box-sizing: border-box;
 	background-clip: padding-box;
@@ -41,7 +44,7 @@ body {
 }
 .vipcellevent {
 	float: right;
-	width: calc(100% - 1.5em - 5px);
+	width: calc(100% - 2em - 5px);
 	height: 100%;
 	background-color: lightgrey;
 }
@@ -51,75 +54,10 @@ body {
 }
 </style>
 </head>
+<body onload="createGrid();">
 <div class="banner">
     <center>grid</center>
 </div>
 <div id="grid" class="vipgrid"></div>
 </body>
-<script type="text/javascript">
-
-	var css = document.createElement('style');
-	document.body.appendChild(css);
-
-	css.sheet.insertRule(".vipcol {}", 0);
-	var vipcolcss = css.sheet.cssRules[0];
-
-	css.sheet.insertRule(".vipcell {}", 1);
-	var vipcellcss = css.sheet.cssRules[1];
-
-	document.body.onresize = updateLayout;
-
-	var first_cell = true;
-	for (var x=0; x < 8; x++)
-	{
-		var col = document.createElement('div');
-		col.className = "vipcol";
-
-		document.getElementById("grid").appendChild(col);
-
-		for (var y=0; y < 30; y++)
-		{
-			var cell = document.createElement('div');
-			cell.className = "vipcell";
-			col.appendChild(cell);
-
-			var cellnum = document.createElement('div');
-			cellnum.className = "vipcellnum";
-			cell.appendChild(cellnum);
-
-			if (first_cell)
-			{
-				first_cell = false;
-				
-				var cellevt = document.createElement('div');
-				cellevt.className = "vipcellevent";
-				cell.appendChild(cellevt);
-				
-				var red_evt = document.createElement('div');
-				red_evt.className = "vipevent";
-				red_evt.style.width = "25%";
-				red_evt.style.backgroundColor = "red";
-				cellevt.appendChild(red_evt);
-				
-				var blue_evt = document.createElement('div');
-				blue_evt.className = "vipevent";
-				blue_evt.style.width = "75%";
-				blue_evt.style.backgroundColor = "blue";
-				cellevt.appendChild(blue_evt);
-			}
-		}
-	}
-	
-	updateLayout();
-
-	function updateLayout()
-	{
-		var grid = document.getElementById("grid");
-		grid.style.height = (window.innerHeight - grid.offsetTop) + "px";
-
-		vipcolcss.style.width = (grid.offsetWidth / 8) + "px";
-		vipcellcss.style.height = Math.floor(grid.offsetHeight / 40) + "px";
-	}
-
-</script>
 </html>
