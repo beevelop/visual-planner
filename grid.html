@@ -35,11 +35,15 @@ body {
 	background-clip: padding-box;
 	background-color: yellow;
 }
-.vipevent {
+.vipcellevent {
 	float: left;
 	width: calc(100% - 1.5em);
 	height: 100%;
-	background-color: grey;
+	background-color: lightgrey;
+}
+.vipevent {
+	float: left;
+	height: 50%;
 }
 </style>
 </head>
@@ -59,7 +63,7 @@ body {
 	css.sheet.insertRule(".vipcell {}", 1);
 	var vipcellcss = css.sheet.cssRules[1];
 
-	window.onresize = updateLayout;
+	document.body.onresize = updateLayout;
 
 	var first_cell = true;
 	for (var x=0; x < 8; x++)
@@ -84,9 +88,20 @@ body {
 				first_cell = false;
 				
 				var cellevt = document.createElement('div');
-				cellevt.className = "vipevent";
-
+				cellevt.className = "vipcellevent";
 				cell.appendChild(cellevt);
+				
+				var red_evt = document.createElement('div');
+				red_evt.className = "vipevent";
+				red_evt.style.width = "25%";
+				red_evt.style.backgroundColor = "red";
+				cellevt.appendChild(red_evt);
+				
+				var blue_evt = document.createElement('div');
+				blue_evt.className = "vipevent";
+				blue_evt.style.width = "75%";
+				blue_evt.style.backgroundColor = "blue";
+				cellevt.appendChild(blue_evt);
 			}
 		}
 	}
@@ -96,11 +111,11 @@ body {
 	function updateLayout()
 	{
 		var x = (window.innerWidth / 8);
-		if (x < 50) x = 50;
+		if (x < 100) x = 100;
 		vipcolcss.style.width = x + "px";
 
 		var y = Math.floor((window.innerHeight - document.getElementById("grid").offsetTop) / 40);
-		if (y < 8) y = 8;
+		if (y < 10) y = 10;
 		vipcellcss.style.height = y + "px";
 	}
 
