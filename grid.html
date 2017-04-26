@@ -16,7 +16,7 @@ body {
     background-color: #DAE4EB;
 }
 .vipcol {
-	display: inline-block;
+	float: left;
 	margin-top: 50px;
 }
 .vipcell {
@@ -27,13 +27,19 @@ body {
 	background-color: Goldenrod;
 }
 .vipcellnum {
+	float: left;
 	width: 1.5em;
 	height: 100%;
-	margin: 0;
 	border: 1px solid transparent;
 	box-sizing: border-box;
 	background-clip: padding-box;
 	background-color: yellow;
+}
+.vipevent {
+	float: left;
+	width: calc(100% - 1.5em);
+	height: 100%;
+	background-color: grey;
 }
 </style>
 </head>
@@ -55,6 +61,7 @@ body {
 
 	window.onresize = updateLayout;
 
+	var first_cell = true;
 	for (var x=0; x < 8; x++)
 	{
 		var col = document.createElement('div');
@@ -66,12 +73,21 @@ body {
 		{
 			var cell = document.createElement('div');
 			cell.className = "vipcell";
+			col.appendChild(cell);
 
 			var cellnum = document.createElement('div');
 			cellnum.className = "vipcellnum";
-
 			cell.appendChild(cellnum);
-			col.appendChild(cell);
+
+			if (first_cell)
+			{
+				first_cell = false;
+				
+				var cellevt = document.createElement('div');
+				cellevt.className = "vipevent";
+
+				cell.appendChild(cellevt);
+			}
 		}
 	}
 	
