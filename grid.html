@@ -20,8 +20,6 @@ body {
 }
 .vipcell {
 	box-sizing: border-box;
-	border-right: 1pt solid transparent;
-	border-bottom: 1pt solid transparent;
 	background-clip: padding-box;
 	background-color: Goldenrod;
 }
@@ -33,7 +31,6 @@ body {
 <div id="grid"></div>
 </body>
 <script type="text/javascript">
-alert(window.devicePixelRatio);
 
 	var css = document.createElement('style');
 	document.body.appendChild(css);
@@ -71,6 +68,11 @@ alert(window.devicePixelRatio);
 
 		var y = Math.floor((window.innerHeight - document.getElementById("grid").offsetTop) / 30);
 		vipcellcss.style.height = "" + y + "px";
+
+		//border-right: 1pt solid transparent;
+		//border-bottom: 1pt solid transparent;
+		vipcellcss.style.borderRight = (1/window.devicePixelRatio) + "px solid transparent";
+		vipcellcss.style.borderBottom = (1/window.devicePixelRatio) + "px solid transparent";
 	}
 
 </script>
