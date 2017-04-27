@@ -12,9 +12,8 @@ function createGrid()
 	css.sheet.insertRule(".vipcell {}", 1);
 	vipcellcss = css.sheet.cssRules[1];
 
-	document.body.onresize = updateLayout;
+	window.onresize = updateLayout;
 
-	var first_cell = true;
 	for (var x=0; x < 8; x++)
 	{
 		var col = document.createElement('div');
@@ -33,10 +32,9 @@ function createGrid()
 			cellnum.textContent = y;
 			cell.appendChild(cellnum);
 
-			if (first_cell)
+			if (x==3)
+			if (y==4)
 			{
-				first_cell = false;
-				
 				var cellevt = document.createElement('div');
 				cellevt.className = "vipcellevent";
 				cell.appendChild(cellevt);
@@ -84,8 +82,8 @@ function updateLayout()
 	var x = (grid.offsetWidth / 8);
 	var y = Math.floor(grid.offsetHeight / 40);
 
+	grid.style.fontSize = ((y / 18) * 0.64) + "em";
 	vipcolcss.style.width = x + "px";
 	vipcellcss.style.height = y + "px";
 	vipcellcss.style.lineHeight = (y-2) + "px";
-	grid.style.fontSize = ((y / 18) * 0.64) + "em";
 }

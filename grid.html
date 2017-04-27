@@ -8,10 +8,13 @@
 <style>
 body {
     font-family: Arial;
-	margin: 0px;
+	margin: 0;
 }
 .banner {
-	margin-top: 3px;
+	margin-top: 10px;
+	text-align: center;
+	min-width: 600px;
+	height: 2.5em;
 	line-height: 2.5em;
     background-color: #DAE4EB;
 }
@@ -22,7 +25,9 @@ body {
 }
 .vipcol {
 	float: left;
-	margin-top: 50px;
+	padding-top: 50px;
+	box-sizing: border-box;
+	background-clip: content-box;
 }
 .vipcell {
 	box-sizing: border-box;
@@ -50,14 +55,16 @@ body {
 }
 .vipevent {
 	float: left;
-	height: 50%;
+	height: 100%;
+	box-sizing: border-box;
+	border-top: 2px solid transparent;
+	border-bottom: 2px solid transparent;
+	background-clip: padding-box;
 }
 </style>
 </head>
 <body onload="createGrid();">
-<div class="banner">
-    <center>grid</center>
-</div>
+<div class="banner">grid</div>
 <div id="grid" class="vipgrid"></div>
 </body>
 </html>
