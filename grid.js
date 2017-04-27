@@ -19,7 +19,7 @@ function createGrid()
 		var col = document.createElement('div');
 		col.className = "vipcol";
 
-		document.getElementById("grid").appendChild(col);
+		document.getElementById("vipgrid").appendChild(col);
 
 		for (var y=0; y < 30; y++)
 		{
@@ -76,13 +76,12 @@ function onMediaChange(mql)
 
 function updateLayout()
 {
-	var grid = document.getElementById("grid");
-	grid.style.height = "calc(100vh - " + grid.offsetTop + "px)";
+	var vipgrid = document.getElementById("vipgrid");
 	
-	var x = (grid.offsetWidth / 8);
-	var y = Math.floor(grid.offsetHeight / 40);
+	var x = (vipgrid.offsetWidth / 8);
+	var y = Math.floor(vipgrid.offsetHeight / 40);
 
-	grid.style.fontSize = ((y / 18) * 0.64) + "em";
+	vipgrid.style.fontSize = ((y / 18) * 0.64) + "em";
 	vipcolcss.style.width = x + "px";
 	vipcellcss.style.height = y + "px";
 	vipcellcss.style.lineHeight = (y-2) + "px";
