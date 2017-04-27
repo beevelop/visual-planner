@@ -60,29 +60,39 @@ function createGrid()
 				cellevt.className = "vipcellevent";
 				cell.appendChild(cellevt);
 				
+				var short_evt = document.createElement('div');
+				short_evt.className = "vipevent";
+				short_evt.style.width = "25%";
+				cellevt.appendChild(short_evt);
+				
 				var red_evt = document.createElement('div');
 				red_evt.className = "vipeventmarker";
 				red_evt.style.width = "1.2ch";
 				red_evt.style.backgroundColor = "red";
-				cellevt.appendChild(red_evt);
+				short_evt.appendChild(red_evt);
 				
-				var short_evt = document.createElement('div');
-				short_evt.className = "vipevent";
-				short_evt.style.width = "20%";
-				short_evt.textContent = "shortish";
-				cellevt.appendChild(short_evt);
+				var short_evt_txt = document.createElement('div');
+				short_evt_txt.className = "vipeventtext";
+				short_evt_txt.style.width = "calc(100% - 1.2ch)";
+				short_evt_txt.textContent = "short";
+				short_evt.appendChild(short_evt_txt);
+				
+				var long_evt = document.createElement('div');
+				long_evt.className = "vipevent";
+				long_evt.style.width = "75%";
+				cellevt.appendChild(long_evt);
 				
 				var blue_evt = document.createElement('div');
 				blue_evt.className = "vipeventmarker";
 				blue_evt.style.width = "1.2ch";
 				blue_evt.style.backgroundColor = "blue";
-				cellevt.appendChild(blue_evt);
+				long_evt.appendChild(blue_evt);
 				
-				var long_evt = document.createElement('div');
-				long_evt.className = "vipevent";
-				long_evt.style.width = "50%";
-				long_evt.textContent = "this is a very long event which don't fit";
-				cellevt.appendChild(long_evt);
+				var long_evt_txt = document.createElement('div');
+				long_evt_txt.className = "vipeventtext";
+				long_evt_txt.style.width = "calc(100% - 1.2ch)";
+				long_evt_txt.textContent = "this is a very long event";
+				long_evt.appendChild(long_evt_txt);
 			}
 		}
 	}
