@@ -80,7 +80,7 @@ function createGrid()
 				
 				var long_evt = document.createElement('div');
 				long_evt.className = "vipevent";
-				long_evt.style.width = "70%";
+				long_evt.style.width = "50%";
 				long_evt.textContent = "this is a very long event which don't fit";
 				cellevt.appendChild(long_evt);
 			}
