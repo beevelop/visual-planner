@@ -57,12 +57,29 @@ function createGrid()
 	}
 
 	updateLayout();
+
+	// printing
+	if (window.matchMedia)
+	{
+		var mql = window.matchMedia("print");
+
+		if (mql)
+			mql.addListener(onMediaChange);
+	}
+}
+
+function onMediaChange(mql)
+{
+	updateLayout();
+
+	//if (mql.matches)
+		//ga_hit('media', 'print');
 }
 
 function updateLayout()
 {
 	var grid = document.getElementById("grid");
-	grid.style.height = (window.innerHeight - grid.offsetTop) + "px";
+	grid.style.height = "calc(100vh - " + grid.offsetTop + "px)";
 	
 	var x = (grid.offsetWidth / 8);
 	var y = Math.floor(grid.offsetHeight / 40);
