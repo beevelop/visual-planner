@@ -1,4 +1,0 @@
-function InitBillsView()
-{
-	InitSingleColView();
-}
