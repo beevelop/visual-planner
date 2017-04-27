@@ -37,19 +37,40 @@ function createGrid()
 			{
 				var cellevt = document.createElement('div');
 				cellevt.className = "vipcellevent";
+				cellevt.style.backgroundColor = "lightgrey";
 				cell.appendChild(cellevt);
 				
 				var red_evt = document.createElement('div');
-				red_evt.className = "vipevent";
+				red_evt.className = "vipeventmarker";
 				red_evt.style.width = "25%";
 				red_evt.style.backgroundColor = "red";
 				cellevt.appendChild(red_evt);
 				
 				var blue_evt = document.createElement('div');
-				blue_evt.className = "vipevent";
+				blue_evt.className = "vipeventmarker";
 				blue_evt.style.width = "75%";
 				blue_evt.style.backgroundColor = "blue";
 				cellevt.appendChild(blue_evt);
+			}
+
+			if (x==4)
+			if (y==14)
+			{
+				var cellevt = document.createElement('div');
+				cellevt.className = "vipcellevent";
+				cell.appendChild(cellevt);
+				
+				var short_evt = document.createElement('div');
+				short_evt.className = "vipevent";
+				short_evt.style.width = "25%";
+				short_evt.textContent = "shortish";
+				cellevt.appendChild(short_evt);
+				
+				var long_evt = document.createElement('div');
+				long_evt.className = "vipevent";
+				long_evt.style.width = "75%";
+				long_evt.textContent = "this is a very long event which don't fit";
+				cellevt.appendChild(long_evt);
 			}
 		}
 	}
@@ -81,7 +102,7 @@ function updateLayout()
 	var x = (vipgrid.offsetWidth / 8);
 	var y = Math.floor(vipgrid.offsetHeight / 40);
 
-	vipgrid.style.fontSize = ((y / 18) * 0.64) + "em";
+	vipgrid.style.fontSize = ((y / 17) * 0.64) + "em";
 	vipcolcss.style.width = x + "px";
 	vipcellcss.style.height = y + "px";
 	vipcellcss.style.lineHeight = (y-2) + "px";

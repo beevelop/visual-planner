@@ -18,7 +18,7 @@ body {
 	line-height: 2.5em;
     background-color: #DAE4EB;
 }
-.grid {
+.container {
 	height: calc(100vh - 2.5em - 10px);
 	min-width: 600px;
 	min-height: 400px;
@@ -39,7 +39,7 @@ body {
 	border-right: 1px solid transparent;
 	border-bottom: 1px solid transparent;
 	background-clip: padding-box;
-	background-color: Goldenrod;
+	background-color: goldenrod;
 }
 .vipcellnum {
 	float: left;
@@ -55,22 +55,34 @@ body {
 .vipcellevent {
 	float: right;
 	width: calc(100% - 2em - 5px);
+	line-height: inherit;
 	height: 100%;
-	background-color: lightgrey;
 }
 .vipevent {
 	float: left;
+	line-height: inherit;
 	height: 100%;
 	box-sizing: border-box;
-	border-top: 2px solid transparent;
-	border-bottom: 2px solid transparent;
+	border-top: 1px solid transparent;
+	border-bottom: 1px solid transparent;
+	background-clip: padding-box;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.vipeventmarker {
+	float: left;
+	height: 100%;
+	box-sizing: border-box;
+	border-top: 3px solid transparent;
+	border-bottom: 3px solid transparent;
 	background-clip: padding-box;
 }
 </style>
 </head>
 <body onload="createGrid();">
 <div class="banner">grid</div>
-<div class="grid">
+<div class="container">
 	<div id="vipgrid" class="vipgrid"></div>
 </div>
 </body>
