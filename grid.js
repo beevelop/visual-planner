@@ -60,15 +60,27 @@ function createGrid()
 				cellevt.className = "vipcellevent";
 				cell.appendChild(cellevt);
 				
+				var red_evt = document.createElement('div');
+				red_evt.className = "vipeventmarker";
+				red_evt.style.width = "1ch";
+				red_evt.style.backgroundColor = "red";
+				cellevt.appendChild(red_evt);
+				
 				var short_evt = document.createElement('div');
 				short_evt.className = "vipevent";
-				short_evt.style.width = "25%";
+				short_evt.style.width = "20%";
 				short_evt.textContent = "shortish";
 				cellevt.appendChild(short_evt);
 				
+				var blue_evt = document.createElement('div');
+				blue_evt.className = "vipeventmarker";
+				blue_evt.style.width = "1ch";
+				blue_evt.style.backgroundColor = "blue";
+				cellevt.appendChild(blue_evt);
+				
 				var long_evt = document.createElement('div');
 				long_evt.className = "vipevent";
-				long_evt.style.width = "75%";
+				long_evt.style.width = "70%";
 				long_evt.textContent = "this is a very long event which don't fit";
 				cellevt.appendChild(long_evt);
 			}
