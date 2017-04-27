@@ -36,9 +36,9 @@ body {
 }
 .vipcell {
 	box-sizing: border-box;
-	border-right: 1px solid transparent;
-	border-bottom: 1px solid transparent;
-	background-clip: padding-box;
+	padding-right: 1px;
+	padding-bottom: 1px;
+	background-clip: content-box;
 	background-color: goldenrod;
 }
 .vipcellnum {
@@ -47,9 +47,9 @@ body {
 	height: 100%;
 	text-align: center;
 	line-height: inherit;
-	border: 1px solid transparent;
+	padding: 1px;
 	box-sizing: border-box;
-	background-clip: padding-box;
+	background-clip: content-box;
 	background-color: yellow;
 }
 .vipcellevent {
@@ -63,9 +63,9 @@ body {
 	line-height: inherit;
 	height: 100%;
 	box-sizing: border-box;
-	border-top: 1px solid transparent;
-	border-bottom: 1px solid transparent;
-	background-clip: padding-box;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	background-clip: content-box;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -73,10 +73,10 @@ body {
 .vipeventmarker {
 	float: left;
 	height: 100%;
+	padding-top: 2px;
+	padding-bottom: 2px;
 	box-sizing: border-box;
-	border-top: 3px solid transparent;
-	border-bottom: 3px solid transparent;
-	background-clip: padding-box;
+	background-clip: content-box;
 }
 </style>
 </head>

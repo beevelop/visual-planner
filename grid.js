@@ -62,7 +62,7 @@ function createGrid()
 				
 				var red_evt = document.createElement('div');
 				red_evt.className = "vipeventmarker";
-				red_evt.style.width = "1ch";
+				red_evt.style.width = "1.2ch";
 				red_evt.style.backgroundColor = "red";
 				cellevt.appendChild(red_evt);
 				
@@ -74,7 +74,7 @@ function createGrid()
 				
 				var blue_evt = document.createElement('div');
 				blue_evt.className = "vipeventmarker";
-				blue_evt.style.width = "1ch";
+				blue_evt.style.width = "1.2ch";
 				blue_evt.style.backgroundColor = "blue";
 				cellevt.appendChild(blue_evt);
 				
