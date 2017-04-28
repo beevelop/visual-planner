@@ -27,6 +27,11 @@ VipObject.prototype.createChild = function(parent, cls)
 	this.parent = parent;
 }
 
+VipObject.prototype.addClass = function(cls)
+{
+	this.div.className += (" " + cls);
+}
+
 VipObject.prototype.ClearContent = function()
 {
 	if (this.div)
@@ -156,7 +161,7 @@ function VipGrid(container_element)
 	var css = document.createElement('style');
 	document.body.appendChild(css);
 	for (var i=0; i < 7; i++)
-		css.sheet.insertRule(fmt(".vipcoloffset_^ {}", i), i);
+		css.sheet.insertRule(fmt(".vipcol.offset_^ {}", i), i);
 	this.vipcolcss = css.sheet.cssRules;
 
 	// css for cell height
@@ -164,11 +169,13 @@ function VipGrid(container_element)
 	document.body.appendChild(css);
 	css.sheet.insertRule(".vipcell {}", 0);
 	this.vipcellcss = css.sheet.cssRules[0];
+
+	this.updateLayout();
 }
 
 VipGrid.prototype = new VipObject;
 
-VipGrid.prototype.create = function()
+VipGrid.prototype.createMultiCol = function()
 {
 	var vdt_start = new VipDate.Today();
 	vdt_start.MoveToStartOfMonth();
@@ -188,8 +195,6 @@ VipGrid.prototype.create = function()
 		
 		vdt_start.MoveMonths(1);
 	}
-	
-	this.updateLayout();
 }
 
 VipGrid.prototype.createSingleCol = function()
@@ -209,6 +214,25 @@ VipGrid.prototype.createSingleCol = function()
 	var vipcol = new VipCol(this, vdt_start, vdt_end);
 
 	this.updateLayout();
+}
+
+VipGrid.prototype.updateLayout = function()
+{
+	var c = this.cellmax;
+	if (this.align_weekends)
+		c += 6;
+
+	var y = Math.floor(this.div.offsetHeight / c);
+
+	// todo : allow space for month header
+
+	for (var i=0; i < 7; i++)
+		this.vipcolcss[i].style.marginTop = (i*y) + "px";
+
+	this.vipcellcss.style.height = y + "px";
+	this.vipcellcss.style.lineHeight = (y-2) + "px";
+
+	this.div.style.fontSize = ((y / 17) * this.font_scale) + "em";
 }
 
 VipGrid.prototype.scroll_col = function(offset)
@@ -238,21 +262,6 @@ VipGrid.prototype.scroll_col = function(offset)
 		if (!ltor)
 			this.MoveLastBefore(this.First());  // move col to left
 	}
-}
-
-VipGrid.prototype.updateLayout = function()
-{
-	var c = vip.grid.align_weekends ? (this.cellmax + 6) : this.cellmax;
-	var y = Math.floor(this.div.offsetHeight / c);
-
-	// todo : allow space for month header
-
-	for (var i=0; i < 7; i++)
-		this.vipcolcss[i].style.marginTop = (i*y) + "px";
-
-	this.div.style.fontSize = ((y / 17) * 0.64) + "em";
-	this.vipcellcss.style.height = y + "px";
-	this.vipcellcss.style.lineHeight = (y-2) + "px";
 }
 
 VipGrid.prototype.getVipCell = function(vdt)
@@ -303,7 +312,7 @@ function VipCol(parent, vdt_start, vdt_end)
 {
 	this.createChild(parent, "vipcol");
 	
-	this.div.className += fmt(" vipcoloffset_^", vdt_start.DayOfWeek());
+	this.addClass("offset_" + vdt_start.DayOfWeek());
 	
 	var vdt_day = new VipDate(vdt_start);
 	while (vdt_day.dt < vdt_end.dt)
@@ -545,24 +554,15 @@ function VipCell(parent, vdt)
 
 	if (vip.grid.show_weekends)
 	if (vdt.isWeekend())
-		this.div.className += " weekend";
-return;
+		this.addClass("weekend");
 
-	this.vipnum = new VipDiv(this, "vipnum");
+	this.vipnum = new VipDiv(this, "vipcellnum");
 	this.vipnum.setText(vdt.DayOfMonth());
-
-	var num = this.vipnum.div;
-	num.style.textAlign = "center";
-	num.style.cursor = "pointer";
-	num.style.pointerEvents = "all";
-	num.onclick = onclickVipDayNumber;
+	this.vipnum.div.onclick = onclickVipDayNumber;
 
 	if (vdt.isToday())
-	{
-		num.style.fontWeight = "bold";
-		num.style.color = "white";
-		num.style.backgroundColor = "red";
-	}
+		this.vipnum.addClass("today");
+return;
 	
 	this.vipevts = new VipDiv(this, "vipevts");
 }
@@ -571,6 +571,7 @@ VipCell.prototype = new VipObject;
 
 VipCell.prototype.updateLayout = function()
 {
+return;
 	var prev = this.Prev();
 	
 	if (prev)

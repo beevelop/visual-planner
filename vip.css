@@ -29,7 +29,13 @@
 	padding: 1px;
 	box-sizing: border-box;
 	background-clip: content-box;
-	background-color: yellow;
+	cursor: pointer;
+	pointer-events: all;
+}
+.vipcellnum.today {
+	font-weight: bold;
+	color: white;
+	background-color: red;
 }
 .vipcellevent {
 	float: right;
