@@ -1,21 +1,24 @@
+* {
+	pointer-events: none;
+}
 .vipgrid {
-	width: 100%;
 	height: 100%;
-	overflow: hidden;
+	display: flex;
+	flex-direction: row;
 }
 .vipcol {
-	float: left;
-	padding-top: 50px;
-	box-sizing: border-box;
-	background-clip: content-box;
+	width: 100%;
 }
 .vipcell {
+	pointer-events: all;
 	box-sizing: border-box;
 	padding-right: 1px;
 	padding-bottom: 1px;
 	background-clip: content-box;
-	background-color: goldenrod;
-	pointer-events: all;
+	background-color: #eaeaea;
+}
+.vipcell.weekend {
+	background-color: #d8d8d8;
 }
 .vipcellnum {
 	float: left;
