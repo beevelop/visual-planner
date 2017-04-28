@@ -21,9 +21,9 @@ VipObject.prototype.createChildDiv = function(container_element, cls)
 	container_element.appendChild(div);
 }
 
-VipObject.prototype.createChild = function(parent, id)
+VipObject.prototype.createChild = function(parent, cls)
 {
-	this.createChildDiv(parent.div, id);
+	this.createChildDiv(parent.div, cls);
 	this.parent = parent;
 }
 
@@ -152,23 +152,18 @@ function VipGrid(container_element)
 	this.separate_event_titles = false;
 	this.auto_refresh = false;
 
+	// css for col offset
+	var css = document.createElement('style');
+	document.body.appendChild(css);
+	for (var i=0; i < 7; i++)
+		css.sheet.insertRule(fmt(".vipcoloffset_^ {}", i), i);
+	this.vipcolcss = css.sheet.cssRules;
+
 	// css for cell height
 	var css = document.createElement('style');
 	document.body.appendChild(css);
 	css.sheet.insertRule(".vipcell {}", 0);
 	this.vipcellcss = css.sheet.cssRules[0];
-
-	// css for col offset
-	var css = document.createElement('style');
-	document.body.appendChild(css);
-	css.sheet.insertRule(".vipcoloffset_0 {}", 0);
-	css.sheet.insertRule(".vipcoloffset_1 {}", 1);
-	css.sheet.insertRule(".vipcoloffset_2 {}", 2);
-	css.sheet.insertRule(".vipcoloffset_3 {}", 3);
-	css.sheet.insertRule(".vipcoloffset_4 {}", 4);
-	css.sheet.insertRule(".vipcoloffset_5 {}", 5);
-	css.sheet.insertRule(".vipcoloffset_6 {}", 6);
-	this.vipcolcss = css.sheet.cssRules;
 }
 
 VipGrid.prototype = new VipObject;
@@ -243,22 +238,6 @@ VipGrid.prototype.scroll_col = function(offset)
 		if (!ltor)
 			this.MoveLastBefore(this.First());  // move col to left
 	}
-
-	var xpx = 0;
-	var vipcol = this.First();
-	while(vipcol)
-	{
-		vipcol.div.style.left = px(xpx);
-		
-		if (vipcol.div.style.width != this.colwidth)
-		{
-			vipcol.div.style.width = this.colwidth;
-			vipcol.updateLayout();
-		}
-
-		xpx += this.colspacing;
-		vipcol = vipcol.Next();
-	}
 }
 
 VipGrid.prototype.updateLayout = function()
@@ -332,10 +311,11 @@ function VipCol(parent, vdt_start, vdt_end)
 		var vipcell = new VipCell(this, vdt_day);
 		vdt_day.MoveDays(1);
 	}
+
+	this.vdt_month = new VipDate(vdt_start);
 return;
 	
 	this.div.style.fontSize = fmt("^em", vip.grid.font_scale);
-	this.vdt_month = new VipDate(vdt_start);
 
 	if (vip.grid.col_header)
 	{
