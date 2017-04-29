@@ -157,7 +157,7 @@ function VipGrid(container_element)
 	this.separate_event_titles = false;
 	this.auto_refresh = false;
 
-	// css for col offset
+	// css for col offsets
 	var css = document.createElement('style');
 	document.body.appendChild(css);
 	for (var i=0; i < 7; i++)
@@ -336,13 +336,19 @@ function VipCol(parent, vdt_start, vdt_end)
 		var vipcell = new VipCell(this.vipcells, this, vdt_day);
 		vdt_day.MoveDays(1);
 	}
+
+	this.vipsel = new VipDiv(this.vipcelloffset, "vipsel");
+	this.vipsel.Show(false);
+
+	this.vipseltip = new VipDiv(this.vipcelloffset, "vipseltip");
+	this.vipseltip.Show(false);
+
+	this.firstcell = this.vipcells.First();
+	this.lastcell = this.vipcells.Last();
+	this.datespan = {start: new VipDate(vdt_start), end: new VipDate(vdt_end)};
 return;
 	
 	this.vipevts = new VipDiv(this.vipcelloffset, "vipevts");
-
-	this.vipsel = new VipDiv(this.vipcelloffset, "vipsel");
-	this.vipsel.div.style.backgroundColor = "rgba(255,255,127,0.6)";
-	this.vipsel.Show(false);
 
 	if (vip.grid.date_indicator)
 	{
@@ -350,19 +356,6 @@ return;
 		this.vipind.div.style.backgroundColor = "rgba(0,0,0,0.3)";
 		this.vipind.Show(false);
 	}
-
-	this.vipseltip = new VipDiv(this.vipcelloffset, "vipseltip");
-	this.vipseltip.div.style.fontSize = "0.8em";
-	this.vipseltip.div.style.textAlign = "center";
-	this.vipseltip.div.style.lineHeight = "2em";
-	this.vipseltip.Show(false);
-
-	this.vipsel.div.style.zIndex = "10";
-	this.vipseltip.div.style.zIndex = "10";
-
-	this.firstcell = this.vipcells.First();
-	this.lastcell = this.vipcells.Last();
-	this.datespan = {start: new VipDate(vdt_start), end: new VipDate(vdt_end)};
 	
 	vip.grid.onloadVipCol(this);
 }
@@ -377,6 +370,7 @@ VipCol.prototype.updateSelectionTip = function(vipcell_start, vipcell_end)
 	if (!vipcell_end) return;
 	if (vipcell_start === vipcell_end) return;
 
+	this.vipseltip.div.style.lineHeight = vipcell_end.div.offsetHeight + "px";
 	this.vipseltip.setText(vipcell_start.vipdate.TimespanTo(vipcell_end.vipdate));
 	this.vipseltip.Align(vipcell_end, vipcell_end);
 	this.vipseltip.Show(true);

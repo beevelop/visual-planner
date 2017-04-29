@@ -11,20 +11,34 @@
 	display: flex;
 	flex-direction: column;
 }
-.vipcoloffset {
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-}
-.vipcells {
-	height: 100%;
-}
 .vipmonthhdr {
 	text-align: center;
 	height: 2em;
 	line-height: 2em;
 	cursor: pointer;
 	pointer-events: all;
+}
+.vipcoloffset {
+	height: 100%;
+	position: relative;
+}
+.vipcells {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+}
+.vipsel {
+	width: 100%;
+	position: absolute;
+	background-color: rgba(255,255,127,0.6);
+	z-index: 10;
+}
+.vipseltip {
+	width: 100%;
+	position: absolute;
+	font-size: 0.8em;
+	text-align: center;
+	z-index: 10;
 }
 .vipcell {
 	pointer-events: all;
