@@ -185,7 +185,11 @@ VipGrid.prototype.createMultiCol = function()
 
 	var vdt_end = new VipDate(vdt_start);
 
-	for (var c=0; c < this.multi_col_count; c++)
+	var colcount = this.multi_col_count;
+	if (isPortrait())
+		colcount /= 2;
+
+	for (var c=0; c < colcount; c++)
 	{
 		vdt_end.MoveMonths(1);
 
@@ -262,6 +266,21 @@ VipGrid.prototype.scroll_col = function(offset)
 		if (!ltor)
 			this.MoveLastBefore(this.First());  // move col to left
 	}
+}
+
+VipGrid.prototype.isPortrait = function()
+{
+	var so = "n/a";
+	if (screen.orientation)
+	if (screen.orientation.type)
+		so = screen.orientation.type;
+	if (screen.msOrientation)  // edge, ie
+		so = screen.msOrientation;
+
+	if (so.includes("portrait"))
+		return true;
+
+	return false;
 }
 
 VipGrid.prototype.getVipCell = function(vdt)
