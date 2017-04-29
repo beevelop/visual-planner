@@ -186,7 +186,7 @@ VipGrid.prototype.createMultiCol = function()
 	var vdt_end = new VipDate(vdt_start);
 
 	var colcount = this.multi_col_count;
-	if (isPortrait())
+	if (this.isPortrait())
 		colcount /= 2;
 
 	for (var c=0; c < colcount; c++)
