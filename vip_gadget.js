@@ -10,8 +10,8 @@ function InitSingleColView()
 {
 	init_gadget();
 	
-	vip_init_grid(grid);
-	vip.grid.onloadVipCol = addVipEventRequest;
+	vip_init_grid(document.getElementById("grid"));
+	//vip.grid.onloadVipCol = addVipEventRequest;
 	vip.grid.createSingleCol();
 
 	updateSingleColLayout();
