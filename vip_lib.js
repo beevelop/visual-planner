@@ -128,7 +128,7 @@ function VipGrid(container_element)
 	this.cellmax = 31;
 	this.col_header = true;
 	this.scrolling_disabled = false;
-	this.date_indicator = false;
+	this.date_indicator = true;
 	this.time_24hr = true;
 	this.onloadVipCol = function() {};
 
@@ -140,7 +140,7 @@ function VipGrid(container_element)
 	this.banner_text = "visual-planner";
 	this.show_weekends = true;
 	this.align_weekends = true;
-	this.font_scale = 100;
+	this.font_scale = 64;
 	this.past_transparency = 30;
 	this.show_event_time = true;
 	this.show_event_title = true;
@@ -209,25 +209,18 @@ VipGrid.prototype.createSingleCol = function()
 
 VipGrid.prototype.updateLayout = function()
 {
-	this.div.style.fontSize = ((this.div.offsetHeight / 1000) * (this.font_scale / 100)) + "em";
-
 	var c = this.cellmax;
-	if (this.align_weekends)
-		c += 6;
+	if (this.col_header) c++;
+	if (this.align_weekends) c += 6;
 
 	var h = this.div.offsetHeight;
 	var firstcol = this.First();
 	if (firstcol)
-	{
 		h = firstcol.div.offsetHeight;
-		
-		if (firstcol.viphdr)
-			h -= firstcol.viphdr.div.offsetHeight;
-	}
 
-	var ypx = Math.floor(h/c) + "px";
-
-	this.div.style.setProperty('--cellheight', ypx);
+	var y = Math.floor(h/c);
+	this.div.style.setProperty('--cellheight', y + "px");
+	this.div.style.fontSize = (y/16) * (this.font_scale / 100) + "em";
 }
 
 VipGrid.prototype.scroll_col = function(offset)
@@ -353,19 +346,18 @@ function VipCol(parent, vdt_start, vdt_end)
 	this.vipseltip = new VipDiv(this.vipcoloffset, "vipseltip");
 	this.vipseltip.Show(false);
 
+	if (vip.grid.date_indicator)
+	{
+		this.vipind = new VipDiv(this.vipcoloffset, "vipind");
+		this.vipind.Show(false);
+	}
+
 	this.firstcell = this.vipcells.First();
 	this.lastcell = this.vipcells.Last();
 	this.datespan = {start: new VipDate(vdt_start), end: new VipDate(vdt_end)};
 return;
 	
 	this.vipevts = new VipDiv(this.vipcoloffset, "vipevts");
-
-	if (vip.grid.date_indicator)
-	{
-		this.vipind = new VipDiv(this.vipcoloffset, "vipind");
-		this.vipind.div.style.backgroundColor = "rgba(0,0,0,0.3)";
-		this.vipind.Show(false);
-	}
 	
 	vip.grid.onloadVipCol(this);
 }

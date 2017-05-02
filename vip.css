@@ -14,8 +14,8 @@
 }
 .vipmonthhdr {
 	text-align: center;
-	height: 2em;
-	line-height: 2em;
+	height: var(--cellheight);
+	line-height: var(--cellheight);
 	cursor: pointer;
 	pointer-events: all;
 }
@@ -26,7 +26,6 @@
 	position: relative;
 }
 .vipcells {
-	height: 100%;
 	width: 100%;
 	position: absolute;
 }
@@ -42,6 +41,12 @@
 	font-size: 0.8em;
 	text-align: center;
 	z-index: 10;
+}
+.vipind {
+	width: 1px;
+	margin-left: 1.8em;
+	position: absolute;
+	background-color: rgba(0,0,0,0.3);
 }
 .vipcell {
 	height: var(--cellheight);
