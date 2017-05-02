@@ -42,8 +42,8 @@ function InitMultiColView()
 	
 	init_gadget();
 	vip_init_grid(document.body);
-	vip.grid.onloadVipCol = addVipEventRequest;
-	vip.grid.create();
+	//vip.grid.onloadVipCol = addVipEventRequest;
+	vip.grid.createMultiCol();
 }
 
 function show_multi_col()
