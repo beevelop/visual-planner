@@ -41,9 +41,9 @@
 	z-index: 10;
 }
 .vipind {
-	width: 1.8em;
+	width: 2px;
 	position: absolute;
-	background-color: rgba(0,0,0,0.1);
+	background-color: rgba(0,0,0,0.2);
 }
 .vipcell {
 	height: var(--cellheight);
