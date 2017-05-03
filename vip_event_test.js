@@ -1,38 +1,3 @@
-function vip_init()
-{
-	vip_init_grid(document.getElementById("grid"));
-
-	//vip.grid.multi_col_count = 12;
-	//vip.grid.auto_scroll = false;
-	//vip.grid.auto_scroll_offset = 0;
-	//vip.grid.open_standalone = false;
-	vip.grid.banner_text = "event test";
-	//vip.grid.show_weekends = false;
-	//vip.grid.align_weekends = false;
-	//vip.grid.font_scale = 0.8;
-	//vip.grid.past_transparency = 60;
-	//vip.grid.show_event_time = false;
-	vip.grid.show_event_title = false;
-	//vip.grid.show_event_marker = false;
-	//vip.grid.colour_event_title = true;
-	//vip.grid.proportional_events = false;
-	//vip.grid.proportional_start_hour = 8;
-	//vip.grid.proportional_end_hour = 20;
-	//vip.grid.multi_day_with_first_single_day = false;
-	//vip.grid.multi_day_as_single_day = false;
-	//vip.grid.all_day_single_day_as_multi_day = false;
-	//vip.grid.marker_width = 0.58;
-	//vip.grid.marker_transparency = 20;
-	//vip.grid.separate_event_titles = false;
-	//vip.grid.auto_refresh = false;
-
-	document.getElementById('banner_text').textContent = vip.grid.banner_text;
-
-	vip.grid.create();
-	
-	evt_test();
-}
-
 var dt_start = new Date;
 while (dt_start.getDay() != 1)
 	dt_start.setDate(dt_start.getDate() - 1);
@@ -126,7 +91,8 @@ function receive_events(data)
 				info.vtmEnd = new VipTime.HourMin(calevt.endTime.hour, calevt.endTime.minute);
 			}
 			
-			vip.grid.addEvent(info);
+			console.log(info);
+			//vip.grid.addEvent(info);
 		}
 	}
 }
