@@ -349,7 +349,7 @@ function VipCol(parent, vdt_start, vdt_end)
 	if (vip.grid.date_indicator)
 	{
 		this.vipind = new VipDiv(this.vipcoloffset, "vipind");
-		this.vipind.Show(true);
+		this.vipind.Show(false);
 	}
 
 	this.firstcell = this.vipcells.First();
