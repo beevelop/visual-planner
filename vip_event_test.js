@@ -27,7 +27,7 @@ function evt_test()
     receive_events(
 	[
 		{ // cal data
-			name: "test calendar",
+			name: "test calendar 1",
 		    events: [
 				create_evt("mdt", false, "multi-day timed", {dayoff:5, hour:10, min:0}, {dayoff:9, hour:13, min:15}, 'orange'),
 				create_evt("one1", false, "very extremely long event's title", {dayoff:2, hour:1, min:30}, {dayoff:2, hour:13, min:0}, 'red'),
@@ -36,6 +36,11 @@ function evt_test()
 				create_evt("three3", false, "e3abc 1234567890", {dayoff:12, hour:8, min:0}, {dayoff:12, hour:8, min:15}, 'magenta'),
 				create_evt("four4", false, "e4 timed", {dayoff:12, hour:10, min:30}, {dayoff:12, hour:12, min:0}, 'red'),
 				create_evt("five5", false, "e5", {dayoff:12, hour:9, min:0}, {dayoff:12, hour:12, min:0}, 'green'),
+		    ]
+		},
+		{ // cal data
+			name: "test calendar 2",
+		    events: [
 				create_evt("six", true, "e-six", {dayoff:2, hour:0, min:0}, {dayoff:3, hour:0, min:0}, 'grey'),
 				create_evt("mcol_id", true, "multi-col", {dayoff:23, hour:0, min:0}, {dayoff:84, hour:0, min:0}, 'yellow'),
 				create_evt("arseid", false, "&#39;arse&#39;", {dayoff:24, hour:11, min:45}, {dayoff:25, hour:13, min:15}, 'magenta'),
@@ -91,8 +96,7 @@ function receive_events(data)
 				info.vtmEnd = new VipTime.HourMin(calevt.endTime.hour, calevt.endTime.minute);
 			}
 			
-			console.log(info);
-			//vip.grid.addEvent(info);
+			vip.grid.addEvent(info);
 		}
 	}
 }

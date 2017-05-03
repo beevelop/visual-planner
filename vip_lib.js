@@ -349,7 +349,7 @@ function VipCol(parent, vdt_start, vdt_end)
 	if (vip.grid.date_indicator)
 	{
 		this.vipind = new VipDiv(this.vipcoloffset, "vipind");
-		this.vipind.Show(false);
+		this.vipind.Show(true);
 	}
 
 	this.firstcell = this.vipcells.First();
@@ -380,6 +380,7 @@ VipCol.prototype.updateSelectionTip = function(vipcell_start, vipcell_end)
 
 VipCol.prototype.addEvent = function(info, vipcell)
 {
+return;
 	var vipevt = null;
 
 	var vipsib = this.vipevts.First();
@@ -507,6 +508,8 @@ VipCell.prototype.inDateRange = function(vdt_lo, vdt_hi)
 
 VipCell.prototype.addEvent = function(info)
 {
+console.log(info);
+return;
 	var vipsib = this.vipevts.First();
 	while (vipsib)
 	{
@@ -530,7 +533,7 @@ VipCell.prototype.addEvent = function(info)
 	this.vipevts.MoveLastBefore(vipsib);  // sort in time order
 
 	this.updateEventInfo();
-	this.updateEventLayout();
+	//this.updateEventLayout();
 }
 
 VipCell.prototype.updateEventLayout = function()

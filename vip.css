@@ -41,10 +41,10 @@
 	z-index: 10;
 }
 .vipind {
-	width: 1px;
-	margin-left: 1.8em;
+	height: 100%;
+	width: 1.8em;
 	position: absolute;
-	background-color: rgba(0,0,0,0.3);
+	background-color: rgba(0,0,0,0.2);
 }
 .vipcell {
 	height: var(--cellheight);
