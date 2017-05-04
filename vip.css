@@ -45,25 +45,33 @@
 	position: absolute;
 	background-color: rgba(0,0,0,0.2);
 }
+.vipcolevts {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	padding-left: 1.8em;
+	padding-right: 1px;
+	pointer-events: none;
+	box-sizing: border-box;
+}
 .vipcell {
 	height: var(--cellheight);
 	line-height: calc(var(--cellheight) - 2px);
 	pointer-events: all;
-	box-sizing: border-box;
 	padding-right: 1px;
 	padding-bottom: 1px;
+	box-sizing: border-box;
 	background-clip: content-box;
 	background-color: #eaeaea;
+	display: flex;
+	flex-direction: row;
 }
 .vipcell.weekend {
 	background-color: #d8d8d8;
 }
 .vipcellnum {
-	float: left;
 	width: 1.8em;
-	height: 100%;
 	text-align: center;
-	line-height: inherit;
 	padding: 1px;
 	box-sizing: border-box;
 	background-clip: content-box;
@@ -75,23 +83,18 @@
 	color: white;
 	background-color: red;
 }
-.vipcellevent {
-	float: right;
-	width: calc(100% - 2em - 2px);
-	line-height: inherit;
-	height: 100%;
+.vipcellevts {
+	padding-top: 1px;
+	padding-bottom: 1px;
+	pointer-events: none;
+	display: flex;
+	flex-direction: row;
 }
-.vipevent {
-	float: left;
-	line-height: inherit;
-	height: 100%;
+.vipsingledayevent {
+	overflow: hidden;
+	white-space: nowrap;
 }
 .vipeventtext {
-	float: left;
-	line-height: inherit;
-	height: 100%;
-	box-sizing: border-box;
-	padding: 1px;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;

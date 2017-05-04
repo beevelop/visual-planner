@@ -11,7 +11,7 @@ function InitSingleColView()
 	init_gadget();
 	
 	vip_init_grid(document.getElementById("grid"));
-	//vip.grid.onloadVipCol = addVipEventRequest;
+	vip.grid.onloadVipCol = addVipEventRequest;
 	vip.grid.createSingleCol();
 
 	updateSingleColLayout();
@@ -42,7 +42,7 @@ function InitMultiColView()
 	
 	init_gadget();
 	vip_init_grid(document.body);
-	//vip.grid.onloadVipCol = addVipEventRequest;
+	vip.grid.onloadVipCol = addVipEventRequest;
 	vip.grid.createMultiCol();
 }
 
@@ -106,6 +106,7 @@ function onclickVipDayNumber(event)
 
 function addVipEventRequest(vipcol)
 {
+return;
 	vip.event_req.queue.push(vipcol);
 	request_events();
 }

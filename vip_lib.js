@@ -80,7 +80,7 @@ VipObject.prototype.Prev = function()
 
 VipObject.prototype.setText = function(txt)
 {
-	this.div.innerHTML = txt;
+	this.div.textContent = txt;
 }
 
 VipObject.prototype.Show = function(showdiv)
@@ -128,7 +128,6 @@ function VipGrid(container_element)
 	this.cellmax = 31;
 	this.col_header = true;
 	this.scrolling_disabled = false;
-	this.date_indicator = true;
 	this.time_24hr = true;
 	this.onloadVipCol = function() {};
 
@@ -194,7 +193,6 @@ VipGrid.prototype.createSingleCol = function()
 	this.col_header = false;
 	this.align_weekends = false;
 	this.scrolling_disabled = true;
-	this.date_indicator = true;
 
 	var vdt_start = new VipDate.Today();
 	vdt_start.MoveToStartOfWeek(1);  // monday this week
@@ -346,18 +344,14 @@ function VipCol(parent, vdt_start, vdt_end)
 	this.vipseltip = new VipDiv(this.vipcoloffset, "vipseltip");
 	this.vipseltip.Show(false);
 
-	if (vip.grid.date_indicator)
-	{
-		this.vipind = new VipDiv(this.vipcoloffset, "vipind");
-		this.vipind.Show(false);
-	}
+	this.vipind = new VipDiv(this.vipcoloffset, "vipind");
+	this.vipind.Show(false);
+	
+	this.vipevts = new VipDiv(this.vipcoloffset, "vipcolevts");
 
 	this.firstcell = this.vipcells.First();
 	this.lastcell = this.vipcells.Last();
 	this.datespan = {start: new VipDate(vdt_start), end: new VipDate(vdt_end)};
-return;
-	
-	this.vipevts = new VipDiv(this.vipcoloffset, "vipevts");
 	
 	vip.grid.onloadVipCol(this);
 }
@@ -476,9 +470,8 @@ function VipCell(parent, vipcol, vdt)
 
 	if (vdt.isToday())
 		this.vipnum.addClass("today");
-return;
 	
-	this.vipevts = new VipDiv(this, "vipevts");
+	this.vipevts = new VipDiv(this, "vipcellevts");
 }
 
 VipCell.prototype = new VipObject;
@@ -508,8 +501,6 @@ VipCell.prototype.inDateRange = function(vdt_lo, vdt_hi)
 
 VipCell.prototype.addEvent = function(info)
 {
-console.log(info);
-return;
 	var vipsib = this.vipevts.First();
 	while (vipsib)
 	{
@@ -532,7 +523,7 @@ return;
 
 	this.vipevts.MoveLastBefore(vipsib);  // sort in time order
 
-	this.updateEventInfo();
+	//this.updateEventInfo();
 	//this.updateEventLayout();
 }
 
@@ -673,16 +664,13 @@ VipMultiDayEvent.prototype.updateLayout = function()
 
 function VipSingleDayEvent(vipcell, info)
 {
+console.log(info);
 	this.createChild(vipcell.vipevts, "vipsingledayevent");
-
-	this.div.style.zIndex = "2";
-	this.div.style.width = "";
-	this.padding=0;
 
 	this.info = info;
 	this.datestamp = info.vdtStart.Datestamp();
 	this.timestamp = info.timed ? info.vtmStart.Timestamp() : 0;
-	this.first_day = (this.datestamp == vipcell.vipdate.Datestamp());
+	//this.first_day = (this.datestamp == vipcell.vipdate.Datestamp());
 	this.title = html2txt(info.title);
 	
 	this.time_title = "";
@@ -699,6 +687,7 @@ function VipSingleDayEvent(vipcell, info)
 		this.tooltip += fmt("^ - ", info.calendar_name);
 	this.tooltip += this.title;
 
+/*
 	if (vip.grid.show_event_marker || vip.grid.proportional_events)
 	{
 		this.vipmarker = new VipDiv(this, "vipevtmarker");
@@ -715,19 +704,15 @@ function VipSingleDayEvent(vipcell, info)
 		
 		this.padding = (this.vipmarker.div.offsetWidth + 1);
 	}
+*/
 
 	if (vip.grid.show_event_title)
 	{
-		this.div.appendChild(document.createTextNode(this.time_title + this.title));
-
-		this.div.style.whiteSpace = "nowrap";
-		this.div.style.overflow = "hidden";
-		this.div.style.textOverflow = "ellipsis";
-		this.div.style.lineHeight = px(vipcell.div.offsetHeight);
-		this.div.style.paddingLeft = px(this.padding);
+		this.vipevttext = new VipDiv(this, "vipeventtext");
+		this.vipevttext.setText(this.time_title + this.title);
 
 		if (vip.grid.colour_event_title)
-			this.div.style.color = info.colour;
+			this.vipevttext.div.style.color = info.colour;
 	}
 }
 
