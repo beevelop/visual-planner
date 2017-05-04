@@ -106,7 +106,6 @@ function onclickVipDayNumber(event)
 
 function addVipEventRequest(vipcol)
 {
-return;
 	vip.event_req.queue.push(vipcol);
 	request_events();
 }
