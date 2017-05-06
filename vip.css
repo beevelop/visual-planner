@@ -97,6 +97,7 @@
 	white-space: nowrap;
 }
 .vipeventtext {
+	padding-left: 2px;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -104,11 +105,10 @@
 .vipeventmarker {
 	float: left;
 	height: 100%;
-	width: 11px;
+	width: 9px;
 	padding-top: 3px;
 	padding-bottom: 3px;
 	padding-left: 2px;
-	padding-right: 2px;
 	box-sizing: border-box;
 	background-clip: content-box;
 }
