@@ -49,30 +49,29 @@
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	padding-left: 1.8em;
 	padding-right: 1px;
 	pointer-events: none;
 	box-sizing: border-box;
 }
 .vipcell {
 	height: var(--cellheight);
-	line-height: calc(var(--cellheight) - 2px);
 	pointer-events: all;
 	padding-right: 1px;
 	padding-bottom: 1px;
 	box-sizing: border-box;
 	background-clip: content-box;
 	background-color: #eaeaea;
-	display: flex;
-	flex-direction: row;
 }
 .vipcell.weekend {
 	background-color: #d8d8d8;
 }
 .vipcellnum {
-	width: 1.8em;
-	text-align: center;
+	float: left;
+	width: 12%;
+	height: 100%;
 	padding: 1px;
+	line-height: calc(var(--cellheight) - 2px);
+	text-align: center;
 	box-sizing: border-box;
 	background-clip: content-box;
 	cursor: pointer;
@@ -84,8 +83,11 @@
 	background-color: red;
 }
 .vipcellevts {
-	padding-top: 1px;
-	padding-bottom: 1px;
+	float: left;
+	width: 88%;
+	height: 100%;
+	line-height: var(--cellheight);
+	box-sizing: border-box;
 	pointer-events: none;
 	display: flex;
 	flex-direction: row;
@@ -102,8 +104,11 @@
 .vipeventmarker {
 	float: left;
 	height: 100%;
-	padding-top: 2px;
-	padding-bottom: 2px;
+	width: 1.7ch;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 2px;
+	padding-right: 2px;
 	box-sizing: border-box;
 	background-clip: content-box;
 }

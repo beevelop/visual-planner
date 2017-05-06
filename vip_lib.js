@@ -670,7 +670,7 @@ console.log(info);
 	this.info = info;
 	this.datestamp = info.vdtStart.Datestamp();
 	this.timestamp = info.timed ? info.vtmStart.Timestamp() : 0;
-	//this.first_day = (this.datestamp == vipcell.vipdate.Datestamp());
+	this.first_day = (this.datestamp == vipcell.vipdate.Datestamp());
 	this.title = html2txt(info.title);
 	
 	this.time_title = "";
@@ -705,6 +705,12 @@ console.log(info);
 		this.padding = (this.vipmarker.div.offsetWidth + 1);
 	}
 */
+
+	if (vip.grid.show_event_marker)
+	{
+		this.vipmarker = new VipDiv(this, "vipeventmarker");
+		this.vipmarker.div.style.backgroundColor = info.colour;
+	}
 
 	if (vip.grid.show_event_title)
 	{
