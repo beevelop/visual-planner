@@ -218,7 +218,9 @@ VipGrid.prototype.updateLayout = function()
 
 	var y = Math.floor(h/c);
 	this.div.style.setProperty('--cellheight', y + "px");
+	this.div.style.setProperty('--markerwidth', "1.5ch");
 	this.div.style.fontSize = (y/16) * (this.font_scale / 100) + "em";
+	this.div.style.lineHeight = (y-2) + "px";
 }
 
 VipGrid.prototype.scroll_col = function(offset)

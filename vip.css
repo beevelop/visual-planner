@@ -1,5 +1,6 @@
 .vipgrid {
 	--cellheight: 16px;
+	--markerwidth: 8px;
 	height: 100%;
 	pointer-events: none;
 	display: flex;
@@ -70,7 +71,6 @@
 	width: 12%;
 	height: 100%;
 	padding: 1px;
-	line-height: calc(var(--cellheight) - 2px);
 	text-align: center;
 	box-sizing: border-box;
 	background-clip: content-box;
@@ -86,7 +86,8 @@
 	float: left;
 	width: 88%;
 	height: 100%;
-	line-height: var(--cellheight);
+	padding-top: 1px;
+	padding-bottom: 1px;
 	box-sizing: border-box;
 	pointer-events: none;
 	display: flex;
@@ -94,7 +95,6 @@
 }
 .vipsingledayevent {
 	overflow: hidden;
-	white-space: nowrap;
 }
 .vipeventtext {
 	padding-left: 2px;
@@ -105,9 +105,9 @@
 .vipeventmarker {
 	float: left;
 	height: 100%;
-	width: 9px;
-	padding-top: 3px;
-	padding-bottom: 3px;
+	width: var(--markerwidth);
+	padding-top: 2px;
+	padding-bottom: 2px;
 	padding-left: 2px;
 	box-sizing: border-box;
 	background-clip: content-box;
