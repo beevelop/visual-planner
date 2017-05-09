@@ -220,9 +220,12 @@ VipGrid.prototype.updateLayout = function()
 
 	this.div.style.fontSize = (cellheight/16) * (this.font_scale/100) + "em";
 	this.div.style.lineHeight = (cellheight - (cellnumpadding*2)) + "px";
+
+	var fontsize = parseFloat(window.getComputedStyle(this.div).fontSize);
+	
 	this.div.style.setProperty('--cellheight', cellheight + "px");
 	this.div.style.setProperty('--cellnumpadding', cellnumpadding + "px");
-	this.div.style.setProperty('--markerwidth', Math.floor(this.div.offsetWidth*0.0064) + "px");
+	this.div.style.setProperty('--markerwidth', Math.floor(fontsize*0.8) + "px");
 	this.div.style.setProperty('--markerpadding', Math.floor(cellheight*0.2) + "px");
 }
 
