@@ -207,20 +207,24 @@ VipGrid.prototype.createSingleCol = function()
 
 VipGrid.prototype.updateLayout = function()
 {
+	if (this.div.childElementCount == 0)
+		return;
+
 	var c = this.cellmax;
 	if (this.col_header) c++;
 	if (this.align_weekends) c += 6;
 
-	var h = this.div.offsetHeight;
-	var firstcol = this.First();
-	if (firstcol)
-		h = firstcol.div.offsetHeight;
+	var colwidth = this.First().div.offsetWidth;
+	var colheight = this.First().div.offsetHeight;
+	var cellheight = Math.floor(colheight/c);
+	var cellnumpadding = Math.floor(cellheight/10);
 
-	var y = Math.floor(h/c);
-	this.div.style.setProperty('--cellheight', y + "px");
-	this.div.style.setProperty('--markerwidth', "1.5ch");
-	this.div.style.fontSize = (y/16) * (this.font_scale / 100) + "em";
-	this.div.style.lineHeight = (y-2) + "px";
+	this.div.style.fontSize = (cellheight/16) * (this.font_scale/100) + "em";
+	this.div.style.lineHeight = (cellheight - (cellnumpadding*2)) + "px";
+	this.div.style.setProperty('--cellheight', cellheight + "px");
+	this.div.style.setProperty('--cellnumpadding', cellnumpadding + "px");
+	this.div.style.setProperty('--markerwidth', Math.floor(colwidth*0.05) + "px");
+	this.div.style.setProperty('--markerpadding', (cellnumpadding+2) + "px");
 }
 
 VipGrid.prototype.scroll_col = function(offset)

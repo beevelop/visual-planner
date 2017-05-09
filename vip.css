@@ -1,6 +1,8 @@
 .vipgrid {
-	--cellheight: 16px;
+	--cellheight: 18px;
+	--cellnumpadding: 1px;
 	--markerwidth: 8px;
+	--markerpadding: 2px;
 	height: 100%;
 	pointer-events: none;
 	display: flex;
@@ -68,9 +70,10 @@
 }
 .vipcellnum {
 	float: left;
-	width: 12%;
+	width: 1.6em;
 	height: 100%;
-	padding: 1px;
+	padding-top: var(--cellnumpadding);
+	padding-bottom: var(--cellnumpadding);
 	text-align: center;
 	box-sizing: border-box;
 	background-clip: content-box;
@@ -84,10 +87,8 @@
 }
 .vipcellevts {
 	float: left;
-	width: 88%;
+	width: calc(100% - 1.6em);
 	height: 100%;
-	padding-top: 1px;
-	padding-bottom: 1px;
 	box-sizing: border-box;
 	pointer-events: none;
 	display: flex;
@@ -97,6 +98,8 @@
 	overflow: hidden;
 }
 .vipeventtext {
+	padding-top: var(--cellnumpadding);
+	padding-bottom: var(--cellnumpadding);
 	padding-left: 2px;
 	overflow: hidden;
 	white-space: nowrap;
@@ -106,8 +109,8 @@
 	float: left;
 	height: 100%;
 	width: var(--markerwidth);
-	padding-top: 2px;
-	padding-bottom: 2px;
+	padding-top: var(--markerpadding);
+	padding-bottom: var(--markerpadding);
 	padding-left: 2px;
 	box-sizing: border-box;
 	background-clip: content-box;
