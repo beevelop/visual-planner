@@ -214,7 +214,6 @@ VipGrid.prototype.updateLayout = function()
 	if (this.col_header) c++;
 	if (this.align_weekends) c += 6;
 
-	var colwidth = this.First().div.offsetWidth;
 	var colheight = this.First().div.offsetHeight;
 	var cellheight = Math.floor(colheight/c);
 	var cellnumpadding = Math.floor(cellheight/10);
@@ -223,8 +222,8 @@ VipGrid.prototype.updateLayout = function()
 	this.div.style.lineHeight = (cellheight - (cellnumpadding*2)) + "px";
 	this.div.style.setProperty('--cellheight', cellheight + "px");
 	this.div.style.setProperty('--cellnumpadding', cellnumpadding + "px");
-	this.div.style.setProperty('--markerwidth', Math.floor(colwidth*0.05) + "px");
-	this.div.style.setProperty('--markerpadding', (cellnumpadding+2) + "px");
+	this.div.style.setProperty('--markerwidth', Math.floor(this.div.offsetWidth*0.0064) + "px");
+	this.div.style.setProperty('--markerpadding', Math.floor(cellheight*0.2) + "px");
 }
 
 VipGrid.prototype.scroll_col = function(offset)
