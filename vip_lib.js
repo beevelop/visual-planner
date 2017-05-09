@@ -531,54 +531,7 @@ VipCell.prototype.addEvent = function(info)
 
 	this.vipevts.MoveLastBefore(vipsib);  // sort in time order
 
-	//this.updateEventInfo();
-	//this.updateEventLayout();
-}
-
-VipCell.prototype.updateEventLayout = function()
-{
-	var vipevt = this.vipevts.First();
-	while (vipevt)
-	{
-		vipevt.div.style.width = "";
-
-		if (vip.grid.proportional_events)
-			vipevt.setProportionalWidth(this.vipevts.div.offsetWidth);
-
-		vipevt = vipevt.Next();
-	}
-
-	if (vip.grid.proportional_events)
-		return;
-
-	while (true)
-	{
-		var x_off = 0;
-		var longest = this.vipevts.First();
-
-		var vipevt = this.vipevts.First();
-		while (vipevt)
-		{
-			if (x_off > 0)
-				x_off += 2;
-			
-			vipevt.div.style.left = px(x_off);
-			x_off += vipevt.div.offsetWidth;
-			
-			if (vipevt.div.offsetWidth > longest.div.offsetWidth)
-				longest = vipevt;
-
-			vipevt = vipevt.Next();
-		}
-
-		if (x_off > this.vipevts.div.offsetWidth)
-		{
-			longest.truncate(5);
-			continue;
-		}
-			
-		break;
-	}
+	this.updateEventInfo();
 }
 
 VipCell.prototype.updateEventInfo = function()
@@ -672,7 +625,6 @@ VipMultiDayEvent.prototype.updateLayout = function()
 
 function VipSingleDayEvent(vipcell, info)
 {
-console.log(info);
 	this.createChild(vipcell.vipevts, "vipsingledayevent");
 
 	this.info = info;
