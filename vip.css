@@ -56,6 +56,10 @@
 	pointer-events: none;
 	box-sizing: border-box;
 }
+.vipmultidayevent {
+	width: var(--markerwidth);
+	position: absolute;
+}
 .vipcell {
 	height: var(--cellheight);
 	pointer-events: all;

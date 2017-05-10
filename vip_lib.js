@@ -121,6 +121,23 @@ VipDiv.prototype = new VipObject;
 
 //////////////////////////////////////////////////////////////////////
 
+function VipEventInfo()
+{
+	this.calendar_name = undefined;
+	this.id = undefined;
+	this.title = undefined;
+	this.colour = undefined;
+	this.timed = undefined;
+	this.duration = undefined;
+	this.vdtStart = undefined;
+	this.vtmStart = undefined;
+	this.vtmEnd = undefined;
+}
+
+
+
+//////////////////////////////////////////////////////////////////////
+
 function VipGrid(container_element)
 {
 	this.createChildDiv(container_element, "vipgrid");
@@ -382,7 +399,6 @@ VipCol.prototype.updateSelectionTip = function(vipcell_start, vipcell_end)
 
 VipCol.prototype.addEvent = function(info, vipcell)
 {
-return;
 	var vipevt = null;
 
 	var vipsib = this.vipevts.First();
@@ -455,6 +471,38 @@ VipCol.prototype.intersection = function(evt1, evt2)
 		return true;
 
 	return false;
+}
+
+
+
+//////////////////////////////////////////////////////////////////////
+
+function VipMultiDayEvent(parent, info, vipcell)
+{
+	this.createChild(parent, "vipmultidayevent");
+
+	this.info = info;
+	this.div.style.backgroundColor = info.colour;
+	this.title = html2txt(info.title);
+	this.vipcell_start = vipcell;
+	this.vipcell_end = vipcell;
+
+	if (info.calendar_name)
+		this.tooltip = fmt("^ - ^", info.calendar_name, this.title);
+	else
+		this.tooltip = this.title;
+}
+
+VipMultiDayEvent.prototype = new VipObject;
+
+VipMultiDayEvent.prototype.extend = function(vipcell)
+{
+	this.vipcell_end = vipcell;
+}
+
+VipMultiDayEvent.prototype.updateLayout = function()
+{
+	this.Align(this.vipcell_start, this.vipcell_end);
 }
 
 
@@ -564,59 +612,6 @@ VipCell.prototype.updateEventInfo = function()
 	}
 
 	this.div.title = str_tooltip;
-}
-
-
-
-//////////////////////////////////////////////////////////////////////
-
-function VipEventInfo()
-{
-	this.calendar_name = undefined;
-	this.id = undefined;
-	this.title = undefined;
-	this.colour = undefined;
-	this.timed = undefined;
-	this.duration = undefined;
-	this.vdtStart = undefined;
-	this.vtmStart = undefined;
-	this.vtmEnd = undefined;
-}
-
-
-
-//////////////////////////////////////////////////////////////////////
-
-function VipMultiDayEvent(parent, info, vipcell)
-{
-	this.createChild(parent, "vipmultidayevent");
-
-	var evt = this.div;
-	evt.style.width = fmt("^em", vip.grid.marker_width);
-	evt.style.backgroundColor = info.colour;
-	evt.style.zIndex = "1";
-
-	this.info = info;
-	this.title = html2txt(info.title);
-	this.vipcell_start = vipcell;
-	this.vipcell_end = vipcell;
-
-	if (info.calendar_name)
-		this.tooltip = fmt("^ - ^", info.calendar_name, this.title);
-	else
-		this.tooltip = this.title;
-}
-
-VipMultiDayEvent.prototype = new VipObject;
-
-VipMultiDayEvent.prototype.extend = function(vipcell)
-{
-	this.vipcell_end = vipcell;
-}
-
-VipMultiDayEvent.prototype.updateLayout = function()
-{
-	this.Align(this.vipcell_start, this.vipcell_end);
 }
 
 
