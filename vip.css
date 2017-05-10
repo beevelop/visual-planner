@@ -57,8 +57,11 @@
 	box-sizing: border-box;
 }
 .vipmultidayevent {
-	width: var(--markerwidth);
 	position: absolute;
+	width: var(--markerwidth);
+	padding-left: 2px;
+	box-sizing: border-box;
+	background-clip: content-box;
 }
 .vipcell {
 	height: var(--cellheight);

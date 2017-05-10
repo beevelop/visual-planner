@@ -452,7 +452,7 @@ VipCol.prototype.updateEventLayout = function()
 			}
 			
 			if (shift)
-				vipsib.div.style.left = px(vipsib.div.offsetLeft - vipsib.div.offsetWidth - 2);
+				vipsib.div.style.left = px(vipsib.div.offsetLeft - vipsib.div.offsetWidth);
 			else
 				break;
 		}
