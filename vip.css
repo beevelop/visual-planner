@@ -1,8 +1,8 @@
 .vipgrid {
-	--cellheight: 18px;
-	--cellnumpadding: 1px;
-	--markerwidth: 8px;
-	--markerpadding: 2px;
+	--cellheight: 0;
+	--cellnumpadding: 0;
+	--markerwidth: 0;
+	--markerpadding: 0;
 	height: 100%;
 	pointer-events: none;
 	display: flex;

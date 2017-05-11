@@ -422,44 +422,28 @@ VipCol.prototype.addEvent = function(info, vipcell)
 		this.vipevts.MoveLastBefore(vipsib);
 	}
 
-	vipevt.extend(vipcell);
 	vipcell.updateEventInfo();
-	this.updateEventLayout();
+	vipevt.extend(vipcell);
+	this.findSlot(vipevt);
 }
 
-VipCol.prototype.updateEventLayout = function()
+VipCol.prototype.findSlot = function(evt)
 {
-	var fixed = [];
-
-	var vipsib = this.vipevts.First();
-	while (vipsib)
+	var sib = this.vipevts.First();
+	while (sib)
 	{
-		vipsib.updateLayout();
-
-		vipsib.div.style.left = px(this.vipevts.div.offsetWidth - vipsib.div.offsetWidth);
-		
-		while(true)
+		if (evt === sib) {}
+		else
 		{
-			var shift = false;
-
-			for (var i=0; i < fixed.length; i++)
+			if (this.intersection(sib, evt))
 			{
-				if (this.intersection(vipsib, fixed[i]))
-				{
-					shift = true;
-					break;
-				}
+				evt.shiftLeft();
+				this.findSlot(evt);
+				return;
 			}
-			
-			if (shift)
-				vipsib.div.style.left = px(vipsib.div.offsetLeft - vipsib.div.offsetWidth);
-			else
-				break;
 		}
 
-		fixed.push(vipsib);
-
-		vipsib = vipsib.Next();
+		sib = sib.Next();
 	}
 }
 
@@ -483,6 +467,7 @@ function VipMultiDayEvent(parent, info, vipcell)
 
 	this.info = info;
 	this.div.style.backgroundColor = info.colour;
+	this.div.style.left = (parent.div.offsetWidth - this.div.offsetWidth) + "px";
 	this.title = html2txt(info.title);
 	this.vipcell_start = vipcell;
 	this.vipcell_end = vipcell;
@@ -498,11 +483,12 @@ VipMultiDayEvent.prototype = new VipObject;
 VipMultiDayEvent.prototype.extend = function(vipcell)
 {
 	this.vipcell_end = vipcell;
+	this.Align(this.vipcell_start, this.vipcell_end);
 }
 
-VipMultiDayEvent.prototype.updateLayout = function()
+VipMultiDayEvent.prototype.shiftLeft = function()
 {
-	this.Align(this.vipcell_start, this.vipcell_end);
+	this.div.style.left = (this.div.offsetLeft - this.div.offsetWidth) + "px";
 }
 
 
