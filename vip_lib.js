@@ -428,8 +428,8 @@ VipCol.prototype.addEvent = function(info, vipcell)
 		this.vipevts.MoveLastBefore(vipsib);
 	}
 
+	vipevt.extendDuration(vipcell);
 	vipcell.updateEventInfo();
-	vipevt.extend(vipcell);
 	this.findFreeSlot(vipevt);
 }
 
@@ -473,11 +473,11 @@ function VipMultiDayEvent(parent, info, vipcell)
 
 	this.info = info;
 	this.div.style.backgroundColor = info.colour;
-	this.div.style.setProperty('--topindex', vipcell.vipindex);
-	this.div.style.setProperty('--heightindex', 1);
+	this.div.style.setProperty('--start', vipcell.vipindex);
 	this.title = html2txt(info.title);
 	this.vipcell_start = vipcell;
 	this.vipcell_end = vipcell;
+	this.setDuration(1);
 	this.setSlot(1);
 
 	if (info.calendar_name)
@@ -488,15 +488,21 @@ function VipMultiDayEvent(parent, info, vipcell)
 
 VipMultiDayEvent.prototype = new VipObject;
 
-VipMultiDayEvent.prototype.extend = function(vipcell)
+VipMultiDayEvent.prototype.setDuration = function(i)
 {
-	this.vipcell_end = vipcell;
-	this.div.style.setProperty('--heightindex', this.vipcell_end.vipindex - this.vipcell_start.vipindex + 1);
+	this.duration = i;
+	this.div.style.setProperty('--duration', this.duration);
 }
 
-VipMultiDayEvent.prototype.setSlot = function(s)
+VipMultiDayEvent.prototype.extendDuration = function(vipcell)
 {
-	this.slot = s;
+	this.vipcell_end = vipcell;
+	this.setDuration(this.vipcell_end.vipindex - this.vipcell_start.vipindex + 1);
+}
+
+VipMultiDayEvent.prototype.setSlot = function(i)
+{
+	this.slot = i;
 	this.div.style.setProperty('--slot', this.slot);
 }
 

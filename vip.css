@@ -58,13 +58,13 @@
 	box-sizing: border-box;
 }
 .vipmultidayevent {
+	--start: 0;
+	--duration: 0;
 	--slot: 0;
-	--topindex: 0;
-	--heightindex: 0;
 	width: var(--markerwidth);
-	height: calc(var(--cellheight) * var(--heightindex));
+	height: calc(var(--cellheight) * var(--duration));
 	left: calc(var(--colwidth) - (var(--slot) * var(--markerwidth)) - 2px);
-	top: calc(var(--cellheight) * var(--topindex));
+	top: calc(var(--cellheight) * var(--start));
 	padding-left: 2px;
 	box-sizing: border-box;
 	background-clip: content-box;
