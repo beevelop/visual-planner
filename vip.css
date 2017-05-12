@@ -1,4 +1,5 @@
 .vipgrid {
+	--colwidth: 0;
 	--cellheight: 0;
 	--cellnumpadding: 0;
 	--markerwidth: 0;
@@ -57,11 +58,18 @@
 	box-sizing: border-box;
 }
 .vipmultidayevent {
-	position: absolute;
+	--slot: 0;
+	--topindex: 0;
+	--heightindex: 0;
 	width: var(--markerwidth);
+	height: calc(var(--cellheight) * var(--heightindex));
+	left: calc(var(--colwidth) - (var(--slot) * var(--markerwidth)) - 2px);
+	top: calc(var(--cellheight) * var(--topindex));
 	padding-left: 2px;
 	box-sizing: border-box;
 	background-clip: content-box;
+	position: absolute;
+	z-index: 1;
 }
 .vipcell {
 	height: var(--cellheight);
@@ -111,6 +119,8 @@
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	position: relative;
+	z-index: 2;
 }
 .vipeventmarker {
 	float: left;

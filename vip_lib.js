@@ -232,6 +232,7 @@ VipGrid.prototype.updateLayout = function()
 	if (this.align_weekends) c += 6;
 
 	var colheight = this.First().div.offsetHeight;
+	var colwidth = this.First().div.offsetWidth;
 	var cellheight = Math.floor(colheight/c);
 	var cellnumpadding = Math.floor(cellheight/10);
 
@@ -240,6 +241,7 @@ VipGrid.prototype.updateLayout = function()
 
 	var fontsize = parseFloat(window.getComputedStyle(this.div).fontSize);
 	
+	this.div.style.setProperty('--colwidth', colwidth + "px");
 	this.div.style.setProperty('--cellheight', cellheight + "px");
 	this.div.style.setProperty('--cellnumpadding', cellnumpadding + "px");
 	this.div.style.setProperty('--markerwidth', Math.floor(fontsize*0.8) + "px");
@@ -356,11 +358,15 @@ function VipCol(parent, vdt_start, vdt_end)
 
 	this.vipcells = new VipDiv(this.vipcoloffset, "vipcells");
 	
+	var cellindex=0;
 	var vdt_day = new VipDate(vdt_start);
 	while (vdt_day.dt < vdt_end.dt)
 	{
 		var vipcell = new VipCell(this.vipcells, this, vdt_day);
+		vipcell.vipindex = cellindex;
+
 		vdt_day.MoveDays(1);
+		cellindex++;
 	}
 
 	this.vipsel = new VipDiv(this.vipcoloffset, "vipsel");
@@ -424,10 +430,10 @@ VipCol.prototype.addEvent = function(info, vipcell)
 
 	vipcell.updateEventInfo();
 	vipevt.extend(vipcell);
-	this.findSlot(vipevt);
+	this.findFreeSlot(vipevt);
 }
 
-VipCol.prototype.findSlot = function(evt)
+VipCol.prototype.findFreeSlot = function(evt)
 {
 	var sib = this.vipevts.First();
 	while (sib)
@@ -437,8 +443,8 @@ VipCol.prototype.findSlot = function(evt)
 		{
 			if (this.intersection(sib, evt))
 			{
-				evt.shiftLeft();
-				this.findSlot(evt);
+				evt.nextSlot();
+				this.findFreeSlot(evt);
 				return;
 			}
 		}
@@ -467,10 +473,12 @@ function VipMultiDayEvent(parent, info, vipcell)
 
 	this.info = info;
 	this.div.style.backgroundColor = info.colour;
-	this.div.style.left = (parent.div.offsetWidth - this.div.offsetWidth) + "px";
+	this.div.style.setProperty('--topindex', vipcell.vipindex);
+	this.div.style.setProperty('--heightindex', 1);
 	this.title = html2txt(info.title);
 	this.vipcell_start = vipcell;
 	this.vipcell_end = vipcell;
+	this.setSlot(1);
 
 	if (info.calendar_name)
 		this.tooltip = fmt("^ - ^", info.calendar_name, this.title);
@@ -483,12 +491,18 @@ VipMultiDayEvent.prototype = new VipObject;
 VipMultiDayEvent.prototype.extend = function(vipcell)
 {
 	this.vipcell_end = vipcell;
-	this.Align(this.vipcell_start, this.vipcell_end);
+	this.div.style.setProperty('--heightindex', this.vipcell_end.vipindex - this.vipcell_start.vipindex + 1);
 }
 
-VipMultiDayEvent.prototype.shiftLeft = function()
+VipMultiDayEvent.prototype.setSlot = function(s)
 {
-	this.div.style.left = (this.div.offsetLeft - this.div.offsetWidth) + "px";
+	this.slot = s;
+	this.div.style.setProperty('--slot', this.slot);
+}
+
+VipMultiDayEvent.prototype.nextSlot = function()
+{
+	this.setSlot(this.slot + 1);
 }
 
 
