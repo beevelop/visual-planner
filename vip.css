@@ -108,6 +108,7 @@
 	pointer-events: none;
 	display: flex;
 	flex-direction: row;
+	position: relative;
 }
 .vipsingledayevent {
 	overflow: hidden;
@@ -131,4 +132,8 @@
 	padding-left: 2px;
 	box-sizing: border-box;
 	background-clip: content-box;
+}
+.vipeventmarker.proportional {
+	padding-left: 0;
+	position: absolute;
 }
