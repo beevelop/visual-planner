@@ -92,8 +92,8 @@ VipObject.prototype.Align = function(cell_start, cell_end)
 {
 	if (cell_start && cell_end)
 	{
-		this.div.style.top = px(cell_start.div.offsetTop);
-		this.div.style.height = px((cell_end.div.offsetTop - cell_start.div.offsetTop) + cell_end.div.offsetHeight);
+		this.div.style.top = (cell_start.div.offsetTop) + "px";
+		this.div.style.height = ((cell_end.div.offsetTop - cell_start.div.offsetTop) + cell_end.div.offsetHeight) + "px";
 		this.Show(true);
 	}
 	else
@@ -626,7 +626,6 @@ VipCell.prototype.updateEventInfo = function()
 
 function VipSingleDayEvent(vipcell, info)
 {
-console.log(info);
 	this.createChild(vipcell.vipevts, "vipsingledayevent");
 
 	this.info = info;
@@ -903,11 +902,6 @@ function fmt(fmtspec)
 	}
 
 	return str;
-}
-
-function px(n)
-{
-	return "" + n + "px";
 }
 
 function html2txt(html)
