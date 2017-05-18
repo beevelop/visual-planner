@@ -112,6 +112,7 @@
 }
 .vipsingledayevent {
 	overflow: hidden;
+	z-index: 2;
 }
 .vipeventtext {
 	padding-top: var(--cellnumpadding);
@@ -121,7 +122,6 @@
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	position: relative;
-	z-index: 2;
 }
 .vipeventmarker {
 	float: left;
@@ -136,5 +136,4 @@
 .vipeventmarker.proportional {
 	padding-left: 0;
 	position: absolute;
-	z-index: 2;
 }
