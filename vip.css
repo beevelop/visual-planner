@@ -59,10 +59,10 @@
 }
 .vipmultidayevent {
 	--start: 0;
-	--duration: 0;
+	--extent: 0;
 	--slot: 0;
 	width: var(--markerwidth);
-	height: calc(var(--cellheight) * var(--duration));
+	height: calc(var(--cellheight) * var(--extent));
 	left: calc(var(--colwidth) - (var(--slot) * var(--markerwidth)) - 2px);
 	top: calc(var(--cellheight) * var(--start));
 	padding-left: 2px;

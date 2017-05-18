@@ -323,7 +323,10 @@ VipGrid.prototype.addEvent = function(info)
 
 			if (vipcell)
 			{
-				vipcell.vipcol.addEvent(info, vipcell);
+				if (this.multi_day_as_single_day)
+					vipcell.addEvent(info);
+				else
+					vipcell.vipcol.addEvent(info, vipcell);
 			}
 
 			vdtNext.MoveDays(1);
@@ -428,7 +431,7 @@ VipCol.prototype.addEvent = function(info, vipcell)
 		this.vipevts.MoveLastBefore(vipsib);
 	}
 
-	vipevt.extendDuration(vipcell);
+	vipevt.extend(vipcell);
 	vipcell.updateEventInfo();
 	this.findFreeSlot(vipevt);
 }
@@ -477,7 +480,7 @@ function VipMultiDayEvent(parent, info, vipcell)
 	this.title = html2txt(info.title);
 	this.vipcell_start = vipcell;
 	this.vipcell_end = vipcell;
-	this.setDuration(1);
+	this.setExtent(1);
 	this.setSlot(1);
 
 	if (info.calendar_name)
@@ -488,16 +491,16 @@ function VipMultiDayEvent(parent, info, vipcell)
 
 VipMultiDayEvent.prototype = new VipObject;
 
-VipMultiDayEvent.prototype.setDuration = function(i)
+VipMultiDayEvent.prototype.setExtent = function(i)
 {
-	this.duration = i;
-	this.div.style.setProperty('--duration', this.duration);
+	this.extent = i;
+	this.div.style.setProperty('--extent', this.extent);
 }
 
-VipMultiDayEvent.prototype.extendDuration = function(vipcell)
+VipMultiDayEvent.prototype.extend = function(vipcell)
 {
 	this.vipcell_end = vipcell;
-	this.setDuration(this.vipcell_end.vipindex - this.vipcell_start.vipindex + 1);
+	this.setExtent(this.vipcell_end.vipindex - this.vipcell_start.vipindex + 1);
 }
 
 VipMultiDayEvent.prototype.setSlot = function(i)
@@ -681,7 +684,7 @@ VipSingleDayEvent.prototype.calcProportionalMarker = function()
 	if (this.info.vtmStart && this.info.vtmEnd)
 	{
 		var s_evt_start = this.info.vtmStart.toSeconds();
-		var s_evt_end = (this.info.duration == 1) ? this.info.vtmEnd.toSeconds() : (new VipTime.HourMin(24, 0)).toSeconds();
+		var s_evt_end = (this.info.duration == 1) ? this.info.vtmEnd.toSeconds() : (24*3600);
 		if (s_evt_start < s_range_start) s_evt_start = s_range_start;
 		if (s_evt_end > s_range_end) s_evt_end = s_range_end;
 	}
