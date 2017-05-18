@@ -632,9 +632,9 @@ function VipSingleDayEvent(vipcell, info)
 	this.createChild(vipcell.vipevts, "vipsingledayevent");
 
 	this.info = info;
-	this.datestamp = info.vdtStart.Datestamp();
 	this.timestamp = info.timed ? info.vtmStart.Timestamp() : 0;
-	this.first_day = (this.datestamp == vipcell.vipdate.Datestamp());
+	this.firstday = (vipcell.vipdate.DayCount() == info.vdtStart.DayCount());
+	this.lastday = (vipcell.vipdate.DayCount() == (info.vdtStart.DayCount() + info.duration - 1));
 	this.title = html2txt(info.title);
 	
 	this.time_title = "";
@@ -681,17 +681,23 @@ VipSingleDayEvent.prototype.calcProportionalMarker = function()
 	var s_range_end = (vip.grid.proportional_end_hour * 3600);
 	var s_range = (s_range_end - s_range_start);
 
-	if (this.info.vtmStart && this.info.vtmEnd)
+	var s_evt_start = s_range_start;
+	var s_evt_end = s_range_end;
+
+	if (this.firstday && this.info.vtmStart)
 	{
-		var s_evt_start = this.info.vtmStart.toSeconds();
-		var s_evt_end = (this.info.duration == 1) ? this.info.vtmEnd.toSeconds() : (24*3600);
-		if (s_evt_start < s_range_start) s_evt_start = s_range_start;
-		if (s_evt_end > s_range_end) s_evt_end = s_range_end;
+		s_evt_start = this.info.vtmStart.toSeconds();
+
+		if (s_evt_start < s_range_start)
+			s_evt_start = s_range_start;
 	}
-	else
+
+	if (this.lastday && this.info.vtmEnd)
 	{
-		var s_evt_start = s_range_start;
-		var s_evt_end = s_range_end;
+		s_evt_end = this.info.vtmEnd.toSeconds();
+
+		if (s_evt_end > s_range_end)
+			s_evt_end = s_range_end;
 	}
 
 	this.vipmarker.div.style.left = (((s_evt_start - s_range_start) / s_range) * 100) + "%";
@@ -766,10 +772,9 @@ VipDate.prototype.Datestamp = function()
 	return ((this.dt.getFullYear()*10000) + ((this.dt.getMonth() + 1)*100) + this.dt.getDate());
 }
 
-VipDate.prototype.UTCDay = function()
+VipDate.prototype.DayCount = function()
 {
-	var s = Date.UTC(this.dt.getFullYear(), this.dt.getMonth(), this.dt.getDate());
-	return (Math.floor(s/86400000));
+	return (Math.floor(this.dt.valueOf()/(1000*3600*24)));
 }
 
 VipDate.prototype.DayOfMonth = function()
@@ -819,7 +824,7 @@ VipDate.prototype.isPastMonth = function()
 
 VipDate.prototype.TimespanTo = function(vdt_end)
 {
-	var c = Math.abs(this.UTCDay() - vdt_end.UTCDay());
+	var c = Math.abs(this.DayCount() - vdt_end.DayCount());
 	var w = Math.floor(c/7);
 	var d = (c-(w*7));
 	

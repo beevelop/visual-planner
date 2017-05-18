@@ -86,12 +86,12 @@ function receive_events(data)
 			if (calevt.allDay)
 			{
 				info.timed = false;
-				info.duration = (info.vdtEnd.UTCDay() - info.vdtStart.UTCDay());
+				info.duration = (info.vdtEnd.DayCount() - info.vdtStart.DayCount());
 			}
 			else
 			{
 				info.timed = true;
-				info.duration = (info.vdtEnd.UTCDay() - info.vdtStart.UTCDay() + 1);
+				info.duration = (info.vdtEnd.DayCount() - info.vdtStart.DayCount() + 1);
 				info.vtmStart = new VipTime.HourMin(calevt.startTime.hour, calevt.startTime.minute);
 				info.vtmEnd = new VipTime.HourMin(calevt.endTime.hour, calevt.endTime.minute);
 			}
