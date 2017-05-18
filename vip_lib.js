@@ -93,7 +93,7 @@ VipObject.prototype.Align = function(cell_start, cell_end)
 	if (cell_start && cell_end)
 	{
 		this.div.style.top = (cell_start.div.offsetTop) + "px";
-		this.div.style.height = ((cell_end.div.offsetTop - cell_start.div.offsetTop) + cell_end.div.offsetHeight) + "px";
+		this.div.style.height = ((cell_end.div.offsetTop - cell_start.div.offsetTop) + cell_end.div.offsetHeight - 1) + "px";
 		this.Show(true);
 	}
 	else
