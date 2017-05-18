@@ -324,9 +324,17 @@ VipGrid.prototype.addEvent = function(info)
 			if (vipcell)
 			{
 				if (this.multi_day_as_single_day)
+				{
 					vipcell.addEvent(info);
+				}
 				else
+				{
 					vipcell.vipcol.addEvent(info, vipcell);
+					
+					if (this.multi_day_with_first_single_day)
+					if (c == 0)
+						vipcell.addEvent(info);
+				}
 			}
 
 			vdtNext.MoveDays(1);
@@ -639,7 +647,7 @@ function VipSingleDayEvent(vipcell, info)
 	
 	this.time_title = "";
 	if (this.info.timed)
-	if (this.first_day)
+	if (this.firstday)
 	if (vip.grid.show_event_time)
 		this.time_title = info.vtmStart.TimeTitle() + " ";
 
