@@ -310,7 +310,19 @@ VipGrid.prototype.addEvent = function(info)
 		var vipcell = this.getVipCell(info.vdtStart);
 		
 		if (vipcell)
-			vipcell.addEvent(info);
+		{
+			if (info.timed)
+			{
+				vipcell.addEvent(info);
+			}
+			else
+			{
+				if (this.all_day_single_day_as_multi_day)
+					vipcell.vipcol.addEvent(info, vipcell);
+				else
+					vipcell.addEvent(info);
+			}
+		}
 	}
 	else
 	{
