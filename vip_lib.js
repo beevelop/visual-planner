@@ -318,7 +318,7 @@ VipGrid.prototype.addEvent = function(info)
 			else
 			{
 				if (this.all_day_single_day_as_multi_day)
-					vipcell.vipcol.addEvent(info, vipcell);
+					vipcell.addColEvent(info);
 				else
 					vipcell.addEvent(info);
 			}
@@ -341,7 +341,7 @@ VipGrid.prototype.addEvent = function(info)
 				}
 				else
 				{
-					vipcell.vipcol.addEvent(info, vipcell);
+					vipcell.addColEvent(info);
 					
 					if (this.multi_day_with_first_single_day)
 					if (c == 0)
@@ -452,7 +452,6 @@ VipCol.prototype.addEvent = function(info, vipcell)
 	}
 
 	vipevt.extend(vipcell);
-	vipcell.updateEventInfo();
 	this.findFreeSlot(vipevt);
 }
 
@@ -582,6 +581,12 @@ VipCell.prototype.inDateRange = function(vdt_lo, vdt_hi)
 		return true;
 
 	return false;
+}
+
+VipCell.prototype.addColEvent = function(info)
+{
+	this.vipcol.addEvent(info, this);
+	this.updateEventInfo();
 }
 
 VipCell.prototype.addEvent = function(info)
