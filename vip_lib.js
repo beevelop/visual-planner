@@ -233,7 +233,6 @@ VipGrid.prototype.updateLayout = function()
 	if (this.align_weekends) c += 6;
 
 	var colheight = this.First().div.offsetHeight;
-	var colwidth = this.First().div.offsetWidth;
 	var cellheight = Math.floor(colheight/c);
 	var cellnumpadding = Math.floor(cellheight/10);
 
@@ -242,7 +241,6 @@ VipGrid.prototype.updateLayout = function()
 
 	var fontsize = parseFloat(window.getComputedStyle(this.div).fontSize);
 	
-	this.div.style.setProperty('--colwidth', colwidth + "px");
 	this.div.style.setProperty('--cellheight', cellheight + "px");
 	this.div.style.setProperty('--cellnumpadding', cellnumpadding + "px");
 	this.div.style.setProperty('--markerwidth', Math.floor(fontsize*0.8) + "px");
