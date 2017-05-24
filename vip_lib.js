@@ -218,6 +218,7 @@ VipGrid.prototype.createSingleCol = function()
 	vdt_end.MoveDays(28);
 	
 	var vipcol = new VipCol(this, vdt_start, vdt_end);
+	vipcol.addClass("indicator");
 
 	this.updateLayout();
 }

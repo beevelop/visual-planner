@@ -14,6 +14,9 @@
 	display: flex;
 	flex-direction: column;
 }
+.vipcol.indicator {
+	padding-left: 3px;
+}
 .vipmonthhdr {
 	text-align: center;
 	height: var(--cellheight);
@@ -45,6 +48,7 @@
 	z-index: 10;
 }
 .vipind {
+	left: -3px;
 	width: 2px;
 	position: absolute;
 	background-color: rgba(0,0,0,0.2);
