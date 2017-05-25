@@ -648,9 +648,11 @@ VipCell.prototype.updateTooltip = function()
 		{
 			for (var i=0; i < evtlist.length; i++)
 			{
+				if (vipevt.slot > evtlist[i].slot)
+					break;
 			}
 			
-			evtlist.push(vipevt);
+			evtlist.splice(i, 0, vipevt);
 		}
 
 		vipevt = vipevt.Next();
@@ -659,6 +661,15 @@ VipCell.prototype.updateTooltip = function()
 	var vipevt = this.vipevts.First();
 	while (vipevt)
 	{
+		for (var i=0; i < evtlist.length; i++)
+		{
+			if (vipevt.info.id == evtlist[i].info.id)
+			{
+				evtlist.splice(i, 1);
+				break;
+			}
+		}
+		
 		evtlist.push(vipevt);
 
 		vipevt = vipevt.Next();
