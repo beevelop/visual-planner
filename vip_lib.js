@@ -460,7 +460,7 @@ VipCol.prototype.addEvent = function(info, vipcell)
 			break;
 		}
 
-		if (vipcell.vipdate.dt < vipsib.vipcell_start.vipdate.dt)
+		if (vipcell.vipdate.dt < vipsib.vipcell_start.vipdate.dt)  // sort in date order
 			break;
 
 		vipsib = vipsib.Next();
@@ -645,15 +645,7 @@ VipCell.prototype.updateTooltip = function()
 	while (vipevt)
 	{
 		if (this.inRange(vipevt.vipcell_start, vipevt.vipcell_end))
-		{
-			for (var i=0; i < evtlist.length; i++)
-			{
-				if (vipevt.slot > evtlist[i].slot)
-					break;
-			}
-			
-			evtlist.splice(i, 0, vipevt);
-		}
+			evtlist.push(vipevt);
 
 		vipevt = vipevt.Next();
 	}
@@ -665,7 +657,7 @@ VipCell.prototype.updateTooltip = function()
 		{
 			if (vipevt.info.id == evtlist[i].info.id)
 			{
-				evtlist.splice(i, 1);
+				evtlist.splice(i, 1);  // remove duplicate
 				break;
 			}
 		}
