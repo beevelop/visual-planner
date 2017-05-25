@@ -517,16 +517,18 @@ function VipMultiDayEvent(parent, info, vipcell)
 	this.info = info;
 	this.div.style.backgroundColor = info.colour;
 	this.div.style.setProperty('--start', vipcell.vipindex);
-	this.title = html2txt(info.title);
 	this.vipcell_start = vipcell;
 	this.vipcell_end = vipcell;
 	this.setExtent(1);
 	this.setSlot(1);
+	
+	var evt_title = html2txt(info.title);
 
+	var cal_title = "";
 	if (info.calendar_name)
-		this.tooltip = fmt("^ - ^", info.calendar_name, this.title);
-	else
-		this.tooltip = this.title;
+		cal_title = info.calendar_name + " - ";
+
+	this.div.title = cal_title + evt_title;
 }
 
 VipMultiDayEvent.prototype = new VipObject;
@@ -673,7 +675,7 @@ VipCell.prototype.updateTooltip = function()
 		if (str_tooltip.length > 0)
 			str_tooltip += '\n';
 		
-		str_tooltip += evtlist[i].tooltip;
+		str_tooltip += evtlist[i].div.title;
 	}
 
 	this.div.title = str_tooltip;
@@ -691,18 +693,20 @@ function VipSingleDayEvent(vipcell, info)
 	this.timestamp = info.timed ? info.vtmStart.Timestamp() : 0;
 	this.firstday = (vipcell.vipdate.DayCount() == info.vdtStart.DayCount());
 	this.lastday = (vipcell.vipdate.DayCount() == (info.vdtStart.DayCount() + info.duration - 1));
-	this.title = html2txt(info.title);
 	
-	this.time_title = "";
+	var evt_title = html2txt(info.title);
+
+	var time_title = "";
 	if (this.info.timed)
 	if (this.firstday)
 	if (vip.grid.show_event_time)
-		this.time_title = info.vtmStart.TimeTitle() + " ";
+		time_title = info.vtmStart.TimeTitle() + " ";
 
-	this.tooltip = this.time_title;
+	var cal_title = "";
 	if (info.calendar_name)
-		this.tooltip += fmt("^ - ", info.calendar_name);
-	this.tooltip += this.title;
+		cal_title = info.calendar_name + " - ";
+
+	this.div.title = time_title + cal_title + evt_title;
 
 	if (vip.grid.proportional_events)
 	{
@@ -718,7 +722,7 @@ function VipSingleDayEvent(vipcell, info)
 		if (vip.grid.show_event_title)
 		{
 			this.vipevttext = new VipDiv(this, "vipeventtext");
-			this.vipevttext.setText(this.time_title + this.title);
+			this.vipevttext.setText(time_title + evt_title);
 
 			if (vip.grid.colour_event_title)
 				this.vipevttext.div.style.color = info.colour;
