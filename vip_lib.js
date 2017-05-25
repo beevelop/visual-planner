@@ -365,7 +365,7 @@ VipGrid.prototype.reloadEvents = function()
 		while (vipcell)
 		{
 			vipcell.vipevts.ClearContent();
-			vipcell.updateEventInfo();
+			vipcell.updateTooltip();
 
 			vipcell = vipcell.Next();
 		}
@@ -607,7 +607,7 @@ VipCell.prototype.inDateRange = function(vdt_lo, vdt_hi)
 VipCell.prototype.addColEvent = function(info)
 {
 	this.vipcol.addEvent(info, this);
-	this.updateEventInfo();
+	this.updateTooltip();
 }
 
 VipCell.prototype.addEvent = function(info)
@@ -634,36 +634,43 @@ VipCell.prototype.addEvent = function(info)
 
 	this.vipevts.MoveLastBefore(vipsib);  // sort in time order
 
-	this.updateEventInfo();
+	this.updateTooltip();
 }
 
-VipCell.prototype.updateEventInfo = function()
+VipCell.prototype.updateTooltip = function()
 {
-	var str_tooltip = "";
+	var evtlist = [];
 
 	var vipevt = this.vipcol.vipevts.First();
 	while (vipevt)
 	{
 		if (this.inRange(vipevt.vipcell_start, vipevt.vipcell_end))
 		{
-			if (str_tooltip.length > 0)
-				str_tooltip += '\n';
+			for (var i=0; i < evtlist.length; i++)
+			{
+			}
 			
-			str_tooltip += vipevt.tooltip;
+			evtlist.push(vipevt);
 		}
 
 		vipevt = vipevt.Next();
 	}
 
-	vipevt = this.vipevts.First();
+	var vipevt = this.vipevts.First();
 	while (vipevt)
+	{
+		evtlist.push(vipevt);
+
+		vipevt = vipevt.Next();
+	}
+
+	var str_tooltip = "";
+	for (var i=0; i < evtlist.length; i++)
 	{
 		if (str_tooltip.length > 0)
 			str_tooltip += '\n';
 		
-		str_tooltip += vipevt.tooltip;
-
-		vipevt = vipevt.Next();
+		str_tooltip += evtlist[i].tooltip;
 	}
 
 	this.div.title = str_tooltip;
