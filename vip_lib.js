@@ -170,7 +170,6 @@ function VipGrid(container_element)
 	this.all_day_single_day_as_multi_day = false;
 	this.marker_width = 0.58;
 	this.marker_transparency = 20;
-	this.separate_event_titles = false;
 	this.auto_refresh = false;
 }
 
