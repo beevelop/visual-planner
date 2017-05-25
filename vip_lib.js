@@ -354,6 +354,28 @@ VipGrid.prototype.addEvent = function(info)
 	}
 }
 
+VipGrid.prototype.reloadEvents = function()
+{
+	var vipcol = this.First();
+	while (vipcol)
+	{
+		vipcol.vipevts.ClearContent();
+		
+		var vipcell = vipcol.vipcells.First();
+		while (vipcell)
+		{
+			vipcell.vipevts.ClearContent();
+			vipcell.updateEventInfo();
+
+			vipcell = vipcell.Next();
+		}
+
+		this.onloadVipCol(vipcol);
+
+		vipcol = vipcol.Next();
+	}
+}
+
 
 
 //////////////////////////////////////////////////////////////////////

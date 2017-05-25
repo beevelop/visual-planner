@@ -151,29 +151,9 @@ function update_events()
 // callback when calendar events have changed
 {
 	vip.event_req.queue = [];
-	
-	// clear existing event items
-	var vipcol = vip.grid.First();
-	while (vipcol)
-	{
-		vipcol.vipevts.ClearContent();
-		
-		var vipcell = vipcol.vipcells.First();
-		while (vipcell)
-		{
-			vipcell.vipevts.ClearContent();
-			vipcell.updateEventInfo();
-
-			vipcell = vipcell.Next();
-		}
-
-		vip.event_req.queue.push(vipcol);
-		
-		vipcol = vipcol.Next();
-	}
-
 	vip.event_req.pending = false;
-	request_events();
+	
+	vip.grid.reloadEvents();
 }
 
 function request_events()
