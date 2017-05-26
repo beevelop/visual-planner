@@ -65,7 +65,7 @@ function toggle_single_col()
 function show_settings()
 {
 	//window.top.location.replace("https://ctcode.github.io/ctcode/visual-planner/vip_settings.html");
-	window.top.location.replace("https://rawgit.com/ctcode/visual-planner/dev/vip_settings.html");
+	window.top.location.replace("https://rawgit.com/ctcode/visual-planner/css/vip_settings.html");
 }
 
 function receive_GCalPrefs(prefs)
