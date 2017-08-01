@@ -212,7 +212,7 @@ function receive_events(data)
 			{
 				info.timed = true;
 				info.vdtStart.setTime(calevt.startTime.hour, calevt.startTime.minute);
-				info.vdtEnd.setTime(calevtcalevt.endTime.hour, calevt.endTime.minute);
+				info.vdtEnd.setTime(calevt.endTime.hour, calevt.endTime.minute);
 				info.duration = (info.vdtEnd.toDaySeq() - info.vdtStart.toDaySeq() + 1);
 			}
 			
