@@ -86,14 +86,14 @@ function receive_events(data)
 			if (calevt.allDay)
 			{
 				info.timed = false;
-				info.duration = (info.vdtEnd.DayCount() - info.vdtStart.DayCount());
+				info.duration = (info.vdtEnd.toDaySeq() - info.vdtStart.toDaySeq());
 			}
 			else
 			{
 				info.timed = true;
-				info.duration = (info.vdtEnd.DayCount() - info.vdtStart.DayCount() + 1);
-				info.vtmStart = new VipTime.HourMin(calevt.startTime.hour, calevt.startTime.minute);
-				info.vtmEnd = new VipTime.HourMin(calevt.endTime.hour, calevt.endTime.minute);
+				info.vdtStart.setTime(calevt.startTime.hour, calevt.startTime.minute);
+				info.vdtEnd.setTime(calevt.endTime.hour, calevt.endTime.minute);
+				info.duration = (info.vdtEnd.toDaySeq() - info.vdtStart.toDaySeq() + 1);
 			}
 			
 			vip.grid.addEvent(info);
