@@ -848,18 +848,6 @@ VipDate.prototype.MoveToStartOfYear = function()
 	this.dt.setMonth(0);
 }
 
-/*
-VipDate.prototype.Datestamp = function()
-{
-	return ((this.dt.getFullYear()*10000) + ((this.dt.getMonth() + 1)*100) + this.dt.getDate());
-}
-
-VipDate.prototype.DayCount = function()
-{
-	return (Math.floor(this.dt.valueOf()/(1000*3600*24)));
-}
-*/
-
 VipDate.prototype.DayOfMonth = function()
 {
 	return this.dt.getDate();
@@ -887,18 +875,6 @@ VipDate.prototype.isWeekend = function()
 	return (this.dt.getDay()==0 || this.dt.getDay()==6);
 }
 
-/*
-VipDate.prototype.isToday = function()
-{
-	return (this.toDaySeq() == this.calcDaySeq(Date.now()));
-}
-
-VipDate.prototype.isSameDay = function(vdt)
-{
-	return (this.toDaySeq() == vdt.toDaySeq());
-}
-*/
-
 VipDate.prototype.isPastMonth = function()
 {
 	var vdt_this_month = new VipDate.Today();
@@ -906,17 +882,6 @@ VipDate.prototype.isPastMonth = function()
 	
 	return (this.toDaySeq() < vdt_this_month.toDaySeq());
 }
-
-/*
-VipDate.prototype.TimespanTo = function(vdt_end)
-{
-	var c = Math.abs(this.DayCount() - vdt_end.DayCount());
-	var w = Math.floor(c/7);
-	var d = (c-(w*7));
-	
-	return (w > 0 ? fmt("^, ^-^", c, w, d) : fmt("^", c));
-}
-*/
 
 VipDate.prototype.DaySpanTo = function(vdt_end)
 {
@@ -946,60 +911,6 @@ VipDate.prototype.TimeTitle = function()
 		return fmt((hh < 12) ? "^:^am" : "^:^pm", hours, minutes);
 	}
 }
-
-
-
-/*
-//////////////////////////////////////////////////////////////////////
-
-function VipTime(vtm)
-{
-	this.hh = 0;
-	this.mm = 0;
-	this.ss = 0;
-
-	if (vtm instanceof VipTime)
-	{
-		this.hh = vtm.hh;
-		this.mm = vtm.mm;
-		this.ss = vtm.ss;
-	}
-}
-
-VipTime.prototype.constructor.HourMin = function(hh, mm)
-{
-	var vtm = new VipTime;
-	vtm.hh = hh;
-	vtm.mm = mm;
-
-	return vtm;
-}
-
-VipTime.prototype.Timestamp = function()
-{
-	return ((this.hh*10000) + (this.mm*100) + this.ss);
-}
-
-VipTime.prototype.toSeconds = function()
-{
-	return ((this.hh*60*60) + (this.mm*60) + this.ss);
-}
-
-VipTime.prototype.TimeTitle = function()
-{
-	var minutes = fmt((this.mm < 10) ? "0^" : "^", this.mm);
-
-	if (vip.grid.time_24hr)
-	{
-		return fmt("^:^", this.hh, minutes);
-	}
-	else
-	{
-		var hours = (this.hh > 12) ? (this.hh-12) : this.hh;
-		return fmt((this.hh < 12) ? "^:^am" : "^:^pm", hours, minutes);
-	}
-}
-*/
 
 
 
