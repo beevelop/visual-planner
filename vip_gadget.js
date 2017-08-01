@@ -206,14 +206,14 @@ function receive_events(data)
 			if (calevt.allDay)
 			{
 				info.timed = false;
-				info.duration = (info.vdtEnd.DayCount() - info.vdtStart.DayCount());
+				info.duration = (info.vdtEnd.toDaySeq() - info.vdtStart.toDaySeq());
 			}
 			else
 			{
 				info.timed = true;
-				info.duration = (info.vdtEnd.DayCount() - info.vdtStart.DayCount() + 1);
-				info.vtmStart = new VipTime.HourMin(calevt.startTime.hour, calevt.startTime.minute);
-				info.vtmEnd = new VipTime.HourMin(calevt.endTime.hour, calevt.endTime.minute);
+				info.vdtStart.setTime(calevt.startTime.hour, calevt.startTime.minute);
+				info.vdtEnd.setTime(calevtcalevt.endTime.hour, calevt.endTime.minute);
+				info.duration = (info.vdtEnd.toDaySeq() - info.vdtStart.toDaySeq() + 1);
 			}
 			
 			vip.grid.addEvent(info);
@@ -226,17 +226,6 @@ function gdt2vdt(gdt)
 	var dt = google.calendar.utils.toDate(gdt);
 	var vdt = new VipDate.YMD(dt.getFullYear(), dt.getMonth()+1, dt.getDate());
 	return vdt;
-}
-
-function gdt2vtm(gdt)
-{
-	var dt = google.calendar.utils.toDate(gdt);
-
-	var vtm = new VipTime;
-	vtm.hh = dt.getHours();
-	vtm.mm = dt.getMinutes();
-
-	return vtm;
 }
 
 function vdt2gdt(vdt)

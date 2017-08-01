@@ -5,6 +5,7 @@
 	--markerpadding: 0;
 	height: 100%;
 	pointer-events: none;
+	user-select: none;
 	display: flex;
 	flex-direction: row;
 }

@@ -71,7 +71,7 @@ function onclickVipDayNumber(event)
 	if ("vipobj" in num)
 	if (num.vipobj.parent instanceof VipCell)
 	{
-		var url = fmt("https://www.google.com/calendar/render?date=^&mode=day", num.vipobj.parent.vipdate.Datestamp());
+		var url = fmt("https://www.google.com/calendar/render?date=^&mode=day", num.vipobj.parent.vipdate.toID());
 		window.open(url);
 	}
 }
@@ -83,7 +83,7 @@ function onclickVipMonthHeader(event)
 	if ("vipobj" in cell)
 	if (cell.vipobj.parent instanceof VipCol)
 	{
-		var url = fmt("https://www.google.com/calendar/render?date=^&mode=month", cell.vipobj.parent.vdt_month.Datestamp());
+		var url = fmt("https://www.google.com/calendar/render?date=^&mode=month", cell.vipobj.parent.vdt_month.toID());
 		window.open(url);
 	}
 }
