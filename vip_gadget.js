@@ -48,8 +48,7 @@ function InitMultiColView()
 
 function show_multi_col()
 {
-	//window.open("https://ctcode.github.io/ctcode/visual-planner/vip.html");
-	//window.open("https://rawgit.com/ctcode/visual-planner/dev/vip.html");
+	//window.open("https://beevelop.github.io/visual-planner/vip.html");
 	gadgets.views.requestNavigateTo('canvas');
 }
 
@@ -64,8 +63,7 @@ function toggle_single_col()
 
 function show_settings()
 {
-	//window.top.location.replace("https://ctcode.github.io/ctcode/visual-planner/vip_settings.html");
-	window.top.location.replace("https://rawgit.com/ctcode/visual-planner/dev/vip_settings.html");
+	window.top.location.replace("https://beevelop.github.io/visual-planner/vip_settings.html");
 }
 
 function receive_GCalPrefs(prefs)

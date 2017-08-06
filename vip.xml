@@ -16,19 +16,19 @@
 </center>
 <div id="grid" style="position:absolute; margin-top:4px; width:100%; height:448px; visibility:hidden;"></div>
 <script type="text/javascript">function ga_hit() {}</script>
-<script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_lib.js"></script>
-<script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_grid.js"></script>
-<script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_gadget.js"></script>
-<script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_bills.js"></script>
+<script type="text/javascript" src="https://beevelop.github.io/visual-planner/vip_lib.js"></script>
+<script type="text/javascript" src="https://beevelop.github.io/visual-planner/vip_grid.js"></script>
+<script type="text/javascript" src="https://beevelop.github.io/visual-planner/vip_gadget.js"></script>
+<script type="text/javascript" src="https://beevelop.github.io/visual-planner/vip_bills.js"></script>
 <script type="text/javascript">gadgets.util.registerOnLoadHandler(InitBillsView);</script>
 ]]>
 </Content>
 <Content type="html" view="canvas">
 <![CDATA[
 <script type="text/javascript">function ga_hit() {}</script>
-<script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_lib.js"></script>
-<script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_grid.js"></script>
-<script type="text/javascript" src="https://rawgit.com/ctcode/visual-planner/dev/vip_gadget.js"></script>
+<script type="text/javascript" src="https://beevelop.github.io/visual-planner/vip_lib.js"></script>
+<script type="text/javascript" src="https://beevelop.github.io/visual-planner/vip_grid.js"></script>
+<script type="text/javascript" src="https://beevelop.github.io/visual-planner/vip_gadget.js"></script>
 <script type="text/javascript">gadgets.util.registerOnLoadHandler(InitMultiColView);</script>
 ]]>
 </Content>
