@@ -1,31 +1,28 @@
-// gadget initialisation
-gadgets.util.registerOnLoadHandler(VipInit);
-
 // global object
 var vip = {
-	single_col: {show: false},
 	multi_col: {
 		auto_scroll: true,
-		offset: -2,
-		count: 10,
-		scale: {fixed: false, width: 144, height: 16},
+		offset: -1,
+		count: 8,
 		past_transparency: 50
 	},
-	cell: {width: 144, height: 16, margin: 20, font_client: {}},
+	cell: {width: 144, height: 16, margin: 20},
 	events: {
 		time_24hr: true,
 		proportional: {show: false, start_hour:8, end_hour:20},
-		title: {show: false, time: false, colour: false, hide_marker: false},
+		title: {show: true, time: true, colour: false, hide_marker: false},
+		marker: {width: 6, height: 11, hide: false},
 		timed: {show: true, multi_day_as_all_day: false},
 		allday: {show: true, one_day_as_timed: true, multi_day_as_timed: false, width_chars: 1}
 	},
 	selection: {start: null, end: null},
 	touch: {id: null, start: {x:0, y:0}},
-	event_req: {queue: [], pending: false}
+	event_req: {add: onAddEventRequest, queue: [], pending: false}
 };
 
-function VipInit()
+function init_vip()
 {
+/*
 	var prefs = new gadgets.Prefs();
 
 	vip.multi_col.count = prefs.getInt("multi_col_count");
@@ -48,6 +45,7 @@ function VipInit()
 	vip.events.timed.show = prefs.getBool("show_timed_evts");
 	vip.events.timed.multi_day_as_all_day = prefs.getBool("multi_day_as_all_day");
 	vip.events.allday.width_chars = prefs.getInt("all_day_evt_width_chars");
+*/
 
 	if (vip.events.proportional.start_hour >= vip.events.proportional.end_hour)
 	{
@@ -62,51 +60,31 @@ function VipInit()
 	else
 		vip.events.format = 'basic';
 
-	google.calendar.getPreferences(receive_GCalPrefs);
+	ga_hit('event_format', vip.events.format);
 
 	vip.host = new VipHost();
 
-	if ('canvasview' in gadgets.views.getParams())
-	{
-		if (gadgets.views.getParams().canvasview == 'multi_col')
-			InitMultiColView();
-
-		if (gadgets.views.getParams().canvasview == 'settings')
-			InitSettingsView();
-	}
-	else
-		InitSingleColView();
+	install_event_handling();
 }
 
 function InitSingleColView()
 {
-	var prefs = new gadgets.Prefs();
-	vip.single_col.show = prefs.getBool("show_single_col");
-
-	vip.host.ClearContent();
-	gadgets.window.adjustHeight();
-
-	if (vip.single_col.show)
-	{
-		gadgets.window.adjustHeight(26 + (28*vip.cell.height));
-		install_event_handling();
-
-		vip.host.createSingleCol();
-
-		// calendar notifications
-		google.calendar.subscribeToDates(update_dates);
-		google.calendar.subscribeToDataChange(update_events);
-
-		ga_hit('event_format', vip.events.format);
-	}
-
-	ga_hit('view', vip.single_col.show ? 'single_col' : 'none');
+	init_vip();
+	show_single_col();
 }
 
 function InitMultiColView()
 {
-	document.body.removeChild(document.getElementById('settings'));
-	install_event_handling();
+	init_vip();
+
+	// printing
+	if (window.matchMedia)
+	{
+	  var mql = window.matchMedia("print");
+	  
+	  if (mql)
+		mql.addListener(onMediaChange);
+	}
 
 	// printing
 	if (window.matchMedia)
@@ -120,79 +98,6 @@ function InitMultiColView()
 	ga_hit('view', 'multi_col');
 	ga_hit('multi_col_count', vip.multi_col.count);
 	ga_hit('multi_col_scroll_offset', vip.multi_col.auto_scroll ? vip.multi_col.offset : 'n/a');
-	ga_hit('event_format', vip.events.format);
-
-	vip.host.createMultiCol();
-}
-
-function InitSettingsView()
-{
-	gadgets.window.setTitle("visual-planner : Settings");
-	document.getElementById("basic_marker").checked = true;
-
-	var prefs = new gadgets.Prefs();
-	document.getElementById("multi_col_count").value = prefs.getInt("multi_col_count");
-	document.getElementById("fixed_cell_size").checked = prefs.getBool("fixed_cell_size");
-	document.getElementById("fixed_height").value = prefs.getInt("fixed_height");
-	document.getElementById("fixed_width").value = prefs.getInt("fixed_width");
-	document.getElementById("auto_scroll").checked = prefs.getBool("auto_scroll");
-	document.getElementById("start_month_offset").value = prefs.getInt("start_month_offset");
-	document.getElementById("past_transparency").value = prefs.getInt("past_transparency");
-	document.getElementById("proportional_events").checked = prefs.getBool("proportional_events");
-	document.getElementById("evt_start_hour").value = prefs.getInt("evt_start_hour");
-	document.getElementById("evt_end_hour").value = prefs.getInt("evt_end_hour");
-	document.getElementById("show_event_title").checked = prefs.getBool("show_event_title");
-	document.getElementById("show_evt_time").checked = prefs.getBool("show_evt_time");
-	document.getElementById("use_evt_colour").checked = prefs.getBool("use_evt_colour");
-	document.getElementById("hide_evt_marker").checked = prefs.getBool("hide_evt_marker");
-	document.getElementById("show_all_day_evts").checked = prefs.getBool("show_all_day_evts");
-	document.getElementById("one_day_as_timed").checked = prefs.getBool("one_day_as_timed");
-	document.getElementById("multi_day_as_timed").checked = prefs.getBool("multi_day_as_timed");
-	document.getElementById("show_timed_evts").checked = prefs.getBool("show_timed_evts");
-	document.getElementById("multi_day_as_all_day").checked = prefs.getBool("multi_day_as_all_day");
-	document.getElementById("all_day_evt_width_chars").value = prefs.getInt("all_day_evt_width_chars");
-
-	document.getElementById("available_space").innerHTML = fmt("^x^", document.body.clientWidth, document.body.clientHeight);
-
-	var setdiv = document.getElementById('settings');
-
-	document.body.removeChild(setdiv);
-	document.body.innerHTML = "";
-	setdiv.style.visibility = "visible";
-
-	var ifm = document.createElement('iframe');
-	ifm.id = 'vipsettingsfrm';
-	ifm.width = '800px';
-	ifm.height = '100%';
-	ifm.style.border = 0;
-	ifm.src = 'about:blank'; 
-	document.body.appendChild(ifm);
-
-	ifm.contentDocument.open('text/html', 'replace');
-	ifm.contentDocument.write("<body style='background-color:#F5DEB3'> </body>");
-	ifm.contentDocument.body.appendChild(setdiv);
-	ifm.contentDocument.close();
-
-	ga_hit('view', 'settings');
-}
-
-function toggle_single_col()
-{
-	var prefs = new gadgets.Prefs();
-	prefs.set("show_single_col", (!vip.single_col.show).toString());
-
-	InitSingleColView();
-}
-
-function show_view(name)
-{
-	gadgets.views.requestNavigateTo('canvas', {canvasview : name});
-}
-
-function receive_GCalPrefs(prefs)
-{
-	if ('military' in prefs)
-		vip.events.time_24hr = prefs.military;
 }
 
 function install_event_handling()
@@ -222,37 +127,10 @@ function install_event_handling()
 /////////////////////////////////////////////////////////////////
 // calendar event handlers
 
-function update_dates(cal_dates)
-// callback when user changes calendar date range
+function onAddEventRequest(vipcol)
 {
-	update_indicator(cal_dates);
-}
-
-function update_indicator(cal_dates)
-// redraw date range indicator
-{
-	var vipcol = vip.host.getFirstChild();
-	if (!vipcol) return;
-	vipcol.vipind.Align(null);
-
-	var vdt_start = new VipDate.GCal(cal_dates.startTime);
-	var vdt_end = new VipDate.GCal(cal_dates.endTime);
-
-	var cell_top = vip.host.getVipCell(vdt_start);
-	var cell_bottom = vip.host.getVipCell(vdt_end);
-	var cell_first = vipcol.vipcells.getFirstChild();
-	var cell_last = vipcol.vipcells.getLastChild();
-
-	if (!cell_top)
-	if (cell_first.inDateRange(vdt_start, vdt_end))
-		cell_top = cell_first;
-
-	if (!cell_bottom)
-	if (cell_last.inDateRange(vdt_start, vdt_end))
-		cell_bottom = cell_last;
-	
-	if (cell_top && cell_bottom)
-		vipcol.vipind.Align(cell_top, cell_bottom);
+	vip.event_req.queue.push(vipcol);
+	request_events();
 }
 
 function update_events()
@@ -295,7 +173,10 @@ function request_events()
 	vip.event_req.pending = true;
 
 	var vipcol = vip.event_req.queue.shift();
-	google.calendar.read.getEvents(receive_events, "selected", vipcol.ReqDateStart, vipcol.ReqDateEnd);
+
+	var gdtStart = google.calendar.utils.fromDate(vipcol.datespan.start.dt);
+	var gdtEnd = google.calendar.utils.fromDate(vipcol.datespan.end.dt);
+	google.calendar.read.getEvents(receive_events, "selected", gdtStart, gdtEnd);
 }
 
 function receive_events(data)
@@ -397,41 +278,6 @@ function add_timed_event(event)
 
 /////////////////////////////////////////////////////////////////
 // mouse/keyboard event handlers
-
-function onSaveSettings()
-{
-	var setdoc = document.getElementById("vipsettingsfrm").contentDocument;
-	setdoc.getElementById("save_btn").innerHTML = "<i>Saving...</i>";
-	
-	var prefs = new gadgets.Prefs();
-	prefs.set("multi_col_count", setdoc.getElementById("multi_col_count").value);
-	prefs.set("fixed_cell_size", setdoc.getElementById("fixed_cell_size").checked.toString());
-	prefs.set("fixed_height", setdoc.getElementById("fixed_height").value);
-	prefs.set("fixed_width", setdoc.getElementById("fixed_width").value);
-	prefs.set("auto_scroll", setdoc.getElementById("auto_scroll").checked.toString());
-	prefs.set("start_month_offset", setdoc.getElementById("start_month_offset").value);
-	prefs.set("past_transparency", setdoc.getElementById("past_transparency").value);
-	prefs.set("proportional_events", setdoc.getElementById("proportional_events").checked.toString());
-	prefs.set("evt_start_hour", setdoc.getElementById("evt_start_hour").value);
-	prefs.set("evt_end_hour", setdoc.getElementById("evt_end_hour").value);
-	prefs.set("show_event_title", setdoc.getElementById("show_event_title").checked.toString());
-	prefs.set("show_evt_time", setdoc.getElementById("show_evt_time").checked.toString());
-	prefs.set("use_evt_colour", setdoc.getElementById("use_evt_colour").checked.toString());
-	prefs.set("hide_evt_marker", setdoc.getElementById("hide_evt_marker").checked.toString());
-	prefs.set("show_all_day_evts", setdoc.getElementById("show_all_day_evts").checked.toString());
-	prefs.set("one_day_as_timed", setdoc.getElementById("one_day_as_timed").checked.toString());
-	prefs.set("multi_day_as_timed", setdoc.getElementById("multi_day_as_timed").checked.toString());
-	prefs.set("show_timed_evts", setdoc.getElementById("show_timed_evts").checked.toString());
-	prefs.set("multi_day_as_all_day", setdoc.getElementById("multi_day_as_all_day").checked.toString());
-	prefs.set("all_day_evt_width_chars", setdoc.getElementById("all_day_evt_width_chars").value);
-
-	window.setTimeout(reload_calendar, 1000);
-}
-
-function reload_calendar()
-{
-	window.top.location.replace("https://www.google.com/calendar/render");
-}
 
 function onclick_day_number(event)
 {
@@ -715,5 +561,5 @@ function onMediaChange(mql)
 		vip.host.updateScale();
 
 	if (mql.matches)
-		ga_hit('no_category', 'print');
+		ga_hit('media', 'print');
 }
