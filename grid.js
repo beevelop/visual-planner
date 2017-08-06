@@ -112,9 +112,6 @@ function createGrid()
 function onMediaChange(mql)
 {
 	updateLayout();
-
-	//if (mql.matches)
-		//ga_hit('media', 'print');
 }
 
 function updateLayout()

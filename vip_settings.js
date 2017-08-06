@@ -24,8 +24,6 @@ function InitSettings()
 	document.getElementById("show_timed_evts").checked = prefs.getBool("show_timed_evts");
 	document.getElementById("multi_day_as_all_day").checked = prefs.getBool("multi_day_as_all_day");
 	document.getElementById("all_day_evt_width_chars").value = prefs.getInt("all_day_evt_width_chars");
-
-	// ga_hit('view', 'settings');
 }
 
 function onSaveSettings()

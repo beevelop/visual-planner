@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Module>
-<ModulePrefs title="visual-planner/dev" description="Visual Planner for Google Calendar" author="Chris Thompson">
+<ModulePrefs title="Visual Planner" description="Visual Planner for Google Calendar" author="Chris Thompson (adapted by Maik Hummel)">
 <Require feature="google.calendar-0.5.read"/>
 <Require feature="views"/>
 <Require feature="setprefs"/>
@@ -15,7 +15,6 @@
 <button type="button" title="Settings" onclick="show_settings();"><b>*</b></button>
 </center>
 <div id="grid" style="position:absolute; margin-top:4px; width:100%; height:448px; visibility:hidden;"></div>
-<script type="text/javascript">function ga_hit() {}</script>
 <script type="text/javascript" src="https://beevelop.github.io/visual-planner/vip_lib.js"></script>
 <script type="text/javascript" src="https://beevelop.github.io/visual-planner/vip_grid.js"></script>
 <script type="text/javascript" src="https://beevelop.github.io/visual-planner/vip_gadget.js"></script>
@@ -25,7 +24,6 @@
 </Content>
 <Content type="html" view="canvas">
 <![CDATA[
-<script type="text/javascript">function ga_hit() {}</script>
 <script type="text/javascript" src="https://beevelop.github.io/visual-planner/vip_lib.js"></script>
 <script type="text/javascript" src="https://beevelop.github.io/visual-planner/vip_grid.js"></script>
 <script type="text/javascript" src="https://beevelop.github.io/visual-planner/vip_gadget.js"></script>

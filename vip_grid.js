@@ -55,9 +55,6 @@ function onResizeView()
 function onMediaChange(mql)
 {
 	vip.grid.updateLayout();
-
-	//if (mql.matches)
-		//ga_hit('media', 'print');
 }
 
 
@@ -222,7 +219,6 @@ function complete_selection(ui_event)
 	if (vip.selection.start)
 	if (! (vip.selection.start === vip.selection.end) )
 	{
-		//ga_hit('create_calendar_event', ui_event);
 		create_calendar_event();
 	}
 

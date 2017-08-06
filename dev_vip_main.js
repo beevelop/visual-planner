@@ -22,7 +22,6 @@ var vip = {
 
 function init_vip()
 {
-/*
 	var prefs = new gadgets.Prefs();
 
 	vip.multi_col.count = prefs.getInt("multi_col_count");
@@ -45,7 +44,6 @@ function init_vip()
 	vip.events.timed.show = prefs.getBool("show_timed_evts");
 	vip.events.timed.multi_day_as_all_day = prefs.getBool("multi_day_as_all_day");
 	vip.events.allday.width_chars = prefs.getInt("all_day_evt_width_chars");
-*/
 
 	if (vip.events.proportional.start_hour >= vip.events.proportional.end_hour)
 	{
@@ -59,8 +57,6 @@ function init_vip()
 		vip.events.format = 'proportional';
 	else
 		vip.events.format = 'basic';
-
-	ga_hit('event_format', vip.events.format);
 
 	vip.host = new VipHost();
 
@@ -94,10 +90,6 @@ function InitMultiColView()
 	  if (mql)
 		mql.addListener(onMediaChange);
 	}
-
-	ga_hit('view', 'multi_col');
-	ga_hit('multi_col_count', vip.multi_col.count);
-	ga_hit('multi_col_scroll_offset', vip.multi_col.auto_scroll ? vip.multi_col.offset : 'n/a');
 }
 
 function install_event_handling()
@@ -437,9 +429,6 @@ function complete_selection(ui_event)
 	if (vip.selection.start)
 	if (! (vip.selection.start === vip.selection.end) )
 	{
-		if (ui_event == "touch")
-			ga_hit('no_category', 'touch_create');
-
 		create_calendar_event();
 	}
 
@@ -559,7 +548,4 @@ function onMediaChange(mql)
 {
 	if (vip.host)
 		vip.host.updateScale();
-
-	if (mql.matches)
-		ga_hit('media', 'print');
 }

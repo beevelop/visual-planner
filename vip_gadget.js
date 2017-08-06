@@ -29,17 +29,10 @@ function updateSingleColLayout()
 
 	google.calendar.subscribeToDates(show ? update_dates : function() {});
 	google.calendar.subscribeToDataChange(show ? update_events : function() {});
-
-	//ga_hit('view', vip.single_col.show ? 'single_col' : 'none');
 }
 
 function InitMultiColView()
 {
-	//ga_hit('view', 'multi_col');
-	//ga_hit('multi_col_count', vip.multi_col.count);
-	//ga_hit('multi_col_scroll_offset', vip.multi_col.auto_scroll ? vip.multi_col.offset : 'n/a');
-	//ga_hit('event_format', vip.grid.events.format);
-	
 	init_gadget();
 	vip_init_grid(document.body);
 	vip.grid.onloadVipCol = addVipEventRequest;

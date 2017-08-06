@@ -197,8 +197,6 @@ VipHost.prototype.scroll_col = function(offset, ui_event)
 {
 	if (this.SingleCol) return;
 
-	ga_hit('scroll', ui_event);
-
 	var cols = this.div;
 	var ltor = (offset > 0);  // scroll direction
 	var count = ltor ? offset : -offset;
