@@ -1,6 +1,6 @@
 function InitSettings()
 {
-/*
+
 	document.getElementById("basic_marker").checked = true;
 
 	var prefs = new gadgets.Prefs();
@@ -25,15 +25,13 @@ function InitSettings()
 	document.getElementById("multi_day_as_all_day").checked = prefs.getBool("multi_day_as_all_day");
 	document.getElementById("all_day_evt_width_chars").value = prefs.getInt("all_day_evt_width_chars");
 
-	ga_hit('view', 'settings');
-*/
+	// ga_hit('view', 'settings');
 }
 
 function onSaveSettings()
 {
 	document.getElementById("save_btn").innerHTML = "<i>Saving...</i>";
 	
-/*
 	prefs.set("multi_col_count", setdoc.getElementById("multi_col_count").value);
 	prefs.set("fixed_cell_size", setdoc.getElementById("fixed_cell_size").checked.toString());
 	prefs.set("fixed_height", setdoc.getElementById("fixed_height").value);
@@ -54,7 +52,6 @@ function onSaveSettings()
 	prefs.set("show_timed_evts", setdoc.getElementById("show_timed_evts").checked.toString());
 	prefs.set("multi_day_as_all_day", setdoc.getElementById("multi_day_as_all_day").checked.toString());
 	prefs.set("all_day_evt_width_chars", setdoc.getElementById("all_day_evt_width_chars").value);
-*/
 
 	window.setTimeout(reload_calendar, 1000);
 }
